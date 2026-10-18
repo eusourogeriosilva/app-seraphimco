@@ -1,0 +1,854 @@
+{
+  "name": "Seraphim.co",
+  "version": 1,
+  "meta": {
+    "source": "seraphim.tokens.json 2.1.0 (W3C DTCG 2025.10), gerado por build-tokens.ts"
+  },
+  "color": {
+    "themes": [
+      {
+        "id": "light",
+        "name": "Claro"
+      }
+    ],
+    "tokens": [
+      {
+        "name": "color-bordo-600",
+        "value": "#8a1a2e",
+        "usage": "Primitivo. Apoio da escala bordô."
+      },
+      {
+        "name": "color-bordo-700",
+        "value": "#6e1423",
+        "usage": "Primitivo. Cor primária da marca."
+      },
+      {
+        "name": "color-bordo-800",
+        "value": "#560f1c",
+        "usage": "Primitivo. Hover de superfícies bordô."
+      },
+      {
+        "name": "color-bordo-900",
+        "value": "#3f0a14",
+        "usage": "Primitivo. Bordô mais profundo. Sombras de duotone."
+      },
+      {
+        "name": "color-framboesa-500",
+        "value": "#c42b4d",
+        "usage": "Primitivo. Acento de preenchimento com texto branco (5,5:1)."
+      },
+      {
+        "name": "color-framboesa-600",
+        "value": "#a8203f",
+        "usage": "Primitivo. Acento sobre fundos claros. 6,2:1 sobre Papel 100."
+      },
+      {
+        "name": "color-rose-100",
+        "value": "#fbeaee",
+        "usage": "Primitivo. Tinta clara de destaque."
+      },
+      {
+        "name": "color-rose-300",
+        "value": "#f4c2cc",
+        "usage": "Primitivo. Acento sobre bordô e grafite (7,5:1 e 10,6:1)."
+      },
+      {
+        "name": "color-papel-0",
+        "value": "#ffffff",
+        "usage": "Primitivo. Branco."
+      },
+      {
+        "name": "color-papel-50",
+        "value": "#f8f6f4",
+        "usage": "Primitivo. Papel mais claro."
+      },
+      {
+        "name": "color-papel-100",
+        "value": "#f0eeec",
+        "usage": "Primitivo. Papel padrão da marca."
+      },
+      {
+        "name": "color-papel-200",
+        "value": "#e2deda",
+        "usage": "Primitivo. Linhas e divisores."
+      },
+      {
+        "name": "color-pedra-300",
+        "value": "#d9d3cf",
+        "usage": "Primitivo. Texto secundário sobre grafite (11,2:1). Antes era um valor solto."
+      },
+      {
+        "name": "color-pedra-400",
+        "value": "#8c8581",
+        "usage": "Primitivo. Bordas de controle (3,6:1 sobre branco)."
+      },
+      {
+        "name": "color-pedra-600",
+        "value": "#6b6460",
+        "usage": "Primitivo. Texto secundário sobre claro (5,0:1 sobre Papel 100)."
+      },
+      {
+        "name": "color-grafite-800",
+        "value": "#2c2a29",
+        "usage": "Primitivo. Grafite elevado."
+      },
+      {
+        "name": "color-grafite-900",
+        "value": "#1f1e1e",
+        "usage": "Primitivo. Texto principal e superfície escura."
+      },
+      {
+        "name": "color-alpha-white-20",
+        "value": "#ffffff33",
+        "usage": "Primitivo. Branco a 20%: linhas sobre fundos escuros. Substitui .18, .2 e .25."
+      },
+      {
+        "name": "color-alpha-ink-12",
+        "value": "#1f1e1e1f",
+        "usage": "Primitivo. Grafite a 12%: contorno de moldura e de prévias. Substitui .12 e .14."
+      },
+      {
+        "name": "color-verde-50",
+        "value": "#e6f2ec",
+        "usage": "Primitivo. Fundo de sucesso."
+      },
+      {
+        "name": "color-verde-700",
+        "value": "#1f6b4a",
+        "usage": "Primitivo. Sucesso."
+      },
+      {
+        "name": "color-ambar-50",
+        "value": "#fbf1dc",
+        "usage": "Primitivo. Fundo de atenção."
+      },
+      {
+        "name": "color-ambar-700",
+        "value": "#8a5a00",
+        "usage": "Primitivo. Atenção."
+      },
+      {
+        "name": "color-vermelho-50",
+        "value": "#fdecea",
+        "usage": "Primitivo. Fundo de erro."
+      },
+      {
+        "name": "color-vermelho-700",
+        "value": "#b42318",
+        "usage": "Primitivo. Erro. Mais alaranjado que a framboesa."
+      },
+      {
+        "name": "color-azul-50",
+        "value": "#e5eff7",
+        "usage": "Primitivo. Fundo de informação."
+      },
+      {
+        "name": "color-azul-700",
+        "value": "#1d5f8f",
+        "usage": "Primitivo. Informação."
+      },
+      {
+        "name": "color-bg-page",
+        "value": "{color-papel-100}",
+        "usage": "Semântico. Fundo de página, slide e post claros."
+      },
+      {
+        "name": "color-bg-surface",
+        "value": "{color-papel-0}",
+        "usage": "Semântico. Cards, campos, tabelas, pranchas."
+      },
+      {
+        "name": "color-bg-subtle",
+        "value": "{color-papel-50}",
+        "usage": "Semântico. Fundo suave dentro de superfícies."
+      },
+      {
+        "name": "color-bg-brand",
+        "value": "{color-bordo-700}",
+        "usage": "Semântico. Seções e slides de impacto."
+      },
+      {
+        "name": "color-bg-brand-hover",
+        "value": "{color-bordo-800}",
+        "usage": "Semântico. Hover sobre superfície de marca."
+      },
+      {
+        "name": "color-bg-brand-deep",
+        "value": "{color-bordo-900}",
+        "usage": "Semântico. Sombras do duotone."
+      },
+      {
+        "name": "color-bg-ink",
+        "value": "{color-grafite-900}",
+        "usage": "Semântico. Seções escuras e rodapé."
+      },
+      {
+        "name": "color-bg-ink-raised",
+        "value": "{color-grafite-800}",
+        "usage": "Semântico. Elemento elevado sobre grafite."
+      },
+      {
+        "name": "color-bg-accent-subtle",
+        "value": "{color-rose-100}",
+        "usage": "Semântico. Destaque suave: bloco de resultado, tag Novo."
+      },
+      {
+        "name": "color-bg-muted",
+        "value": "{color-papel-200}",
+        "usage": "Semântico. Áreas neutras e placeholders de imagem."
+      },
+      {
+        "name": "color-bg-disabled",
+        "value": "{color-papel-200}",
+        "usage": "Semântico. Controle desativado."
+      },
+      {
+        "name": "color-text-primary",
+        "value": "{color-grafite-900}",
+        "usage": "Semântico. Texto principal sobre claro (14,4:1)."
+      },
+      {
+        "name": "color-text-secondary",
+        "value": "{color-pedra-600}",
+        "usage": "Semântico. Apoio e legendas sobre claro (5,0:1)."
+      },
+      {
+        "name": "color-text-brand",
+        "value": "{color-bordo-700}",
+        "usage": "Semântico. Títulos de destaque e links (10,2:1)."
+      },
+      {
+        "name": "color-text-accent",
+        "value": "{color-framboesa-600}",
+        "usage": "Semântico. Eyebrow e numeração. Só sobre claro."
+      },
+      {
+        "name": "color-text-on-brand",
+        "value": "{color-papel-0}",
+        "usage": "Semântico. Texto sobre bordô (11,7:1)."
+      },
+      {
+        "name": "color-text-on-dark",
+        "value": "{color-papel-0}",
+        "usage": "Semântico. Texto sobre bordô (11,7:1) ou grafite (16,6:1)."
+      },
+      {
+        "name": "color-text-secondary-on-dark",
+        "value": "{color-pedra-300}",
+        "usage": "Semântico. Apoio sobre grafite."
+      },
+      {
+        "name": "color-text-accent-on-dark",
+        "value": "{color-rose-300}",
+        "usage": "Semântico. Eyebrow e numeração sobre bordô ou grafite."
+      },
+      {
+        "name": "color-text-disabled",
+        "value": "{color-pedra-600}",
+        "usage": "Semântico. Texto de controle desativado."
+      },
+      {
+        "name": "color-accent-rule",
+        "value": "{color-framboesa-600}",
+        "usage": "Semântico. Filete e marcadores sobre claro."
+      },
+      {
+        "name": "color-accent-rule-on-dark",
+        "value": "{color-rose-300}",
+        "usage": "Semântico. Filete e marcadores sobre escuro."
+      },
+      {
+        "name": "color-border-subtle",
+        "value": "{color-papel-200}",
+        "usage": "Semântico. Divisores e hairlines."
+      },
+      {
+        "name": "color-border-strong",
+        "value": "{color-grafite-900}",
+        "usage": "Semântico. Linha de cabeçalho de tabela."
+      },
+      {
+        "name": "color-border-control",
+        "value": "{color-pedra-400}",
+        "usage": "Semântico. Borda de campo (3,6:1)."
+      },
+      {
+        "name": "color-border-brand",
+        "value": "{color-bordo-700}",
+        "usage": "Semântico. Borda de botão secundário, foco de campo, moldura."
+      },
+      {
+        "name": "color-border-on-dark",
+        "value": "{color-alpha-white-20}",
+        "usage": "Semântico. Divisores sobre bordô e grafite."
+      },
+      {
+        "name": "color-border-frame",
+        "value": "{color-alpha-ink-12}",
+        "usage": "Semântico. Contorno de prévias e pranchas."
+      },
+      {
+        "name": "color-focus-ring",
+        "value": "{color-framboesa-600}",
+        "usage": "Semântico. Anel de foco sobre claro."
+      },
+      {
+        "name": "color-focus-ring-on-dark",
+        "value": "{color-rose-300}",
+        "usage": "Semântico. Anel de foco sobre escuro."
+      },
+      {
+        "name": "color-status-success",
+        "value": "{color-verde-700}",
+        "usage": "Semântico. Texto e ícone de sucesso (5,6:1 sobre o fundo)."
+      },
+      {
+        "name": "color-status-success-bg",
+        "value": "{color-verde-50}",
+        "usage": "Semântico. Fundo de sucesso."
+      },
+      {
+        "name": "color-status-warning",
+        "value": "{color-ambar-700}",
+        "usage": "Semântico. Texto e ícone de atenção (5,3:1)."
+      },
+      {
+        "name": "color-status-warning-bg",
+        "value": "{color-ambar-50}",
+        "usage": "Semântico. Fundo de atenção."
+      },
+      {
+        "name": "color-status-danger",
+        "value": "{color-vermelho-700}",
+        "usage": "Semântico. Texto e ícone de erro (5,8:1)."
+      },
+      {
+        "name": "color-status-danger-bg",
+        "value": "{color-vermelho-50}",
+        "usage": "Semântico. Fundo de erro."
+      },
+      {
+        "name": "color-status-info",
+        "value": "{color-azul-700}",
+        "usage": "Semântico. Texto e ícone de informação (5,8:1)."
+      },
+      {
+        "name": "color-status-info-bg",
+        "value": "{color-azul-50}",
+        "usage": "Semântico. Fundo de informação."
+      },
+      {
+        "name": "color-button-primary-bg",
+        "value": "{color-bg-brand}",
+        "usage": "Componente. Botão primário."
+      },
+      {
+        "name": "color-button-primary-bg-hover",
+        "value": "{color-bg-brand-hover}",
+        "usage": "Componente. Botão primário em hover."
+      },
+      {
+        "name": "color-button-primary-text",
+        "value": "{color-text-on-brand}",
+        "usage": "Componente. Texto do botão primário."
+      },
+      {
+        "name": "color-button-secondary-border",
+        "value": "{color-border-brand}",
+        "usage": "Componente. Contorno do botão secundário."
+      },
+      {
+        "name": "color-button-secondary-text",
+        "value": "{color-text-brand}",
+        "usage": "Componente. Texto do botão secundário e terciário."
+      },
+      {
+        "name": "color-button-inverse-bg",
+        "value": "{color-papel-0}",
+        "usage": "Componente. Botão primário sobre bordô ou grafite."
+      },
+      {
+        "name": "color-button-inverse-text",
+        "value": "{color-text-brand}",
+        "usage": "Componente. Texto do botão inverso."
+      },
+      {
+        "name": "color-button-outline-on-dark",
+        "value": "{color-text-on-dark}",
+        "usage": "Componente. Contorno e texto do botão secundário sobre escuro."
+      },
+      {
+        "name": "color-input-bg",
+        "value": "{color-bg-surface}",
+        "usage": "Componente. Fundo do campo."
+      },
+      {
+        "name": "color-input-border",
+        "value": "{color-border-control}",
+        "usage": "Componente. Borda em repouso."
+      },
+      {
+        "name": "color-input-border-focus",
+        "value": "{color-border-brand}",
+        "usage": "Componente. Borda em foco (2 px)."
+      },
+      {
+        "name": "color-input-border-error",
+        "value": "{color-status-danger}",
+        "usage": "Componente. Borda com erro (2 px)."
+      },
+      {
+        "name": "color-offer-highlight",
+        "value": "{color-accent-rule}",
+        "usage": "Componente. Borda superior do card de oferta prioritário."
+      },
+      {
+        "name": "color-offer-price",
+        "value": "{color-text-brand}",
+        "usage": "Componente. Valor do bloco de investimento."
+      }
+    ]
+  },
+  "type": {
+    "fonts": [],
+    "families": {
+      "serif": "\"Newsreader\", Georgia, serif",
+      "sans": "\"Hanken Grotesk\", system-ui, sans-serif"
+    },
+    "groups": [
+      {
+        "name": "Títulos",
+        "family": "serif",
+        "styles": [
+          {
+            "name": "display-xl",
+            "family": "serif",
+            "fontSize": "72px",
+            "lineHeight": 1.06,
+            "fontWeight": 400,
+            "letterSpacing": "-0.015em",
+            "usage": "Hero do site, capa."
+          },
+          {
+            "name": "display-l",
+            "family": "serif",
+            "fontSize": "56px",
+            "lineHeight": 1.07,
+            "fontWeight": 400,
+            "letterSpacing": "-0.015em",
+            "usage": "Título de seção e de prancha."
+          },
+          {
+            "name": "h1",
+            "family": "serif",
+            "fontSize": "40px",
+            "lineHeight": 1.15,
+            "fontWeight": 400,
+            "letterSpacing": "-0.015em",
+            "usage": ""
+          },
+          {
+            "name": "h2",
+            "family": "serif",
+            "fontSize": "32px",
+            "lineHeight": 1.19,
+            "fontWeight": 500,
+            "letterSpacing": "-0.015em",
+            "usage": ""
+          }
+        ]
+      },
+      {
+        "name": "Texto",
+        "family": "sans",
+        "styles": [
+          {
+            "name": "h3",
+            "family": "sans",
+            "fontSize": "22px",
+            "lineHeight": 1.36,
+            "fontWeight": 600,
+            "letterSpacing": "0em",
+            "usage": ""
+          },
+          {
+            "name": "lead",
+            "family": "sans",
+            "fontSize": "20px",
+            "lineHeight": 1.5,
+            "fontWeight": 400,
+            "letterSpacing": "0em",
+            "usage": ""
+          },
+          {
+            "name": "body",
+            "family": "sans",
+            "fontSize": "16px",
+            "lineHeight": 1.625,
+            "fontWeight": 400,
+            "letterSpacing": "0em",
+            "usage": ""
+          },
+          {
+            "name": "small",
+            "family": "sans",
+            "fontSize": "14px",
+            "lineHeight": 1.57,
+            "fontWeight": 400,
+            "letterSpacing": "0em",
+            "usage": ""
+          },
+          {
+            "name": "eyebrow",
+            "family": "sans",
+            "fontSize": "12px",
+            "lineHeight": 1.2,
+            "fontWeight": 600,
+            "letterSpacing": "0.14em",
+            "usage": "Caixa-alta."
+          }
+        ]
+      },
+      {
+        "name": "Redes sociais (base 1080)",
+        "family": "serif",
+        "styles": [
+          {
+            "name": "social-display",
+            "family": "serif",
+            "fontSize": "112px",
+            "lineHeight": 1.05,
+            "fontWeight": 400,
+            "letterSpacing": "-0.015em",
+            "usage": "Post 4:5 em 1080 px. Faixa 96–120."
+          },
+          {
+            "name": "social-body",
+            "family": "sans",
+            "fontSize": "40px",
+            "lineHeight": 1.4,
+            "fontWeight": 400,
+            "letterSpacing": "0em",
+            "usage": "Mínimo 36 px."
+          },
+          {
+            "name": "social-eyebrow",
+            "family": "sans",
+            "fontSize": "28px",
+            "lineHeight": 1.2,
+            "fontWeight": 600,
+            "letterSpacing": "0.14em",
+            "usage": "Caixa-alta."
+          },
+          {
+            "name": "social-footer",
+            "family": "sans",
+            "fontSize": "24px",
+            "lineHeight": 1.4,
+            "fontWeight": 500,
+            "letterSpacing": "0.08em",
+            "usage": "Mínimo 22 px. Caixa-alta."
+          }
+        ]
+      }
+    ]
+  },
+  "spacing": {
+    "note": "Escala base 4 e papéis de layout.",
+    "tokens": [
+      {
+        "name": "space-0",
+        "value": "0px",
+        "usage": ""
+      },
+      {
+        "name": "space-4",
+        "value": "4px",
+        "usage": ""
+      },
+      {
+        "name": "space-8",
+        "value": "8px",
+        "usage": ""
+      },
+      {
+        "name": "space-12",
+        "value": "12px",
+        "usage": ""
+      },
+      {
+        "name": "space-16",
+        "value": "16px",
+        "usage": ""
+      },
+      {
+        "name": "space-20",
+        "value": "20px",
+        "usage": ""
+      },
+      {
+        "name": "space-24",
+        "value": "24px",
+        "usage": ""
+      },
+      {
+        "name": "space-32",
+        "value": "32px",
+        "usage": ""
+      },
+      {
+        "name": "space-40",
+        "value": "40px",
+        "usage": ""
+      },
+      {
+        "name": "space-48",
+        "value": "48px",
+        "usage": ""
+      },
+      {
+        "name": "space-56",
+        "value": "56px",
+        "usage": ""
+      },
+      {
+        "name": "space-64",
+        "value": "64px",
+        "usage": ""
+      },
+      {
+        "name": "space-72",
+        "value": "72px",
+        "usage": ""
+      },
+      {
+        "name": "space-80",
+        "value": "80px",
+        "usage": ""
+      },
+      {
+        "name": "space-96",
+        "value": "96px",
+        "usage": ""
+      },
+      {
+        "name": "space-128",
+        "value": "128px",
+        "usage": ""
+      },
+      {
+        "name": "layout-gap-inline",
+        "value": "16px",
+        "usage": "Entre itens lado a lado."
+      },
+      {
+        "name": "layout-gap-stack",
+        "value": "24px",
+        "usage": "Entre blocos empilhados."
+      },
+      {
+        "name": "layout-section-gap",
+        "value": "56px",
+        "usage": "Entre seções de uma prancha ou página."
+      },
+      {
+        "name": "layout-section-y",
+        "value": "96px",
+        "usage": "Respiro vertical de seção no site (64 no celular)."
+      },
+      {
+        "name": "layout-board-x",
+        "value": "80px",
+        "usage": "Margem lateral das pranchas."
+      },
+      {
+        "name": "layout-board-y",
+        "value": "72px",
+        "usage": "Margem vertical das pranchas."
+      },
+      {
+        "name": "layout-page-x",
+        "value": "64px",
+        "usage": "Margem lateral do site no desktop (16 no celular)."
+      },
+      {
+        "name": "layout-social-margin",
+        "value": "96px",
+        "usage": "Margem do post 4:5 em 1080 px."
+      },
+      {
+        "name": "layout-container",
+        "value": "1200px",
+        "usage": "Largura máxima do conteúdo no site."
+      }
+    ]
+  },
+  "radius": {
+    "tokens": [
+      {
+        "name": "radius-none",
+        "value": "0px",
+        "usage": "Cards, imagens, superfícies."
+      },
+      {
+        "name": "radius-control",
+        "value": "2px",
+        "usage": "Botões e campos."
+      },
+      {
+        "name": "radius-pill",
+        "value": "999px",
+        "usage": "Tags e avatares."
+      }
+    ]
+  },
+  "shadow": {
+    "tokens": [
+      {
+        "name": "shadow-overlay",
+        "value": "0px 8px 24px 0px rgba(31, 30, 30, 0.12)",
+        "usage": "Só modais. O padrão é plano."
+      }
+    ]
+  },
+  "borderWidth": {
+    "tokens": [
+      {
+        "name": "border-width-hairline",
+        "value": "1px",
+        "usage": "Divisores."
+      },
+      {
+        "name": "border-width-control",
+        "value": "1.5px",
+        "usage": "Botão secundário, tabela."
+      },
+      {
+        "name": "border-width-focus",
+        "value": "2px",
+        "usage": "Anel de foco, campo em foco ou com erro."
+      },
+      {
+        "name": "border-width-rule",
+        "value": "3px",
+        "usage": "Filete da marca, destaque de oferta."
+      },
+      {
+        "name": "border-width-focus-offset",
+        "value": "3px",
+        "usage": "Distância do anel de foco."
+      }
+    ]
+  },
+  "size": {
+    "tokens": [
+      {
+        "name": "size-control",
+        "value": "48px",
+        "usage": "Altura de botão e campo."
+      },
+      {
+        "name": "size-control-sm",
+        "value": "40px",
+        "usage": "Botão compacto da navegação."
+      },
+      {
+        "name": "size-touch-min",
+        "value": "44px",
+        "usage": "Alvo de toque mínimo."
+      },
+      {
+        "name": "size-icon-sm",
+        "value": "16px",
+        "usage": ""
+      },
+      {
+        "name": "size-icon",
+        "value": "24px",
+        "usage": ""
+      },
+      {
+        "name": "size-icon-lg",
+        "value": "32px",
+        "usage": ""
+      },
+      {
+        "name": "size-rule-width",
+        "value": "64px",
+        "usage": "Comprimento do filete."
+      }
+    ]
+  },
+  "breakpoint": {
+    "tokens": [
+      {
+        "name": "breakpoint-sm",
+        "value": "640px",
+        "usage": "Celular para tablet."
+      },
+      {
+        "name": "breakpoint-md",
+        "value": "960px",
+        "usage": "Tablet para desktop."
+      },
+      {
+        "name": "breakpoint-lg",
+        "value": "1280px",
+        "usage": "Desktop largo."
+      }
+    ]
+  },
+  "tracking": {
+    "tokens": [
+      {
+        "name": "font-tracking-tight",
+        "value": "-0.015em",
+        "usage": "Títulos serifados."
+      },
+      {
+        "name": "font-tracking-normal",
+        "value": "0em",
+        "usage": ""
+      },
+      {
+        "name": "font-tracking-wordmark",
+        "value": "0.05em",
+        "usage": "SERAPHIM.CO."
+      },
+      {
+        "name": "font-tracking-caps-sm",
+        "value": "0.08em",
+        "usage": "Rodapés e rótulos em caixa-alta."
+      },
+      {
+        "name": "font-tracking-caps",
+        "value": "0.14em",
+        "usage": "Eyebrow."
+      }
+    ]
+  },
+  "leading": {
+    "tokens": [
+      {
+        "name": "font-leading-display",
+        "value": "1.05",
+        "usage": ""
+      },
+      {
+        "name": "font-leading-heading",
+        "value": "1.15",
+        "usage": ""
+      },
+      {
+        "name": "font-leading-ui",
+        "value": "1.2",
+        "usage": ""
+      },
+      {
+        "name": "font-leading-body",
+        "value": "1.6",
+        "usage": ""
+      }
+    ]
+  }
+}

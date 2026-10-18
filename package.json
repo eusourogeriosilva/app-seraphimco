@@ -1,0 +1,23 @@
+{
+  "name": "seraphim-site",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "tokens:build": "node tokens/scripts/build-tokens.ts",
+    "tokens:check": "node tokens/scripts/build-tokens.ts --check",
+    "tokens:version": "node tokens/scripts/check-version.ts",
+    "lint:tokens": "node tokens/scripts/check-tokens.ts src",
+    "lint:css": "stylelint \"src/**/*.css\"",
+    "typecheck": "tsc -p tsconfig.json",
+    "typecheck:ts6": "npx --yes -p typescript@6.0.3 tsc -p tsconfig.json",
+    "ci": "npm run tokens:check && npm run typecheck && npm run typecheck:ts6 && npm run lint:css && npm run lint:tokens"
+  },
+  "devDependencies": {
+    "@types/node": "24.19.1",
+    "stylelint": "17.16.0",
+    "typescript": "7.0.2"
+  }
+}

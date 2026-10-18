@@ -1,0 +1,54 @@
+name: tokens
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: tokens-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 24
+          cache: npm
+
+      - run: npm ci
+
+      - name: Build em dia e contraste
+        run: npm run tokens:check
+
+      - name: Versão e CHANGELOG
+        if: github.event_name == 'pull_request'
+        run: npm run tokens:version -- --base origin/${{ github.base_ref }}
+
+      - name: Tipos (TypeScript 7)
+        run: npm run typecheck
+
+      - name: Tipos (compatibilidade com TypeScript 6)
+        run: npm run typecheck:ts6
+
+      - name: CSS sem cor solta
+        run: npm run lint:css
+
+      - name: Tokens existentes e semânticos
+        run: npm run lint:tokens
+
+      - name: Publicar dist como artefato
+        if: github.event_name == 'push'
+        uses: actions/upload-artifact@v4
+        with:
+          name: seraphim-tokens
+          path: tokens/dist/

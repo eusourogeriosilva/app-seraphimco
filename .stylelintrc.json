@@ -1,0 +1,11 @@
+{
+  "rules": {
+    "color-no-hex": [true, { "message": "Cor em hex: use um token, ex.: var(--color-text-primary)" }],
+    "color-named": ["never", { "message": "Cor nomeada: use um token, ex.: var(--color-bg-surface)" }],
+    "function-disallowed-list": [
+      ["rgb", "rgba", "hsl", "hsla", "hwb", "lab", "lch", "oklab", "oklch", "color"],
+      { "message": "Função de cor: use um token de cor" }
+    ]
+  },
+  "ignoreFiles": ["tokens/dist/**", "node_modules/**", "dist/**"]
+}
