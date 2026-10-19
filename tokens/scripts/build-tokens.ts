@@ -6,8 +6,8 @@
 import { mkdirSync, readFileSync, writeFileSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
 import {
-  DIST, type Json, type Token, asDimension, colorPrimitives, contrast, cssName, cssValue, dim, fail, fmt,
-  hexa, loadSource, refTarget, resolve, rgba, version, walk,
+  DIST, type Dimension, type Json, type Token, asDimension, colorPrimitives, contrast, cssName, cssValue, dim, fail, fmt,
+  hexa, loadSource, refTarget, rem, resolve, rgba, version, walk,
 } from './lib.ts';
 
 // Pares de contraste obrigatórios: [texto, fundo, mínimo WCAG 2.1]
@@ -81,18 +81,43 @@ const plain = [...tokens.values()].filter((t) => t.type !== 'typography');
 const privateColors = colorPrimitives(tokens);
 const ver = version(source);
 
+interface TypoBand { fontSize: Dimension; lineHeight: number; letterSpacing: Dimension }
+const TYPO_KEYS = new Set(['fontSize', 'lineHeight', 'letterSpacing']);
+
 function typoParts(t: Token) {
   const v = t.value as { [k: string]: Json };
   const famRef = refTarget(v['fontFamily'] ?? null);
   if (!famRef) fail(`fontFamily de ${t.path} precisa ser alias`);
+  const base: TypoBand = {
+    fontSize: asDimension(v['fontSize'] ?? null),
+    lineHeight: Number(v['lineHeight']),
+    letterSpacing: asDimension(v['letterSpacing'] ?? null),
+  };
+  // Sobrescritas por faixa (md = tablet, sm = celular). Tracking não declarado mantém a razão em em do desktop.
+  const bands: Record<string, TypoBand> = {};
+  const r = t.ext['responsive'];
+  let prev = base.fontSize.value;
+  for (const [band] of BANDS) {
+    const o = r && typeof r === 'object' && !Array.isArray(r) ? (r[band] as { [k: string]: Json } | undefined) : undefined;
+    if (!o) continue;
+    for (const k of Object.keys(o)) if (!TYPO_KEYS.has(k)) fail(`${t.path}: responsive.${band}.${k} não é aceito (fontSize, lineHeight, letterSpacing)`);
+    const fontSize = o['fontSize'] ? asDimension(o['fontSize']) : base.fontSize;
+    if (fontSize.unit !== 'px') fail(`${t.path}: responsive.${band}.fontSize precisa estar em px`);
+    if (fontSize.value > prev) fail(`${t.path}: responsive.${band}.fontSize (${fontSize.value}) maior que a faixa anterior (${prev}); títulos só encolhem`);
+    prev = fontSize.value;
+    const lineHeight = o['lineHeight'] === undefined ? base.lineHeight : Number(o['lineHeight']);
+    const letterSpacing = o['letterSpacing']
+      ? asDimension(o['letterSpacing'])
+      : { value: Math.round((base.letterSpacing.value / base.fontSize.value) * fontSize.value * 100) / 100, unit: 'px' };
+    bands[band] = { fontSize, lineHeight, letterSpacing };
+  }
   return {
     name: cssName(t.path).replace(/^typography-/, ''),
     family: famRef,
-    fontSize: asDimension(v['fontSize'] ?? null),
+    ...base,
     fontWeight: Number(v['fontWeight']),
-    lineHeight: Number(v['lineHeight']),
-    letterSpacing: asDimension(v['letterSpacing'] ?? null),
     upper: t.ext['textTransform'] === 'uppercase',
+    bands,
   };
 }
 
@@ -120,7 +145,7 @@ function buildCss(): string {
     const p = typoParts(t);
     const n = `typography-${p.name}`;
     lines.push(
-      `  --${n}-font-family: var(--${cssName(p.family)});`, `  --${n}-font-size: ${dim(p.fontSize as unknown as Json)};`,
+      `  --${n}-font-family: var(--${cssName(p.family)});`, `  --${n}-font-size: ${rem(p.fontSize as unknown as Json)};`,
       `  --${n}-font-weight: ${p.fontWeight};`, `  --${n}-line-height: ${fmt(p.lineHeight)};`,
       `  --${n}-letter-spacing: ${dim(p.letterSpacing as unknown as Json)};`,
     );
@@ -133,6 +158,11 @@ function buildCss(): string {
   }
   for (const [name, bp] of BANDS) {
     const rows = responsiveOf(name).map(([t, v]) => `--${cssName(t.path)}: ${cssValue({ ...t, value: v })};`);
+    for (const t of typo) {
+      const p = typoParts(t);
+      const b = p.bands[name];
+      if (b) rows.push(`--typography-${p.name}-font-size: ${rem(b.fontSize as unknown as Json)}; --typography-${p.name}-line-height: ${fmt(b.lineHeight)}; --typography-${p.name}-letter-spacing: ${dim(b.letterSpacing as unknown as Json)};`);
+    }
     if (rows.length) lines.push(`@media (max-width: ${bandMax(bp)}px) { :root { ${rows.join(' ')} } }`);
   }
   lines.push('@media (prefers-reduced-motion: reduce) { :root { --motion-duration-fast: 0ms; --motion-duration-base: 0ms; --motion-duration-slow: 0ms; } }');
@@ -175,6 +205,9 @@ function buildTs(): string {
       fontFamily: cssValue({ ...tokens.get(p.family)!, value: resolve(tokens, p.family) }),
       fontSize: dim(p.fontSize as unknown as Json), fontWeight: p.fontWeight, lineHeight: p.lineHeight,
       letterSpacing: dim(p.letterSpacing as unknown as Json), ...(p.upper ? { textTransform: 'uppercase' } : {}),
+      ...(Object.keys(p.bands).length
+        ? { responsive: Object.fromEntries(Object.entries(p.bands).map(([k, b]) => [k, { fontSize: dim(b.fontSize as unknown as Json), lineHeight: b.lineHeight, letterSpacing: dim(b.letterSpacing as unknown as Json) }])) }
+        : {}),
     };
   }
   const j = (o: unknown) => JSON.stringify(o, null, 2);

@@ -3,8 +3,8 @@
   "$description": "Seraphim.co Design System 2.1. Fonte única dos tokens. Três camadas: primitivos (paleta e escalas), semânticos (papéis) e componente. Consumidores usam só semânticos e de componente.",
   "$extensions": {
     "co.seraphim": {
-      "version": "2.4.0",
-      "updated": "2026-10-18"
+      "version": "2.5.0",
+      "updated": "2026-10-19"
     }
   },
   "color": {
@@ -1367,7 +1367,27 @@
           "unit": "px"
         }
       },
-      "$description": "Hero do site, capa."
+      "$description": "Hero do site, capa.",
+      "$extensions": {
+        "co.seraphim": {
+          "responsive": {
+            "md": {
+              "fontSize": {
+                "value": 56,
+                "unit": "px"
+              },
+              "lineHeight": 1.08
+            },
+            "sm": {
+              "fontSize": {
+                "value": 40,
+                "unit": "px"
+              },
+              "lineHeight": 1.1
+            }
+          }
+        }
+      }
     },
     "display-l": {
       "$value": {
@@ -1383,7 +1403,27 @@
           "unit": "px"
         }
       },
-      "$description": "Título de seção e de prancha."
+      "$description": "Título de seção e de prancha.",
+      "$extensions": {
+        "co.seraphim": {
+          "responsive": {
+            "md": {
+              "fontSize": {
+                "value": 48,
+                "unit": "px"
+              },
+              "lineHeight": 1.08
+            },
+            "sm": {
+              "fontSize": {
+                "value": 36,
+                "unit": "px"
+              },
+              "lineHeight": 1.1
+            }
+          }
+        }
+      }
     },
     "h1": {
       "$value": {
@@ -1397,6 +1437,26 @@
         "letterSpacing": {
           "value": -0.6,
           "unit": "px"
+        }
+      },
+      "$extensions": {
+        "co.seraphim": {
+          "responsive": {
+            "md": {
+              "fontSize": {
+                "value": 36,
+                "unit": "px"
+              },
+              "lineHeight": 1.15
+            },
+            "sm": {
+              "fontSize": {
+                "value": 32,
+                "unit": "px"
+              },
+              "lineHeight": 1.18
+            }
+          }
         }
       }
     },
@@ -1413,6 +1473,26 @@
           "value": -0.48,
           "unit": "px"
         }
+      },
+      "$extensions": {
+        "co.seraphim": {
+          "responsive": {
+            "md": {
+              "fontSize": {
+                "value": 30,
+                "unit": "px"
+              },
+              "lineHeight": 1.2
+            },
+            "sm": {
+              "fontSize": {
+                "value": 28,
+                "unit": "px"
+              },
+              "lineHeight": 1.22
+            }
+          }
+        }
       }
     },
     "h3": {
@@ -1428,6 +1508,26 @@
           "value": 0,
           "unit": "px"
         }
+      },
+      "$extensions": {
+        "co.seraphim": {
+          "responsive": {
+            "md": {
+              "fontSize": {
+                "value": 22,
+                "unit": "px"
+              },
+              "lineHeight": 1.36
+            },
+            "sm": {
+              "fontSize": {
+                "value": 20,
+                "unit": "px"
+              },
+              "lineHeight": 1.4
+            }
+          }
+        }
       }
     },
     "lead": {
@@ -1442,6 +1542,26 @@
         "letterSpacing": {
           "value": 0,
           "unit": "px"
+        }
+      },
+      "$extensions": {
+        "co.seraphim": {
+          "responsive": {
+            "md": {
+              "fontSize": {
+                "value": 20,
+                "unit": "px"
+              },
+              "lineHeight": 1.5
+            },
+            "sm": {
+              "fontSize": {
+                "value": 18,
+                "unit": "px"
+              },
+              "lineHeight": 1.5
+            }
+          }
         }
       }
     },

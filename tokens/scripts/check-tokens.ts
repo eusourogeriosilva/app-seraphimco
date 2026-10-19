@@ -9,6 +9,7 @@
 //   movimento-literal       transition ou animation com tempo ou curva solta (ex.: 200ms, ease): use motion-*
 //   sem-movimento-reduzido  arquivo com animation sem bloco prefers-reduced-motion
 //   espacamento-fora-da-escala  padding, margin ou gap com px fora de dimension.space.* (aceita 0, auto, var() e ±1px)
+//   fonte-fora-da-escala  font-size ou font com tamanho literal (px, rem, em, pt): use var(--font-size-*) ou var(--typography-*)
 // Exceções: comentário "tokens-ignore" na linha, ou "tokens-ignore-file" no arquivo
 // (ex.: templates de e-mail, que não suportam variáveis CSS).
 import { readdirSync, readFileSync, statSync } from 'node:fs';
@@ -24,6 +25,8 @@ const TIME = /(?<![\w.-])\d*\.?\d+m?s\b/;
 const CURVE = /\b(?:ease|ease-in|ease-out|ease-in-out|linear|step-start|step-end)\b|cubic-bezier\(|steps\(/;
 const SPACE_DECL = /(?<![\w-])(?:padding|margin)(?:-(?:top|right|bottom|left|inline|block)(?:-(?:start|end))?)?\s*:\s*([^;}\n]*)|(?<![\w-])(?:gap|row-gap|column-gap)\s*:\s*([^;}\n]*)/g;
 const PX = /(-?\d*\.?\d+)px\b/g;
+const FONT_DECL = /(?<![\w-])(font-size|font)\s*:\s*([^;}\n]*)/g;
+const FONT_LEN = /(?<![\w.-])\d*\.?\d+(?:px|rem|em|pt)\b/;
 const VAR = /var\(\s*--([\w-]+)/g;
 const STRING = /(['"`])((?:\\.|(?!\1)[^\\\n])*)\1/g;
 
@@ -83,6 +86,13 @@ function scanLine(file: string, lineNo: number, text: string, offset: number, lo
         const n = Math.abs(Number(px[1]));
         if (n !== 1 && !spaceScale.has(n)) report('espacamento-fora-da-escala', m.index, `${px[0]} não está na escala: use var(--space-*) (${[...spaceScale].join(', ')})`);
       }
+    }
+  }
+  if (file.endsWith('.css') || file.endsWith('.html')) {
+    for (const m of text.matchAll(FONT_DECL)) {
+      const value = (m[2] ?? '').replace(/var\([^)]*\)/g, '');
+      const hit = FONT_LEN.exec(value);
+      if (hit) report('fonte-fora-da-escala', m.index, `${m[1]}: ${hit[0]} solto; use var(--font-size-*) ou var(--typography-*-font-size)`);
     }
   }
   for (const m of text.matchAll(VAR)) {

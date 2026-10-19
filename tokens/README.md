@@ -52,6 +52,12 @@ Token renomeado nasce como novo e o nome antigo vira alias de mesmo valor com `$
 
 Um token pode ter valores de tablet e celular em `$extensions["co.seraphim"].responsive` (`md` até 959 px, `sm` até 639 px). O valor do token é o de desktop. O build gera os `@media` no `tokens.css` e o mapa `responsive` no `tokens.ts`. Hoje valem para `layout-columns`, `layout-gutter`, `layout-page-x`, `layout-section-y` e `layout-section-gap`.
 
+Os estilos compostos de tipografia aceitam o mesmo bloco, com `fontSize`, `lineHeight` e `letterSpacing` por faixa (`display-xl`, `display-l`, `h1`, `h2`, `h3`, `lead`). O tracking não declarado é recalculado pela razão em em do desktop. O build falha se o tamanho crescer ao descer de faixa. No `tokens.css`, `font-size` sai em rem (px ÷ 16); em `tokens.ts` e no Design System segue em px.
+
 ## Lint de espaçamento
 
 `padding`, `margin` e `gap` só aceitam `var(--space-*)`, 0, auto e ±1 px (sobreposição de borda). Valor fora da escala de `dimension.space.*` falha a CI (`espacamento-fora-da-escala`).
+
+## Lint de fonte
+
+`fonte-fora-da-escala` barra `font-size` e `font` com tamanho literal (px, rem, em, pt) em `src/`. Use `var(--font-size-*)` ou, num texto inteiro, a classe `.type-*`. Entrelinha dentro de `font` em px também falha: use valor sem unidade, para acompanhar o texto ampliado.

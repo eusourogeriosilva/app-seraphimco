@@ -115,6 +115,9 @@ export function asDimension(v: Json): Dimension {
 
 export const fmt = (n: number): string => String(Number(n.toPrecision(6)));
 export const dim = (v: Json): string => { const d = asDimension(v); return `${fmt(d.value)}${d.unit}`; };
+/** font-size sai em rem no CSS (px ÷ 16), para respeitar a preferência de tamanho de texto do navegador. Em tokens.ts e no Design System segue px. */
+export const REM_BASE = 16;
+export const rem = (v: Json): string => { const d = asDimension(v); return d.unit === 'px' ? `${fmt(d.value / REM_BASE)}rem` : dim(v); };
 
 export function rgba(v: Json): string {
   const c = asColor(v);
@@ -151,7 +154,7 @@ export function cssValue(token: Token): string {
   const v = token.value;
   switch (token.type) {
     case 'color': return rgba(v);
-    case 'dimension':
+    case 'dimension': return token.path.startsWith('font.size.') ? rem(v) : dim(v);
     case 'duration': return dim(v);
     case 'fontFamily': {
       const families = Array.isArray(v) ? v.map(String) : [String(v)];

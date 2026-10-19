@@ -2,6 +2,26 @@
 
 Formato: [semver](https://semver.org/lang/pt-BR/). Token removido ou renomeado é major; token novo é minor; valor ou descrição alterados é patch. A CI recusa um pull request que mude `seraphim.tokens.json` sem o bump e sem a seção correspondente aqui.
 
+## [2.5.0] - 2026-10-19
+
+Base: tipografia responsiva aprovada na prancha "03 · Tipografia responsiva" do canvas.
+
+### Adicionado
+- Valores por faixa nos estilos compostos de tipografia (`$extensions["co.seraphim"].responsive`, com `md` e `sm`, sobrescrevendo `fontSize`, `lineHeight` e `letterSpacing`). `display-xl` 72, 56 e 40 px; `display-l` 56, 48 e 36; `h1` 40, 36 e 32; `h2` 32, 30 e 28; `h3` 22, 22 e 20; `lead` 20, 20 e 18. Corpo, pequeno, eyebrow e os estilos sociais não mudam.
+- O tracking de cada faixa mantém a razão em em do desktop (-0,015 em nos títulos serifados) e é calculado pelo build, salvo se declarado.
+- O build recusa `fontSize` que cresça de uma faixa para a menor, unidade que não seja px e chave desconhecida em `responsive` de tipografia.
+- `tokens.ts`: cada estilo de `typography` ganha `responsive` quando houver sobrescrita (valores em px).
+- Lint `fonte-fora-da-escala`: `font-size` e `font` só com `var(--font-size-*)` ou `var(--typography-*)`; px, rem, em e pt soltos, inclusive a entrelinha em px dentro de `font`, falham a CI.
+
+### Alterado
+- `tokens.css`: `font-size` (primitivos `font-size-*` e `typography-*-font-size`) passa a sair em rem (px ÷ 16), para respeitar a preferência de tamanho de texto do navegador. Os valores na fonte, em `tokens.ts` e no Design System seguem em px. Nada muda no tamanho padrão.
+- Folha de componentes na escala tipográfica: botão, campo, aba aberta e resposta do FAQ passam de 15 para 16 px (o campo em 16 px evita o zoom automático do iOS); legenda e dica do campo, de 13 para 14 px; tag sm, de 11 para 12 px; entrelinhas em px viram valores sem unidade.
+- `height` de botão, campo e tag vira `min-height`, para o componente crescer com o texto ampliado. Em contêiner flex com `align-items` padrão, botões de tamanhos diferentes na mesma linha se esticam; use `align-items: flex-start` ou `center`.
+
+### Fora desta versão
+- O site completo em tablet e celular.
+- O tracking segue em px; com o texto ampliado pelo usuário ele não acompanha o corpo.
+
 ## [2.4.0] - 2026-10-18
 
 Base: grade e espaçamento aprovados na placa "04 · Grid e espaçamento" do canvas.

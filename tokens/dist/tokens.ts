@@ -1,7 +1,7 @@
 // Seraphim.co — gerado de seraphim.tokens.json (DTCG 2025.10). Não edite à mão.
 // Primitivos de cor ficam em `privatePrimitives` e fora de `cssVar`: use os semânticos.
 
-export const version = "2.4.0" as const;
+export const version = "2.5.0" as const;
 
 /** Tokens públicos (semânticos, de componente e escalas), com valores resolvidos. */
 export const tokens = {
@@ -248,42 +248,114 @@ export const typography = {
     "fontSize": "72px",
     "fontWeight": 400,
     "lineHeight": 1.06,
-    "letterSpacing": "-1.08px"
+    "letterSpacing": "-1.08px",
+    "responsive": {
+      "md": {
+        "fontSize": "56px",
+        "lineHeight": 1.08,
+        "letterSpacing": "-0.84px"
+      },
+      "sm": {
+        "fontSize": "40px",
+        "lineHeight": 1.1,
+        "letterSpacing": "-0.6px"
+      }
+    }
   },
   "display-l": {
     "fontFamily": "Newsreader, Georgia, serif",
     "fontSize": "56px",
     "fontWeight": 400,
     "lineHeight": 1.07,
-    "letterSpacing": "-0.84px"
+    "letterSpacing": "-0.84px",
+    "responsive": {
+      "md": {
+        "fontSize": "48px",
+        "lineHeight": 1.08,
+        "letterSpacing": "-0.72px"
+      },
+      "sm": {
+        "fontSize": "36px",
+        "lineHeight": 1.1,
+        "letterSpacing": "-0.54px"
+      }
+    }
   },
   "h1": {
     "fontFamily": "Newsreader, Georgia, serif",
     "fontSize": "40px",
     "fontWeight": 400,
     "lineHeight": 1.15,
-    "letterSpacing": "-0.6px"
+    "letterSpacing": "-0.6px",
+    "responsive": {
+      "md": {
+        "fontSize": "36px",
+        "lineHeight": 1.15,
+        "letterSpacing": "-0.54px"
+      },
+      "sm": {
+        "fontSize": "32px",
+        "lineHeight": 1.18,
+        "letterSpacing": "-0.48px"
+      }
+    }
   },
   "h2": {
     "fontFamily": "Newsreader, Georgia, serif",
     "fontSize": "32px",
     "fontWeight": 500,
     "lineHeight": 1.19,
-    "letterSpacing": "-0.48px"
+    "letterSpacing": "-0.48px",
+    "responsive": {
+      "md": {
+        "fontSize": "30px",
+        "lineHeight": 1.2,
+        "letterSpacing": "-0.45px"
+      },
+      "sm": {
+        "fontSize": "28px",
+        "lineHeight": 1.22,
+        "letterSpacing": "-0.42px"
+      }
+    }
   },
   "h3": {
     "fontFamily": "'Hanken Grotesk', system-ui, sans-serif",
     "fontSize": "22px",
     "fontWeight": 600,
     "lineHeight": 1.36,
-    "letterSpacing": "0px"
+    "letterSpacing": "0px",
+    "responsive": {
+      "md": {
+        "fontSize": "22px",
+        "lineHeight": 1.36,
+        "letterSpacing": "0px"
+      },
+      "sm": {
+        "fontSize": "20px",
+        "lineHeight": 1.4,
+        "letterSpacing": "0px"
+      }
+    }
   },
   "lead": {
     "fontFamily": "'Hanken Grotesk', system-ui, sans-serif",
     "fontSize": "20px",
     "fontWeight": 400,
     "lineHeight": 1.5,
-    "letterSpacing": "0px"
+    "letterSpacing": "0px",
+    "responsive": {
+      "md": {
+        "fontSize": "20px",
+        "lineHeight": 1.5,
+        "letterSpacing": "0px"
+      },
+      "sm": {
+        "fontSize": "18px",
+        "lineHeight": 1.5,
+        "letterSpacing": "0px"
+      }
+    }
   },
   "body": {
     "fontFamily": "'Hanken Grotesk', system-ui, sans-serif",
