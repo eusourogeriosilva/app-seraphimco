@@ -46,9 +46,30 @@ jobs:
       - name: Tokens existentes e semânticos
         run: npm run lint:tokens
 
+      - name: HTML (h1, níveis, lang, alt, rótulos)
+        run: npm run lint:html
+
       - name: Publicar dist como artefato
         if: github.event_name == 'push'
         uses: actions/upload-artifact@v4
         with:
           name: seraphim-tokens
           path: tokens/dist/
+
+  browser:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 24
+          cache: npm
+
+      - run: npm ci
+
+      - name: Chromium para o Playwright
+        run: npx playwright install --with-deps chromium
+
+      - name: Testes de navegador (axe-core, formulário, layout por faixa)
+        run: npm run test:browser
