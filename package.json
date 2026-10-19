@@ -18,6 +18,8 @@
     "lint:html": "node tokens/scripts/check-html.ts src"
   },
   "devDependencies": {
+    "@fontsource/hanken-grotesk": "5.3.0",
+    "@fontsource/newsreader": "5.3.0",
     "@types/node": "24.19.1",
     "axe-core": "4.10.2",
     "playwright": "1.56.0",

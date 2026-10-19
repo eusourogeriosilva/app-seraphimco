@@ -116,5 +116,5 @@ Teclado das abas (setas, Home, End, volta nas pontas, foco móvel, Tab para o pa
 ## Testes de acessibilidade
 
 - `npm run lint:html`: um `h1` por página, sem salto de nível, `lang`, `alt` em `img`, rótulo em controles. Faz parte do `npm run ci`.
-- `npm run test:browser`: Playwright + axe-core (WCAG 2.2 AA e best-practice) nas páginas do Site em 1440, 768 e 390 px, mais formulário, forced-colors, prefers-contrast e cartão clicável. Exige Chromium (`npx playwright install chromium`; use `PW_CHROMIUM=/caminho/do/chrome` para um navegador já instalado). Fora do `ci` rápido, em job próprio.
+- `npm run test:browser`: Playwright + axe-core (WCAG 2.2 AA e best-practice) nas páginas do Site em 1440, 768 e 390 px, mais formulário, forced-colors, prefers-contrast e cartão clicável; e as 297 verificações de comportamento, tipografia, navegação e Site (`componentes`, `tipografia`, `navegacao`, `site`), que usam as fixtures de `tests/browser/fixtures/` e as fontes reais de `@fontsource`. Exige Chromium (`npx playwright install chromium`; use `PW_CHROMIUM=/caminho/do/chrome` para um navegador já instalado). Fora do `ci` rápido, em job próprio.
 - O axe não mede o contraste do `.wordmark` (moldura em pseudo-elemento) nem o do `textarea`; ambos estão na lista de exceções do teste e usam os mesmos tokens já medidos.

@@ -11,6 +11,7 @@ Base: acessibilidade, prancha "05 · Acessibilidade" do canvas.
 - `src/styles/components.css`: `textarea.field__input`, `.field__input[readonly]`, `.check`, `.card[data-interactive]` (cartão clicável), `.alert a`, `.alert[hidden]`/`.alert:empty`, `@media (forced-colors: active)` (contornos como `border`) e `@media (prefers-contrast: more)` (bordas e texto secundário sobem um degrau).
 - `src/components/form.ts` (`initForm`), `src/site/contato.html` e `contato.ts`.
 - `npm run lint:html` (um h1, níveis, `lang`, `alt`, rótulos; no `npm run ci`) e `npm run test:browser` (Playwright + axe-core, formulário, forced-colors, prefers-contrast; fora do `ci` rápido).
+- Testes de navegador portados de Python para Node (`tests/browser/*.test.ts`, 297 verificações com os mesmos nomes; conferido que uma regressão proposital reprova) e fixtures em `tests/browser/fixtures/`; `tests/` entra no `typecheck`.
 - `docs/acessibilidade/`: roteiro de teste com leitor de tela e rascunho de declaração de acessibilidade.
 
 ## [2.6.0] - 2026-10-19
