@@ -1,0 +1,79 @@
+/* Seraphim.co — layout das páginas do site: seções, hero, listas, cartões, fundador, chamada final e rodapé.
+ * Usa só tokens, a grade de base.css (.container, .grid) e os componentes de components.css.
+ * Faixas: celular até 639 px, tablet 640 a 959 px, desktop 960 px ou mais. */
+
+/* ---------- seções: respiro vertical por faixa, fundo por classe ----------
+ * Seções escuras levam data-surface="dark", para botões e links usarem a variante sobre escuro. */
+.section { padding-block: var(--layout-section-y); background: var(--color-bg-page); color: var(--color-text-primary); }
+.section--surface { background: var(--color-bg-surface); }
+.section--brand { background: var(--color-bg-brand); color: var(--color-text-on-dark); }
+.section--ink { background: var(--color-bg-ink); color: var(--color-text-on-dark); }
+.section--strip { padding-block: var(--space-32); background: var(--color-bg-surface); border-block: 1px solid var(--color-border-subtle); }
+.section__stack { display: flex; flex-direction: column; gap: var(--layout-section-gap); }
+.section__head { display: flex; flex-direction: column; gap: var(--layout-gap-stack); max-width: var(--layout-measure-lead); }
+.stack { display: flex; flex-direction: column; gap: var(--layout-gap-stack); }
+.stack > * { margin: 0; }
+
+/* ---------- texto de apoio e filete ---------- */
+.eyebrow { color: var(--color-text-accent); }
+.lead-muted { color: var(--color-text-secondary); max-width: var(--layout-measure-body); }
+.rule { width: var(--size-rule-width); height: var(--border-width-rule); background: var(--color-accent-rule); }
+:where([data-surface="dark"]) .eyebrow { color: var(--color-text-accent-on-dark); }
+:where([data-surface="dark"]) .lead-muted { color: var(--color-text-secondary-on-dark); }
+:where([data-surface="dark"]) .rule { background: var(--color-accent-rule-on-dark); }
+.brand-em { color: var(--color-text-brand); font-style: italic; }
+.text-brand { color: var(--color-text-brand); }
+.text-on-dark { color: var(--color-text-on-dark); }
+
+/* ---------- moldura aberta em foto: canto inferior direito ---------- */
+.frame { position: relative; padding: 0 var(--space-16) var(--space-16) 0; }
+.frame::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 62%;
+  height: 68%;
+  border-right: var(--border-width-control) solid var(--color-border-brand);
+  border-bottom: var(--border-width-control) solid var(--color-border-brand);
+  pointer-events: none;
+}
+:where([data-surface="dark"]) .frame::after { border-color: var(--color-accent-rule-on-dark); }
+.photo--placeholder { display: flex; align-items: flex-end; padding: var(--space-16); background: var(--color-bg-muted); color: var(--color-text-primary); font: 500 var(--font-size-14)/1.4 var(--font-family-sans); }
+
+/* ---------- hero e blocos em grade ---------- */
+.split { align-items: center; row-gap: var(--layout-section-gap); }
+.split--start { align-items: start; }
+
+/* ---------- faixa de logos ---------- */
+.logos { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--space-16); }
+.logos__item { display: flex; align-items: center; justify-content: center; min-height: var(--size-control-sm); box-shadow: inset 0 0 0 1px var(--color-border-subtle); color: var(--color-text-secondary); font: 500 var(--font-size-12)/1 var(--font-family-sans); }
+@media (max-width: 639px) { .logos { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
+/* ---------- lista numerada (cenário) ---------- */
+.numlist { margin: 0; padding: 0; list-style: none; border-top: 1px solid var(--color-border-subtle); }
+.numlist li { display: flex; align-items: baseline; gap: var(--space-24); padding-block: var(--space-24); border-bottom: 1px solid var(--color-border-subtle); font: 400 var(--font-size-24)/1.25 var(--font-family-sans); }
+.numlist b { flex: none; width: var(--space-32); color: var(--color-text-accent); font: 700 var(--font-size-16)/1 var(--font-family-sans); }
+@media (max-width: 639px) { .numlist li { gap: var(--space-16); font-size: var(--font-size-20); } }
+
+/* ---------- Método: 4 itens ---------- */
+.method__item { display: flex; flex-direction: column; gap: var(--space-12); padding-top: var(--space-24); border-top: 1px solid var(--color-border-on-dark); }
+.method__item b { color: var(--color-text-on-dark); font: 600 var(--font-size-20)/1.3 var(--font-family-sans); }
+.method__item p { margin: 0; color: var(--color-text-on-dark); font: 400 var(--font-size-16)/1.5 var(--font-family-sans); }
+
+/* ---------- cartão de serviço ---------- */
+.card--service { display: flex; flex-direction: column; gap: var(--space-16); background: var(--color-bg-subtle); }
+.card--service h3 { margin: 0; }
+.card--service p { margin: 0; color: var(--color-text-secondary); }
+.card--service .icon { color: var(--color-border-brand); }
+.link-more { align-self: flex-start; padding-bottom: var(--space-4); border-bottom: var(--border-width-control) solid var(--color-border-brand); color: var(--color-text-brand); font: 600 var(--font-size-14)/1 var(--font-family-sans); text-decoration: none; }
+.link-more:focus-visible { outline: var(--border-width-focus) solid var(--color-focus-ring); outline-offset: var(--border-width-focus-offset); }
+
+/* ---------- rodapé ---------- */
+.site-footer { padding-block: var(--space-64) var(--space-32); background: var(--color-bg-ink); color: var(--color-text-secondary-on-dark); }
+.site-footer__links { display: flex; flex-direction: column; align-items: flex-start; margin: 0; padding: 0; list-style: none; }
+.site-footer__links a,
+.site-footer__links span { display: inline-flex; align-items: center; min-height: var(--size-touch-min); color: var(--color-text-secondary-on-dark); font: 500 var(--font-size-16)/1 var(--font-family-sans); text-decoration: none; }
+.site-footer__links a:focus-visible { outline: var(--border-width-focus) solid var(--color-focus-ring-on-dark); outline-offset: calc(-1 * var(--border-width-focus)); }
+@media (hover: hover) { .site-footer__links a:hover { color: var(--color-text-on-dark); } }
+.site-footer__legal { margin-top: var(--layout-section-gap); padding-top: var(--space-24); border-top: 1px solid var(--color-border-on-dark); font: 400 var(--font-size-14)/1.5 var(--font-family-sans); }

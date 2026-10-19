@@ -13,10 +13,12 @@
 .card,
 .tab,
 .steps a,
-.faq > summary { box-sizing: border-box; }
+.faq > summary,
+.photo { box-sizing: border-box; }
 
 /* ---------- botão: tipo x tamanho x superfície ---------- */
 .btn {
+  text-decoration: none;
   --bg: var(--color-button-primary-light-bg);
   --fg: var(--color-button-primary-light-text);
   --bd: transparent;
@@ -422,4 +424,27 @@
 @media (min-width: 640px) {
   .photo-cover > * { grid-area: 1 / 1; }
   .photo-cover__text { align-self: end; background: transparent; }
+}
+
+/* ---------- logotipo: SERAPHIM.CO na moldura aberta ----------
+ * <span class="wordmark">SERAPHIM.CO</span>. Tamanho em --s (px do corpo); cor em --c. Mínimo recomendado: 15 px. */
+.wordmark {
+  --s: 15px;
+  position: relative;
+  display: inline-block;
+  margin: 0.3em 0 0 0.35em;
+  padding: 0 1.5em 1.4em 0;
+  color: var(--c, var(--color-text-primary));
+  font: 500 var(--s)/1 var(--font-family-sans);
+  letter-spacing: var(--font-tracking-wordmark);
+}
+.wordmark::after {
+  content: "";
+  position: absolute;
+  inset: -0.3em 0 0 -0.35em;
+  background:
+    linear-gradient(currentColor, currentColor) right top / 0.07em 100% no-repeat,
+    linear-gradient(currentColor, currentColor) left bottom / 100% 0.07em no-repeat,
+    linear-gradient(currentColor, currentColor) right top / 1.1em 0.07em no-repeat,
+    linear-gradient(currentColor, currentColor) left bottom / 0.07em 0.8em no-repeat;
 }

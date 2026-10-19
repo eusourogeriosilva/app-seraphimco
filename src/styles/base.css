@@ -51,11 +51,4 @@ body {
 .measure-body { max-width: var(--layout-measure-body); }
 .measure-lead { max-width: var(--layout-measure-lead); }
 
-.section--brand {
-  background: var(--color-bg-brand);
-  color: var(--color-text-on-dark);
-  padding-block: var(--layout-section-y);
-}
-
 .eyebrow { color: var(--color-text-accent); }
-.section--brand .eyebrow { color: var(--color-text-accent-on-dark); }
