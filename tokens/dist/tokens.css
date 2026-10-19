@@ -75,6 +75,7 @@
   --motion-duration-fast: 120ms;
   --motion-duration-base: 200ms;
   --motion-duration-slow: 320ms;
+  --motion-duration-spin: 900ms;
   --motion-easing-standard: cubic-bezier(0.2, 0, 0, 1);
   --shadow-overlay: 0px 8px 24px 0px var(--color-alpha-ink-12);
   /* semantic */
@@ -89,6 +90,7 @@
   --color-bg-accent-subtle: var(--color-rose-100);
   --color-bg-muted: var(--color-papel-200);
   --color-bg-disabled: var(--color-papel-200);
+  --color-bg-skeleton: var(--color-border-subtle);
   --color-text-primary: var(--color-grafite-900);
   --color-text-secondary: var(--color-pedra-600);
   --color-text-brand: var(--color-bordo-700);
@@ -166,6 +168,8 @@
   --color-button-tertiary-dark-underline-hover: var(--color-text-on-dark);
   --color-button-disabled-bg: var(--color-bg-disabled);
   --color-button-disabled-text: var(--color-text-disabled);
+  --color-button-disabled-dark-text: var(--color-border-control);
+  --color-button-disabled-dark-border: var(--color-border-control);
   --color-button-primary-bg: var(--color-button-primary-light-bg);
   --color-button-primary-bg-hover: var(--color-button-primary-light-bg-hover);
   --color-button-primary-text: var(--color-button-primary-light-text);
@@ -178,6 +182,7 @@
   --color-input-border: var(--color-border-control);
   --color-input-border-focus: var(--color-border-brand);
   --color-input-border-error: var(--color-status-danger);
+  --color-input-bg-disabled: var(--color-bg-disabled);
   --color-card-light-bg: var(--color-bg-surface);
   --color-card-light-border: var(--color-border-subtle);
   --color-card-dark-bg: var(--color-bg-brand);

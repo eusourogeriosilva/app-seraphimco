@@ -37,3 +37,35 @@ body {
   outline: var(--border-width-focus) solid var(--color-focus-ring);
   outline-offset: var(--border-width-focus-offset);
 }
+
+/* Estados: o navegador e o ARIA decidem, não classes. */
+.btn-primary:disabled,
+.btn-primary[aria-disabled="true"] {
+  background: var(--color-button-disabled-bg);
+  color: var(--color-button-disabled-text);
+  cursor: not-allowed;
+}
+.section--brand .btn-primary:disabled,
+.section--brand .btn-primary[aria-disabled="true"] {
+  background: transparent;
+  color: var(--color-button-disabled-dark-text);
+  box-shadow: inset 0 0 0 var(--border-width-control) var(--color-button-disabled-dark-border);
+}
+.btn-primary[aria-busy="true"] { cursor: progress; }
+.btn-primary[aria-busy="true"]::before {
+  content: "";
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  margin-right: var(--space-8);
+  border: 2px solid currentColor;
+  border-right-color: transparent;
+  border-radius: 50%;
+  vertical-align: -2px;
+  animation: gira var(--motion-duration-spin) linear infinite;
+}
+@keyframes gira { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) {
+  .btn-primary[aria-busy="true"]::before { animation: none; border-right-color: currentColor; }
+}
+.skeleton { background: var(--color-bg-skeleton); min-height: var(--space-16); }

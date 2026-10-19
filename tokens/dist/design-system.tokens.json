@@ -2,7 +2,7 @@
   "name": "Seraphim.co",
   "version": 1,
   "meta": {
-    "source": "seraphim.tokens.json 2.2.0 (W3C DTCG 2025.10), gerado por build-tokens.ts"
+    "source": "seraphim.tokens.json 2.3.0 (W3C DTCG 2025.10), gerado por build-tokens.ts"
   },
   "color": {
     "themes": [
@@ -201,6 +201,11 @@
         "name": "color-bg-disabled",
         "value": "{color-papel-200}",
         "usage": "Semântico. Controle desativado."
+      },
+      {
+        "name": "color-bg-skeleton",
+        "value": "{color-border-subtle}",
+        "usage": "Semântico. Barras do esqueleto de carregamento de conteúdo. Decorativo, sem animação; o estado é anunciado por aria-busy."
       },
       {
         "name": "color-text-primary",
@@ -440,12 +445,22 @@
       {
         "name": "color-button-disabled-bg",
         "value": "{color-bg-disabled}",
-        "usage": "Componente. Botão desabilitado (só superfície clara; sobre escuro, a definir)."
+        "usage": "Componente. Botão desabilitado sobre superfície clara. Sobre escuro, use color-button-disabled-dark-*."
       },
       {
         "name": "color-button-disabled-text",
         "value": "{color-text-disabled}",
         "usage": "Componente. Texto do botão desabilitado."
+      },
+      {
+        "name": "color-button-disabled-dark-text",
+        "value": "{color-border-control}",
+        "usage": "Componente. Texto do botão desabilitado sobre superfície escura. Sem preenchimento: 3,24:1 sobre bordô, 4,58:1 sobre grafite."
+      },
+      {
+        "name": "color-button-disabled-dark-border",
+        "value": "{color-border-control}",
+        "usage": "Componente. Contorno do botão desabilitado sobre superfície escura."
       },
       {
         "name": "color-input-bg",
@@ -466,6 +481,11 @@
         "name": "color-input-border-error",
         "value": "{color-status-danger}",
         "usage": "Componente. Borda com erro (2 px)."
+      },
+      {
+        "name": "color-input-bg-disabled",
+        "value": "{color-bg-disabled}",
+        "usage": "Componente. Fundo do campo desabilitado. O texto usa color-text-disabled."
       },
       {
         "name": "color-card-light-bg",

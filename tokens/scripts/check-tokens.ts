@@ -6,6 +6,8 @@
 //   token-inexistente var(--x) que não existe em tokens.css nem é definido no próprio arquivo
 //   primitivo-de-cor  var(--color-bordo-700) e afins: use o token semântico
 //   token-obsoleto    var(--x) com $deprecated na fonte: AVISO, não falha. Migre antes da próxima major.
+//   movimento-literal       transition ou animation com tempo ou curva solta (ex.: 200ms, ease): use motion-*
+//   sem-movimento-reduzido  arquivo com animation sem bloco prefers-reduced-motion
 // Exceções: comentário "tokens-ignore" na linha, ou "tokens-ignore-file" no arquivo
 // (ex.: templates de e-mail, que não suportam variáveis CSS).
 import { readdirSync, readFileSync, statSync } from 'node:fs';
@@ -16,6 +18,9 @@ const EXTS = new Set(['.css', '.ts', '.tsx', '.mts', '.html']);
 const SKIP_DIRS = new Set(['node_modules', 'dist', '.git', 'coverage']);
 const HEX = /(?<![\w&$./-])#(?:[0-9a-fA-F]{8}|[0-9a-fA-F]{6}|[0-9a-fA-F]{3,4})\b/g;
 const COLOR_FN = /\b(?:rgba?|hsla?|hwb|lab|lch|oklab|oklch|color)\(/g;
+const MOTION_DECL = /(?<![\w-])(transition|animation)(?:-duration|-timing-function|-delay)?\s*:\s*([^;}\n]*)/g;
+const TIME = /(?<![\w.-])\d*\.?\d+m?s\b/;
+const CURVE = /\b(?:ease|ease-in|ease-out|ease-in-out|linear|step-start|step-end)\b|cubic-bezier\(|steps\(/;
 const VAR = /var\(\s*--([\w-]+)/g;
 const STRING = /(['"`])((?:\\.|(?!\1)[^\\\n])*)\1/g;
 
@@ -59,6 +64,14 @@ function scanLine(file: string, lineNo: number, text: string, offset: number, lo
   const hint = file.endsWith('.css') || file.endsWith('.html') ? 'var(--color-text-primary)' : "cssVar('color-text-primary')";
   for (const m of text.matchAll(HEX)) report('cor-literal', m.index, `${m[0]}: use um token (ex.: ${hint})`);
   for (const m of text.matchAll(COLOR_FN)) report('cor-literal', m.index, `${m[0]}…): use um token de cor`);
+  if (file.endsWith('.css') || file.endsWith('.html')) {
+    for (const m of text.matchAll(MOTION_DECL)) {
+      const value = (m[2] ?? '').replace(/var\([^)]*\)/g, '');
+      if (/^\s*(none|0s?)\s*$/.test(value)) continue;
+      if (TIME.test(value) || (CURVE.test(value) && !(m[1] === 'animation' && /\blinear\b/.test(value) && !TIME.test(value))))
+        report('movimento-literal', m.index, `${m[1]}: use var(--motion-duration-*) e var(--motion-easing-*), não ${value.trim()}`);
+    }
+  }
   for (const m of text.matchAll(VAR)) {
     const name = m[1]!;
     if (primitives.has(name)) report('primitivo-de-cor', m.index, `--${name} é primitivo: use o token semântico equivalente`);
@@ -75,6 +88,10 @@ for (const file of all) {
   const isCss = extname(file) === '.css';
   const body = blankBlockComments(raw);
   const localVars = new Set([...body.matchAll(/(?<![\w-])--([\w-]+)\s*:/g)].map((m) => m[1]!));
+  if ((isCss || extname(file) === '.html') && /(?<![\w-])animation(?:-name)?\s*:\s*(?!none\b)/.test(body) && !body.includes('prefers-reduced-motion')) {
+    const idx = body.search(/(?<![\w-])animation(?:-name)?\s*:/);
+    issues.push({ file, line: body.slice(0, idx).split('\n').length, col: 1, rule: 'sem-movimento-reduzido', message: 'animation exige @media (prefers-reduced-motion: reduce) no mesmo arquivo' });
+  }
   body.split('\n').forEach((line, i) => {
     if (raw.split('\n')[i]?.includes('tokens-ignore')) return;
     if (isCss || extname(file) === '.html') { scanLine(file, i + 1, line, 0, localVars); return; }

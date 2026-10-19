@@ -3,7 +3,7 @@
   "$description": "Seraphim.co Design System 2.1. Fonte única dos tokens. Três camadas: primitivos (paleta e escalas), semânticos (papéis) e componente. Consumidores usam só semânticos e de componente.",
   "$extensions": {
     "co.seraphim": {
-      "version": "2.2.0",
+      "version": "2.3.0",
       "updated": "2026-10-18"
     }
   },
@@ -461,6 +461,10 @@
       "disabled": {
         "$value": "{color.papel.200}",
         "$description": "Controle desativado."
+      },
+      "skeleton": {
+        "$value": "{color.border.subtle}",
+        "$description": "Barras do esqueleto de carregamento de conteúdo. Decorativo, sem animação; o estado é anunciado por aria-busy."
       }
     },
     "text": {
@@ -694,11 +698,19 @@
       },
       "disabled-bg": {
         "$value": "{color.bg.disabled}",
-        "$description": "Botão desabilitado (só superfície clara; sobre escuro, a definir)."
+        "$description": "Botão desabilitado sobre superfície clara. Sobre escuro, use color-button-disabled-dark-*."
       },
       "disabled-text": {
         "$value": "{color.text.disabled}",
         "$description": "Texto do botão desabilitado."
+      },
+      "disabled-dark-text": {
+        "$value": "{color.border.control}",
+        "$description": "Texto do botão desabilitado sobre superfície escura. Sem preenchimento: 3,24:1 sobre bordô, 4,58:1 sobre grafite."
+      },
+      "disabled-dark-border": {
+        "$value": "{color.border.control}",
+        "$description": "Contorno do botão desabilitado sobre superfície escura."
       },
       "primary-bg": {
         "$value": "{color.button.primary-light-bg}",
@@ -762,6 +774,10 @@
       "border-error": {
         "$value": "{color.status.danger}",
         "$description": "Borda com erro (2 px)."
+      },
+      "bg-disabled": {
+        "$value": "{color.bg.disabled}",
+        "$description": "Fundo do campo desabilitado. O texto usa color-text-disabled."
       }
     },
     "card": {
@@ -1511,6 +1527,13 @@
           "unit": "ms"
         },
         "$description": "Painéis e menus."
+      },
+      "spin": {
+        "$value": {
+          "value": 900,
+          "unit": "ms"
+        },
+        "$description": "Uma volta do indicador de carregando. Só com prefers-reduced-motion tratado."
       }
     },
     "easing": {

@@ -1,7 +1,7 @@
 // Seraphim.co — gerado de seraphim.tokens.json (DTCG 2025.10). Não edite à mão.
 // Primitivos de cor ficam em `privatePrimitives` e fora de `cssVar`: use os semânticos.
 
-export const version = "2.2.0" as const;
+export const version = "2.3.0" as const;
 
 /** Tokens públicos (semânticos, de componente e escalas), com valores resolvidos. */
 export const tokens = {
@@ -16,6 +16,7 @@ export const tokens = {
   "color-bg-accent-subtle": "#fbeaee",
   "color-bg-muted": "#e2deda",
   "color-bg-disabled": "#e2deda",
+  "color-bg-skeleton": "#e2deda",
   "color-text-primary": "#1f1e1e",
   "color-text-secondary": "#6b6460",
   "color-text-brand": "#6e1423",
@@ -65,6 +66,8 @@ export const tokens = {
   "color-button-tertiary-dark-underline-hover": "#ffffff",
   "color-button-disabled-bg": "#e2deda",
   "color-button-disabled-text": "#6b6460",
+  "color-button-disabled-dark-text": "#8c8581",
+  "color-button-disabled-dark-border": "#8c8581",
   "color-button-primary-bg": "#6e1423",
   "color-button-primary-bg-hover": "#560f1c",
   "color-button-primary-text": "#ffffff",
@@ -77,6 +80,7 @@ export const tokens = {
   "color-input-border": "#8c8581",
   "color-input-border-focus": "#6e1423",
   "color-input-border-error": "#b42318",
+  "color-input-bg-disabled": "#e2deda",
   "color-card-light-bg": "#ffffff",
   "color-card-light-border": "#e2deda",
   "color-card-dark-bg": "#6e1423",
@@ -156,6 +160,7 @@ export const tokens = {
   "motion-duration-fast": "120ms",
   "motion-duration-base": "200ms",
   "motion-duration-slow": "320ms",
+  "motion-duration-spin": "900ms",
   "motion-easing-standard": [
     0.2,
     0,

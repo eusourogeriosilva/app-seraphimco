@@ -2,6 +2,26 @@
 
 Formato: [semver](https://semver.org/lang/pt-BR/). Token removido ou renomeado é major; token novo é minor; valor ou descrição alterados é patch. A CI recusa um pull request que mude `seraphim.tokens.json` sem o bump e sem a seção correspondente aqui.
 
+## [2.3.0] - 2026-10-18
+
+Base: matriz de estados aprovada na placa "05 · Estados" do canvas (estado vem de pseudo-classe ou atributo ARIA, nunca de classe).
+
+### Adicionado
+- `color-button-disabled-dark-text` e `color-button-disabled-dark-border`: botão desabilitado sobre bordô e grafite, sem preenchimento (3,24:1 e 4,58:1).
+- `color-input-bg-disabled`: fundo do campo desabilitado.
+- `color-bg-skeleton`: barras do esqueleto de carregamento de conteúdo (decorativo, sem animação).
+- `motion-duration-spin` (900 ms): uma volta do indicador de carregando. Entra porque o lint passa a exigir token em toda animação.
+- 8 pares de contraste obrigatórios no build (de 52 para 60): desabilitado sobre escuro, texto desabilitado sobre os dois fundos desabilitados, borda e mensagem de erro do campo.
+- Regras de lint `movimento-literal` (transition e animation só com tokens `motion-*`) e `sem-movimento-reduzido` (animation exige `prefers-reduced-motion` no mesmo arquivo). Ambas falham a CI.
+
+### Alterado
+- Descrição de `color-button-disabled-bg`: vale para superfície clara.
+
+### Fora desta versão
+- Hover de campo, aba e FAQ: sem desenho ainda.
+- Estado desabilitado de tag, aba e FAQ: sem uso real.
+- Estados de página (vazio, 404, offline).
+
 ## [2.2.0] - 2026-10-18
 
 Base: modelo de variantes (tipo, tom, tamanho e superfície) aprovado na placa "05 · Variantes" do canvas.

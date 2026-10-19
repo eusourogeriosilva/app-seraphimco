@@ -47,6 +47,11 @@ const CONTRAST: ReadonlyArray<readonly [string, string, number]> = [
   ['color.border.control', 'color.bg.surface', 3], ['color.border.control', 'color.bg.page', 3],
   ['color.focus.ring', 'color.bg.page', 3], ['color.focus.ring', 'color.bg.surface', 3],
   ['color.focus.ring-on-dark', 'color.bg.brand', 3], ['color.focus.ring-on-dark', 'color.bg.ink', 3],
+  // desabilitado e erro (texto desabilitado é isento na WCAG; o mínimo de 3 garante que siga legível)
+  ['color.button.disabled-dark-text', 'color.bg.brand', 3], ['color.button.disabled-dark-text', 'color.bg.ink', 3],
+  ['color.button.disabled-dark-border', 'color.bg.brand', 3], ['color.button.disabled-dark-border', 'color.bg.ink', 3],
+  ['color.text.disabled', 'color.input.bg-disabled', 3], ['color.text.disabled', 'color.button.disabled-bg', 3],
+  ['color.input.border-error', 'color.input.bg', 3], ['color.status.danger', 'color.input.bg', 4.5],
 ];
 // Reprovado por desenho: framboesa sobre grafite (2,3:1). Nenhum token "on-dark" ou "-dark-" pode resolver para ela.
 const FORBIDDEN_ON_DARK = 'color.framboesa.600';

@@ -8,7 +8,7 @@ Requisitos: Node 24 ou mais recente. Os scripts são TypeScript executado direto
 
 | Comando | O que faz |
 |---|---|
-| `npm run tokens:build` | Gera `dist/` a partir da fonte e testa os 52 pares de contraste |
+| `npm run tokens:build` | Gera `dist/` a partir da fonte e testa os 60 pares de contraste |
 | `npm run tokens:check` | Falha se `dist/` estiver desatualizado, se houver alias quebrado ou contraste reprovado |
 | `npm run tokens:version` | Compara com `origin/main` e exige o bump de versão e a seção no CHANGELOG |
 | `npm run lint:tokens` | Procura em `src/` cor solta (hex, `rgb()`…), token inexistente e primitivo de cor |
@@ -43,3 +43,7 @@ O passo 5 continua manual: a CI valida e gera, mas não publica nos artefatos do
 ## Descontinuação de tokens
 
 Token renomeado nasce como novo e o nome antigo vira alias de mesmo valor com `$deprecated: "Use <novo>. Remoção prevista na 3.0.0."`. O lint (`token-obsoleto`) apenas avisa; o editor do Design System não lista obsoletos. Renomear ou remover é major, adicionar é minor, mudar valor ou descrição é patch.
+
+## Lint de movimento
+
+`npm run lint:tokens` recusa `transition` e `animation` com tempo ou curva solta (`movimento-literal`) e arquivo com `animation` sem `prefers-reduced-motion` (`sem-movimento-reduzido`). Use `var(--motion-duration-*)` e `var(--motion-easing-*)`. `animation: none` e `transition: none` passam.
