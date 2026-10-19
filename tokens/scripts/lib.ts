@@ -16,6 +16,8 @@ export interface Token {
   ext: JsonObject;
   groupExt: JsonObject;
   tier: Tier;
+  /** Mensagem de `$deprecated` (DTCG), ou null se o token está em vigor. */
+  deprecated: string | null;
 }
 
 export interface ColorValue { colorSpace: string; components: number[]; hex: string; alpha?: number }
@@ -71,6 +73,7 @@ export function walk(node: JsonObject, path: string[] = [], inherited?: string):
         ext,
         groupExt,
         tier: tierRaw === 'semantic' || tierRaw === 'component' ? tierRaw : 'primitive',
+        deprecated: typeof child['$deprecated'] === 'string' ? child['$deprecated'] : child['$deprecated'] === true ? 'Obsoleto.' : null,
       });
     } else {
       const childType = typeof child['$type'] === 'string' ? child['$type'] : ownType;

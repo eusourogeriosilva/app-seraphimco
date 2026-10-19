@@ -5,11 +5,12 @@
 //   cor-literal       hex, rgb(), hsl(), oklch()… em CSS ou em strings de TS
 //   token-inexistente var(--x) que não existe em tokens.css nem é definido no próprio arquivo
 //   primitivo-de-cor  var(--color-bordo-700) e afins: use o token semântico
+//   token-obsoleto    var(--x) com $deprecated na fonte: AVISO, não falha. Migre antes da próxima major.
 // Exceções: comentário "tokens-ignore" na linha, ou "tokens-ignore-file" no arquivo
 // (ex.: templates de e-mail, que não suportam variáveis CSS).
 import { readdirSync, readFileSync, statSync } from 'node:fs';
 import { extname, join, relative } from 'node:path';
-import { DIST, colorPrimitives, loadSource, walk } from './lib.ts';
+import { DIST, colorPrimitives, cssName, loadSource, walk } from './lib.ts';
 
 const EXTS = new Set(['.css', '.ts', '.tsx', '.mts', '.html']);
 const SKIP_DIRS = new Set(['node_modules', 'dist', '.git', 'coverage']);
@@ -19,10 +20,13 @@ const VAR = /var\(\s*--([\w-]+)/g;
 const STRING = /(['"`])((?:\\.|(?!\1)[^\\\n])*)\1/g;
 
 const defined = new Set([...readFileSync(join(DIST, 'tokens.css'), 'utf8').matchAll(/--([\w-]+)\s*:/g)].map((m) => m[1]!));
-const primitives = colorPrimitives(walk(loadSource()));
+const allTokens = walk(loadSource());
+const primitives = colorPrimitives(allTokens);
+const deprecated = new Map([...allTokens.values()].filter((t) => t.deprecated).map((t) => [cssName(t.path), t.deprecated as string]));
 
 interface Issue { file: string; line: number; col: number; rule: string; message: string }
 const issues: Issue[] = [];
+const warnings: Issue[] = [];
 
 function files(dir: string): string[] {
   let entries: string[];
@@ -58,6 +62,7 @@ function scanLine(file: string, lineNo: number, text: string, offset: number, lo
   for (const m of text.matchAll(VAR)) {
     const name = m[1]!;
     if (primitives.has(name)) report('primitivo-de-cor', m.index, `--${name} é primitivo: use o token semântico equivalente`);
+    else if (deprecated.has(name)) warnings.push({ file, line: lineNo, col: offset + m.index + 1, rule: 'token-obsoleto', message: `--${name} está obsoleto. ${deprecated.get(name)}` });
     else if (!defined.has(name) && !localVars.has(name)) report('token-inexistente', m.index, `--${name} não existe em tokens.css`);
   }
 }
@@ -78,9 +83,10 @@ for (const file of all) {
   });
 }
 
+for (const w of warnings) console.warn(`AVISO ${relative(process.cwd(), w.file)}:${w.line}:${w.col}  ${w.rule}  ${w.message}`);
 for (const i of issues) console.error(`${relative(process.cwd(), i.file)}:${i.line}:${i.col}  ${i.rule}  ${i.message}`);
 if (issues.length) {
   console.error(`\n${issues.length} problema(s) em ${new Set(issues.map((i) => i.file)).size} arquivo(s).`);
   process.exit(1);
 }
-console.log(`tokens: ${all.length} arquivo(s) verificados, nenhuma cor solta, nenhum token inexistente.`);
+console.log(`tokens: ${all.length} arquivo(s) verificados, nenhuma cor solta, nenhum token inexistente${warnings.length ? `, ${warnings.length} aviso(s) de token obsoleto` : ''}.`);

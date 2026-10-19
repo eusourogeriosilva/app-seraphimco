@@ -23,7 +23,7 @@ try {
 }
 const after: JsonObject = JSON.parse(readFileSync(SOURCE, 'utf8'));
 
-const flat = (src: JsonObject) => new Map([...walk(src)].map(([p, t]) => [p, JSON.stringify([t.type, t.value, t.description])]));
+const flat = (src: JsonObject) => new Map([...walk(src)].map(([p, t]) => [p, JSON.stringify([t.type, t.value, t.description, t.deprecated])]));
 const a = flat(before);
 const b = flat(after);
 const removed = [...a.keys()].filter((k) => !b.has(k));

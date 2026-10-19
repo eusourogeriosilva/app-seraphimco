@@ -28,11 +28,11 @@ body {
   padding-inline: var(--space-24);
   border: 0;
   border-radius: var(--radius-control);
-  background: var(--color-button-primary-bg);
-  color: var(--color-button-primary-text);
+  background: var(--color-button-primary-light-bg);
+  color: var(--color-button-primary-light-text);
   transition: background var(--motion-duration-fast) var(--motion-easing-standard);
 }
-.btn-primary:hover { background: var(--color-button-primary-bg-hover); }
+.btn-primary:hover { background: var(--color-button-primary-light-bg-hover); }
 .btn-primary:focus-visible {
   outline: var(--border-width-focus) solid var(--color-focus-ring);
   outline-offset: var(--border-width-focus-offset);

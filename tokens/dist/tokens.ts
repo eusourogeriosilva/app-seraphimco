@@ -1,7 +1,7 @@
 // Seraphim.co — gerado de seraphim.tokens.json (DTCG 2025.10). Não edite à mão.
 // Primitivos de cor ficam em `privatePrimitives` e fora de `cssVar`: use os semânticos.
 
-export const version = "2.1.0" as const;
+export const version = "2.2.0" as const;
 
 /** Tokens públicos (semânticos, de componente e escalas), com valores resolvidos. */
 export const tokens = {
@@ -43,6 +43,28 @@ export const tokens = {
   "color-status-danger-bg": "#fdecea",
   "color-status-info": "#1d5f8f",
   "color-status-info-bg": "#e5eff7",
+  "color-button-primary-light-bg": "#6e1423",
+  "color-button-primary-light-bg-hover": "#560f1c",
+  "color-button-primary-light-text": "#ffffff",
+  "color-button-primary-dark-bg": "#ffffff",
+  "color-button-primary-dark-bg-hover": "#fbeaee",
+  "color-button-primary-dark-text": "#6e1423",
+  "color-button-secondary-light-text": "#6e1423",
+  "color-button-secondary-light-border": "#6e1423",
+  "color-button-secondary-light-bg-hover": "#fbeaee",
+  "color-button-secondary-dark-text": "#ffffff",
+  "color-button-secondary-dark-border": "#ffffff",
+  "color-button-secondary-dark-bg-hover": "#fbeaee",
+  "color-button-secondary-dark-text-hover": "#6e1423",
+  "color-button-tertiary-light-text": "#6e1423",
+  "color-button-tertiary-light-underline": "#6e1423",
+  "color-button-tertiary-light-underline-hover": "#a8203f",
+  "color-button-tertiary-dark-text": "#f4c2cc",
+  "color-button-tertiary-dark-underline": "#f4c2cc",
+  "color-button-tertiary-dark-text-hover": "#ffffff",
+  "color-button-tertiary-dark-underline-hover": "#ffffff",
+  "color-button-disabled-bg": "#e2deda",
+  "color-button-disabled-text": "#6b6460",
   "color-button-primary-bg": "#6e1423",
   "color-button-primary-bg-hover": "#560f1c",
   "color-button-primary-text": "#ffffff",
@@ -55,6 +77,9 @@ export const tokens = {
   "color-input-border": "#8c8581",
   "color-input-border-focus": "#6e1423",
   "color-input-border-error": "#b42318",
+  "color-card-light-bg": "#ffffff",
+  "color-card-light-border": "#e2deda",
+  "color-card-dark-bg": "#6e1423",
   "color-offer-highlight": "#a8203f",
   "color-offer-price": "#6e1423",
   "space-0": "0px",
@@ -169,6 +194,18 @@ export const privatePrimitives = {
   "color-vermelho-700": "#b42318",
   "color-azul-50": "#e5eff7",
   "color-azul-700": "#1d5f8f"
+} as const;
+
+/** Tokens obsoletos e o que usar no lugar. Seguem funcionando até a próxima major. */
+export const deprecated = {
+  "color-button-primary-bg": "Use color-button-primary-light-bg. Remoção prevista na 3.0.0.",
+  "color-button-primary-bg-hover": "Use color-button-primary-light-bg-hover. Remoção prevista na 3.0.0.",
+  "color-button-primary-text": "Use color-button-primary-light-text. Remoção prevista na 3.0.0.",
+  "color-button-secondary-border": "Use color-button-secondary-light-border. Remoção prevista na 3.0.0.",
+  "color-button-secondary-text": "Use color-button-secondary-light-text. Remoção prevista na 3.0.0.",
+  "color-button-inverse-bg": "Use color-button-primary-dark-bg. Remoção prevista na 3.0.0.",
+  "color-button-inverse-text": "Use color-button-primary-dark-text. Remoção prevista na 3.0.0.",
+  "color-button-outline-on-dark": "Use color-button-secondary-dark-text. Remoção prevista na 3.0.0."
 } as const;
 
 /** Estilos de texto compostos. No CSS, as classes são `.type-<nome>`. */

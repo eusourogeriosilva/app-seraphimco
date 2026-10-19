@@ -2,8 +2,8 @@
 import { cssVar, tokens, typeClass, type ColorToken } from '../tokens/dist/tokens.ts';
 
 export const ctaStyle = {
-  background: cssVar('color-button-primary-bg'),
-  color: cssVar('color-button-primary-text'),
+  background: cssVar('color-button-primary-light-bg'),
+  color: cssVar('color-button-primary-light-text'),
   borderRadius: cssVar('radius-control'),
 } as const;
 

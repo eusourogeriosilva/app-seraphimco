@@ -8,7 +8,7 @@ Requisitos: Node 24 ou mais recente. Os scripts são TypeScript executado direto
 
 | Comando | O que faz |
 |---|---|
-| `npm run tokens:build` | Gera `dist/` a partir da fonte e testa os 31 pares de contraste |
+| `npm run tokens:build` | Gera `dist/` a partir da fonte e testa os 52 pares de contraste |
 | `npm run tokens:check` | Falha se `dist/` estiver desatualizado, se houver alias quebrado ou contraste reprovado |
 | `npm run tokens:version` | Compara com `origin/main` e exige o bump de versão e a seção no CHANGELOG |
 | `npm run lint:tokens` | Procura em `src/` cor solta (hex, `rgb()`…), token inexistente e primitivo de cor |
@@ -39,3 +39,7 @@ Requisitos: Node 24 ou mais recente. Os scripts são TypeScript executado direto
 5. Depois do merge, publique `dist/design-system.tokens.json` no Design System e `dist/tokens.css` no canvas (`project/tokens/tokens.css`).
 
 O passo 5 continua manual: a CI valida e gera, mas não publica nos artefatos do Claude.
+
+## Descontinuação de tokens
+
+Token renomeado nasce como novo e o nome antigo vira alias de mesmo valor com `$deprecated: "Use <novo>. Remoção prevista na 3.0.0."`. O lint (`token-obsoleto`) apenas avisa; o editor do Design System não lista obsoletos. Renomear ou remover é major, adicionar é minor, mudar valor ou descrição é patch.

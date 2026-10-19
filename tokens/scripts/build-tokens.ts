@@ -25,14 +25,30 @@ const CONTRAST: ReadonlyArray<readonly [string, string, number]> = [
   ['color.text.accent-on-dark', 'color.bg.brand', 4.5], ['color.text.accent-on-dark', 'color.bg.ink', 4.5],
   ['color.status.success', 'color.status.success-bg', 4.5], ['color.status.warning', 'color.status.warning-bg', 4.5],
   ['color.status.danger', 'color.status.danger-bg', 4.5], ['color.status.info', 'color.status.info-bg', 4.5],
-  ['color.button.primary-text', 'color.button.primary-bg', 4.5],
-  ['color.button.primary-text', 'color.button.primary-bg-hover', 4.5],
-  ['color.button.inverse-text', 'color.button.inverse-bg', 4.5],
+  // botão primário
+  ['color.button.primary-light-text', 'color.button.primary-light-bg', 4.5],
+  ['color.button.primary-light-text', 'color.button.primary-light-bg-hover', 4.5],
+  ['color.button.primary-dark-text', 'color.button.primary-dark-bg', 4.5],
+  ['color.button.primary-dark-text', 'color.button.primary-dark-bg-hover', 4.5],
+  // botão secundário
+  ['color.button.secondary-light-text', 'color.button.secondary-light-bg-hover', 4.5],
+  ['color.button.secondary-light-border', 'color.bg.surface', 3], ['color.button.secondary-light-border', 'color.bg.page', 3],
+  ['color.button.secondary-dark-text', 'color.bg.brand', 4.5], ['color.button.secondary-dark-text', 'color.bg.ink', 4.5],
+  ['color.button.secondary-dark-border', 'color.bg.brand', 3], ['color.button.secondary-dark-border', 'color.bg.ink', 3],
+  ['color.button.secondary-dark-text-hover', 'color.button.secondary-dark-bg-hover', 4.5],
+  // botão terciário
+  ['color.button.tertiary-light-text', 'color.bg.page', 4.5], ['color.button.tertiary-light-text', 'color.bg.surface', 4.5],
+  ['color.button.tertiary-light-underline', 'color.bg.surface', 3],
+  ['color.button.tertiary-light-underline-hover', 'color.bg.surface', 3],
+  ['color.button.tertiary-dark-text', 'color.bg.brand', 4.5], ['color.button.tertiary-dark-text', 'color.bg.ink', 4.5],
+  ['color.button.tertiary-dark-underline', 'color.bg.brand', 3], ['color.button.tertiary-dark-underline', 'color.bg.ink', 3],
+  ['color.button.tertiary-dark-text-hover', 'color.bg.brand', 4.5], ['color.button.tertiary-dark-text-hover', 'color.bg.ink', 4.5],
+  ['color.button.tertiary-dark-underline-hover', 'color.bg.brand', 3], ['color.button.tertiary-dark-underline-hover', 'color.bg.ink', 3],
   ['color.border.control', 'color.bg.surface', 3], ['color.border.control', 'color.bg.page', 3],
   ['color.focus.ring', 'color.bg.page', 3], ['color.focus.ring', 'color.bg.surface', 3],
   ['color.focus.ring-on-dark', 'color.bg.brand', 3], ['color.focus.ring-on-dark', 'color.bg.ink', 3],
 ];
-// Reprovado por desenho: framboesa sobre grafite (2,3:1). Nenhum token "on-dark" pode resolver para ela.
+// Reprovado por desenho: framboesa sobre grafite (2,3:1). Nenhum token "on-dark" ou "-dark-" pode resolver para ela.
 const FORBIDDEN_ON_DARK = 'color.framboesa.600';
 
 const check = process.argv.includes('--check');
@@ -48,7 +64,7 @@ for (const [fg, bg, min] of CONTRAST) {
 }
 const forbidden = rgba(resolve(tokens, FORBIDDEN_ON_DARK));
 for (const t of tokens.values()) {
-  if (t.type === 'color' && t.tier !== 'primitive' && t.path.includes('on-dark') && rgba(resolve(tokens, t.path)) === forbidden) {
+  if (t.type === 'color' && t.tier !== 'primitive' && /on-dark|-dark-/.test(t.path) && rgba(resolve(tokens, t.path)) === forbidden) {
     failed = true; console.error(`FALHA: ${t.path} resolve para ${FORBIDDEN_ON_DARK}, reprovado sobre escuro`);
   }
 }
@@ -132,6 +148,8 @@ function buildTs(): string {
     };
   }
   const j = (o: unknown) => JSON.stringify(o, null, 2);
+  const deprecatedMap: Record<string, string> = {};
+  for (const t of plain) if (t.deprecated) deprecatedMap[cssName(t.path)] = t.deprecated;
   return `// Seraphim.co — gerado de seraphim.tokens.json (DTCG 2025.10). Não edite à mão.
 // Primitivos de cor ficam em \`privatePrimitives\` e fora de \`cssVar\`: use os semânticos.
 
@@ -142,6 +160,9 @@ export const tokens = ${j(pub)} as const;
 
 /** Paleta bruta. Só para documentação; o lint de tokens recusa o uso direto. */
 export const privatePrimitives = ${j(priv)} as const;
+
+/** Tokens obsoletos e o que usar no lugar. Seguem funcionando até a próxima major. */
+export const deprecated = ${j(deprecatedMap)} as const;
 
 /** Estilos de texto compostos. No CSS, as classes são \`.type-<nome>\`. */
 export const typography = ${j(typography)} as const;
@@ -166,7 +187,8 @@ export function typeClass<T extends TypographyName>(name: T): \`type-\${T}\` {
 // ---------- formato do artefato Design System
 function buildDs(): string {
   const label = { primitive: 'Primitivo', semantic: 'Semântico', component: 'Componente' } as const;
-  const colors = plain.filter((t) => t.type === 'color').map((t) => {
+  // Tokens obsoletos ficam de fora do editor: ninguém deve escolher um deles em um design novo.
+  const colors = plain.filter((t) => t.type === 'color' && !t.deprecated).map((t) => {
     const target = refTarget(t.value);
     return { name: cssName(t.path), value: target ? `{${cssName(target)}}` : hexa(t.value), usage: `${label[t.tier]}. ${t.description}`.trim() };
   });

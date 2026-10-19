@@ -3,7 +3,7 @@
   "$description": "Seraphim.co Design System 2.1. Fonte única dos tokens. Três camadas: primitivos (paleta e escalas), semânticos (papéis) e componente. Consumidores usam só semânticos e de componente.",
   "$extensions": {
     "co.seraphim": {
-      "version": "2.1.0",
+      "version": "2.2.0",
       "updated": "2026-10-18"
     }
   },
@@ -612,37 +612,133 @@
           "tier": "component"
         }
       },
-      "primary-bg": {
+      "primary-light-bg": {
         "$value": "{color.bg.brand}",
-        "$description": "Botão primário."
+        "$description": "Botão primário sobre superfície clara."
       },
-      "primary-bg-hover": {
+      "primary-light-bg-hover": {
         "$value": "{color.bg.brand-hover}",
-        "$description": "Botão primário em hover."
+        "$description": "Botão primário claro em hover."
       },
-      "primary-text": {
+      "primary-light-text": {
         "$value": "{color.text.on-brand}",
-        "$description": "Texto do botão primário."
+        "$description": "Texto do botão primário sobre superfície clara."
       },
-      "secondary-border": {
-        "$value": "{color.border.brand}",
-        "$description": "Contorno do botão secundário."
-      },
-      "secondary-text": {
-        "$value": "{color.text.brand}",
-        "$description": "Texto do botão secundário e terciário."
-      },
-      "inverse-bg": {
-        "$value": "{color.papel.0}",
+      "primary-dark-bg": {
+        "$value": "{color.bg.surface}",
         "$description": "Botão primário sobre bordô ou grafite."
       },
-      "inverse-text": {
+      "primary-dark-bg-hover": {
+        "$value": "{color.bg.accent-subtle}",
+        "$description": "Botão primário escuro em hover."
+      },
+      "primary-dark-text": {
         "$value": "{color.text.brand}",
-        "$description": "Texto do botão inverso."
+        "$description": "Texto do botão primário sobre bordô ou grafite."
+      },
+      "secondary-light-text": {
+        "$value": "{color.text.brand}",
+        "$description": "Texto do botão secundário sobre superfície clara."
+      },
+      "secondary-light-border": {
+        "$value": "{color.border.brand}",
+        "$description": "Contorno do botão secundário sobre superfície clara."
+      },
+      "secondary-light-bg-hover": {
+        "$value": "{color.bg.accent-subtle}",
+        "$description": "Preenchimento do secundário claro em hover."
+      },
+      "secondary-dark-text": {
+        "$value": "{color.text.on-dark}",
+        "$description": "Texto do botão secundário sobre bordô ou grafite."
+      },
+      "secondary-dark-border": {
+        "$value": "{color.text.on-dark}",
+        "$description": "Contorno do botão secundário sobre bordô ou grafite."
+      },
+      "secondary-dark-bg-hover": {
+        "$value": "{color.bg.accent-subtle}",
+        "$description": "Preenchimento do secundário escuro em hover."
+      },
+      "secondary-dark-text-hover": {
+        "$value": "{color.text.brand}",
+        "$description": "Texto do secundário escuro em hover."
+      },
+      "tertiary-light-text": {
+        "$value": "{color.text.brand}",
+        "$description": "Texto do botão terciário (link com seta) sobre superfície clara."
+      },
+      "tertiary-light-underline": {
+        "$value": "{color.border.brand}",
+        "$description": "Sublinhado do terciário claro."
+      },
+      "tertiary-light-underline-hover": {
+        "$value": "{color.accent.rule}",
+        "$description": "Sublinhado do terciário claro em hover."
+      },
+      "tertiary-dark-text": {
+        "$value": "{color.text.accent-on-dark}",
+        "$description": "Texto do botão terciário sobre bordô ou grafite."
+      },
+      "tertiary-dark-underline": {
+        "$value": "{color.text.accent-on-dark}",
+        "$description": "Sublinhado do terciário escuro."
+      },
+      "tertiary-dark-text-hover": {
+        "$value": "{color.text.on-dark}",
+        "$description": "Texto do terciário escuro em hover."
+      },
+      "tertiary-dark-underline-hover": {
+        "$value": "{color.text.on-dark}",
+        "$description": "Sublinhado do terciário escuro em hover."
+      },
+      "disabled-bg": {
+        "$value": "{color.bg.disabled}",
+        "$description": "Botão desabilitado (só superfície clara; sobre escuro, a definir)."
+      },
+      "disabled-text": {
+        "$value": "{color.text.disabled}",
+        "$description": "Texto do botão desabilitado."
+      },
+      "primary-bg": {
+        "$value": "{color.button.primary-light-bg}",
+        "$description": "Botão primário.",
+        "$deprecated": "Use color-button-primary-light-bg. Remoção prevista na 3.0.0."
+      },
+      "primary-bg-hover": {
+        "$value": "{color.button.primary-light-bg-hover}",
+        "$description": "Botão primário em hover.",
+        "$deprecated": "Use color-button-primary-light-bg-hover. Remoção prevista na 3.0.0."
+      },
+      "primary-text": {
+        "$value": "{color.button.primary-light-text}",
+        "$description": "Texto do botão primário.",
+        "$deprecated": "Use color-button-primary-light-text. Remoção prevista na 3.0.0."
+      },
+      "secondary-border": {
+        "$value": "{color.button.secondary-light-border}",
+        "$description": "Contorno do botão secundário.",
+        "$deprecated": "Use color-button-secondary-light-border. Remoção prevista na 3.0.0."
+      },
+      "secondary-text": {
+        "$value": "{color.button.secondary-light-text}",
+        "$description": "Texto do botão secundário e terciário.",
+        "$deprecated": "Use color-button-secondary-light-text. Remoção prevista na 3.0.0."
+      },
+      "inverse-bg": {
+        "$value": "{color.button.primary-dark-bg}",
+        "$description": "Botão primário sobre bordô ou grafite.",
+        "$deprecated": "Use color-button-primary-dark-bg. Remoção prevista na 3.0.0."
+      },
+      "inverse-text": {
+        "$value": "{color.button.primary-dark-text}",
+        "$description": "Texto do botão inverso.",
+        "$deprecated": "Use color-button-primary-dark-text. Remoção prevista na 3.0.0."
       },
       "outline-on-dark": {
-        "$value": "{color.text.on-dark}",
-        "$description": "Contorno e texto do botão secundário sobre escuro."
+        "$value": "{color.button.secondary-dark-text}",
+        "$description": "Contorno e texto do botão secundário sobre escuro.",
+        "$deprecated": "Use color-button-secondary-dark-text. Remoção prevista na 3.0.0."
       }
     },
     "input": {
@@ -666,6 +762,25 @@
       "border-error": {
         "$value": "{color.status.danger}",
         "$description": "Borda com erro (2 px)."
+      }
+    },
+    "card": {
+      "$extensions": {
+        "co.seraphim": {
+          "tier": "component"
+        }
+      },
+      "light-bg": {
+        "$value": "{color.bg.surface}",
+        "$description": "Casca de card sobre superfície clara."
+      },
+      "light-border": {
+        "$value": "{color.border.subtle}",
+        "$description": "Linha fina da casca de card clara."
+      },
+      "dark-bg": {
+        "$value": "{color.bg.brand}",
+        "$description": "Casca de card sobre fundo escuro (depoimento)."
       }
     },
     "offer": {

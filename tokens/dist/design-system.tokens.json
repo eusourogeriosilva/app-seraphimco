@@ -2,7 +2,7 @@
   "name": "Seraphim.co",
   "version": 1,
   "meta": {
-    "source": "seraphim.tokens.json 2.1.0 (W3C DTCG 2025.10), gerado por build-tokens.ts"
+    "source": "seraphim.tokens.json 2.2.0 (W3C DTCG 2025.10), gerado por build-tokens.ts"
   },
   "color": {
     "themes": [
@@ -338,44 +338,114 @@
         "usage": "Semântico. Fundo de informação."
       },
       {
-        "name": "color-button-primary-bg",
+        "name": "color-button-primary-light-bg",
         "value": "{color-bg-brand}",
-        "usage": "Componente. Botão primário."
+        "usage": "Componente. Botão primário sobre superfície clara."
       },
       {
-        "name": "color-button-primary-bg-hover",
+        "name": "color-button-primary-light-bg-hover",
         "value": "{color-bg-brand-hover}",
-        "usage": "Componente. Botão primário em hover."
+        "usage": "Componente. Botão primário claro em hover."
       },
       {
-        "name": "color-button-primary-text",
+        "name": "color-button-primary-light-text",
         "value": "{color-text-on-brand}",
-        "usage": "Componente. Texto do botão primário."
+        "usage": "Componente. Texto do botão primário sobre superfície clara."
       },
       {
-        "name": "color-button-secondary-border",
-        "value": "{color-border-brand}",
-        "usage": "Componente. Contorno do botão secundário."
-      },
-      {
-        "name": "color-button-secondary-text",
-        "value": "{color-text-brand}",
-        "usage": "Componente. Texto do botão secundário e terciário."
-      },
-      {
-        "name": "color-button-inverse-bg",
-        "value": "{color-papel-0}",
+        "name": "color-button-primary-dark-bg",
+        "value": "{color-bg-surface}",
         "usage": "Componente. Botão primário sobre bordô ou grafite."
       },
       {
-        "name": "color-button-inverse-text",
-        "value": "{color-text-brand}",
-        "usage": "Componente. Texto do botão inverso."
+        "name": "color-button-primary-dark-bg-hover",
+        "value": "{color-bg-accent-subtle}",
+        "usage": "Componente. Botão primário escuro em hover."
       },
       {
-        "name": "color-button-outline-on-dark",
+        "name": "color-button-primary-dark-text",
+        "value": "{color-text-brand}",
+        "usage": "Componente. Texto do botão primário sobre bordô ou grafite."
+      },
+      {
+        "name": "color-button-secondary-light-text",
+        "value": "{color-text-brand}",
+        "usage": "Componente. Texto do botão secundário sobre superfície clara."
+      },
+      {
+        "name": "color-button-secondary-light-border",
+        "value": "{color-border-brand}",
+        "usage": "Componente. Contorno do botão secundário sobre superfície clara."
+      },
+      {
+        "name": "color-button-secondary-light-bg-hover",
+        "value": "{color-bg-accent-subtle}",
+        "usage": "Componente. Preenchimento do secundário claro em hover."
+      },
+      {
+        "name": "color-button-secondary-dark-text",
         "value": "{color-text-on-dark}",
-        "usage": "Componente. Contorno e texto do botão secundário sobre escuro."
+        "usage": "Componente. Texto do botão secundário sobre bordô ou grafite."
+      },
+      {
+        "name": "color-button-secondary-dark-border",
+        "value": "{color-text-on-dark}",
+        "usage": "Componente. Contorno do botão secundário sobre bordô ou grafite."
+      },
+      {
+        "name": "color-button-secondary-dark-bg-hover",
+        "value": "{color-bg-accent-subtle}",
+        "usage": "Componente. Preenchimento do secundário escuro em hover."
+      },
+      {
+        "name": "color-button-secondary-dark-text-hover",
+        "value": "{color-text-brand}",
+        "usage": "Componente. Texto do secundário escuro em hover."
+      },
+      {
+        "name": "color-button-tertiary-light-text",
+        "value": "{color-text-brand}",
+        "usage": "Componente. Texto do botão terciário (link com seta) sobre superfície clara."
+      },
+      {
+        "name": "color-button-tertiary-light-underline",
+        "value": "{color-border-brand}",
+        "usage": "Componente. Sublinhado do terciário claro."
+      },
+      {
+        "name": "color-button-tertiary-light-underline-hover",
+        "value": "{color-accent-rule}",
+        "usage": "Componente. Sublinhado do terciário claro em hover."
+      },
+      {
+        "name": "color-button-tertiary-dark-text",
+        "value": "{color-text-accent-on-dark}",
+        "usage": "Componente. Texto do botão terciário sobre bordô ou grafite."
+      },
+      {
+        "name": "color-button-tertiary-dark-underline",
+        "value": "{color-text-accent-on-dark}",
+        "usage": "Componente. Sublinhado do terciário escuro."
+      },
+      {
+        "name": "color-button-tertiary-dark-text-hover",
+        "value": "{color-text-on-dark}",
+        "usage": "Componente. Texto do terciário escuro em hover."
+      },
+      {
+        "name": "color-button-tertiary-dark-underline-hover",
+        "value": "{color-text-on-dark}",
+        "usage": "Componente. Sublinhado do terciário escuro em hover."
+      },
+      {
+        "name": "color-button-disabled-bg",
+        "value": "{color-bg-disabled}",
+        "usage": "Componente. Botão desabilitado (só superfície clara; sobre escuro, a definir)."
+      },
+      {
+        "name": "color-button-disabled-text",
+        "value": "{color-text-disabled}",
+        "usage": "Componente. Texto do botão desabilitado."
       },
       {
         "name": "color-input-bg",
@@ -396,6 +466,21 @@
         "name": "color-input-border-error",
         "value": "{color-status-danger}",
         "usage": "Componente. Borda com erro (2 px)."
+      },
+      {
+        "name": "color-card-light-bg",
+        "value": "{color-bg-surface}",
+        "usage": "Componente. Casca de card sobre superfície clara."
+      },
+      {
+        "name": "color-card-light-border",
+        "value": "{color-border-subtle}",
+        "usage": "Componente. Linha fina da casca de card clara."
+      },
+      {
+        "name": "color-card-dark-bg",
+        "value": "{color-bg-brand}",
+        "usage": "Componente. Casca de card sobre fundo escuro (depoimento)."
       },
       {
         "name": "color-offer-highlight",
