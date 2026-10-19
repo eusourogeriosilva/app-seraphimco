@@ -52,6 +52,13 @@ const CONTRAST: ReadonlyArray<readonly [string, string, number]> = [
   ['color.button.disabled-dark-border', 'color.bg.brand', 3], ['color.button.disabled-dark-border', 'color.bg.ink', 3],
   ['color.text.disabled', 'color.input.bg-disabled', 3], ['color.text.disabled', 'color.button.disabled-bg', 3],
   ['color.input.border-error', 'color.input.bg', 3], ['color.status.danger', 'color.input.bg', 4.5],
+  // campo somente leitura, link dentro do alerta, cartão clicável (hover) e modo de contraste aumentado
+  ['color.text.primary', 'color.bg.subtle', 4.5],
+  ['color.text.primary', 'color.status.success-bg', 4.5], ['color.text.primary', 'color.status.warning-bg', 4.5],
+  ['color.text.primary', 'color.status.danger-bg', 4.5], ['color.text.primary', 'color.status.info-bg', 4.5],
+  ['color.border.control', 'color.bg.subtle', 3],
+  ['color.border.brand', 'color.bg.surface', 3], ['color.border.brand', 'color.bg.subtle', 3],
+  ['color.border.strong', 'color.bg.page', 3], ['color.border.strong', 'color.bg.surface', 3],
 ];
 // Reprovado por desenho: framboesa sobre grafite (2,3:1). Nenhum token "on-dark" ou "-dark-" pode resolver para ela.
 const FORBIDDEN_ON_DARK = 'color.framboesa.600';

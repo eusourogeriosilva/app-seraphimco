@@ -161,10 +161,28 @@
 .alert[data-tone="info"] { --c: var(--color-status-info); --bgc: var(--color-status-info-bg); }
 .alert > :is(strong, b) { display: block; }
 .alert__text { color: var(--color-text-primary); font-weight: 400; }
+.alert[hidden], .alert:empty { display: none; }
+.alert ul { margin: 0; padding-left: var(--space-16); }
+.alert a { color: var(--color-text-primary); font-weight: 600; text-decoration: underline; text-underline-offset: 0.2em; }
+.alert a:focus-visible { outline: var(--border-width-focus) solid var(--color-focus-ring); outline-offset: var(--border-width-focus-offset); }
+
+/* ---------- caixa de seleção com rótulo (consentimento, preferências) ---------- */
+.check { display: flex; align-items: flex-start; gap: var(--space-12); min-height: var(--size-touch-min); font: 400 var(--font-size-16)/1.5 var(--font-family-sans); color: var(--color-text-primary); }
+.check input { flex: none; inline-size: var(--space-24); block-size: var(--space-24); margin: 0; accent-color: var(--color-bg-brand); }
+.check input:focus-visible { outline: var(--border-width-focus) solid var(--color-focus-ring); outline-offset: var(--border-width-focus-offset); }
+.check input[aria-invalid="true"] { outline: var(--border-width-control) solid var(--color-input-border-error); outline-offset: var(--border-width-control); }
+
+/* ---------- cartão clicável: o link ocupa o cartão inteiro, o foco aparece no cartão ---------- */
+.card[data-interactive] { position: relative; }
+.card[data-interactive] a::after { content: ""; position: absolute; inset: 0; }
+.card[data-interactive] a:focus-visible { outline: none; }
+.card[data-interactive]:has(a:focus-visible) { outline: var(--border-width-focus) solid var(--color-focus-ring); outline-offset: var(--border-width-focus-offset); }
+@media (hover: hover) { .card[data-interactive]:hover { box-shadow: inset 0 0 0 1px var(--color-border-brand); } }
 
 /* ---------- campo ---------- */
 .field { display: flex; flex-direction: column; gap: var(--layout-gap-tight); }
 .field__label { font: 600 var(--font-size-14)/1.3 var(--font-family-sans); }
+.field__hint, .field__error { margin: 0; }
 .field__hint { font: 400 var(--font-size-14)/1.4 var(--font-family-sans); color: var(--color-text-secondary); }
 .field__input {
   min-height: var(--size-control);
@@ -187,6 +205,8 @@
   color: var(--color-text-disabled);
   cursor: not-allowed;
 }
+textarea.field__input { padding: var(--space-12) var(--space-16); line-height: 1.5; min-height: calc(var(--size-control) * 2); resize: vertical; }
+.field__input[readonly] { background: var(--color-bg-subtle); border-color: var(--color-border-control); }
 .field__error {
   display: flex;
   align-items: flex-start;
@@ -447,4 +467,18 @@
     linear-gradient(currentColor, currentColor) left bottom / 100% 0.07em no-repeat,
     linear-gradient(currentColor, currentColor) right top / 1.1em 0.07em no-repeat,
     linear-gradient(currentColor, currentColor) left bottom / 0.07em 0.8em no-repeat;
+}
+
+/* ---------- modos de contraste do sistema ----------
+ * forced-colors: o navegador remove box-shadow e background-image; contornos e a moldura do logotipo
+ * precisam existir como border/outline. prefers-contrast: more: bordas e texto secundário sobem um degrau. */
+@media (forced-colors: active) {
+  .card, .alert, .table-cards tr, .field__input[readonly] { box-shadow: none; border: var(--border-width-control) solid CanvasText; }
+  .wordmark::after { forced-color-adjust: none; }
+}
+@media (prefers-contrast: more) {
+  :root {
+    --color-border-subtle: var(--color-border-strong);
+    --color-text-secondary: var(--color-text-primary);
+  }
 }

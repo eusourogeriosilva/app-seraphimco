@@ -81,3 +81,40 @@ initMenu();
 
 ## Verificado em navegador
 Teclado das abas (setas, Home, End, volta nas pontas, foco móvel, Tab para o painel), FAQ com itens independentes (Enter e Espaço), alturas (botão 48/44/32, aba 44, linha do FAQ 56), tamanhos dos títulos nas três faixas, texto a 200% sem corte em 1280, 390 e 320 px, cabeçalho, menu, tabelas, Blueprint, card, fotos e grupo de ações em 1280, 960, 959, 768, 640, 639, 390 e 320 px, hover, desabilitado, indicador de carregando com e sem `prefers-reduced-motion`, rolagem horizontal das abas em 390 px, grade (colunas, gutter, margem e respiros) em 1280, 1000, 768 e 390 px, sem rolagem horizontal da página. Ainda não verificado com leitor de tela.
+
+## Formulário acessível (`form.ts`, `.field`, `.check`)
+
+```html
+<form class="form" novalidate>
+  <div class="alert" role="alert" data-tone="danger" data-form-summary hidden></div>
+  <div class="field">
+    <label class="field__label" for="email">E-mail <span data-form-ignore>(obrigatório)</span></label>
+    <input class="field__input" id="email" name="email" type="email" autocomplete="email" required>
+  </div>
+  <div class="field"><label class="field__label" for="mensagem">Mensagem …</label><textarea class="field__input" id="mensagem" name="mensagem" rows="4" required></textarea></div>
+  <label class="check" for="lgpd"><input id="lgpd" name="lgpd" type="checkbox" required><span>Concordo … (obrigatório)</span></label>
+  <div class="actions"><button class="btn" data-variant="primary" type="submit">Enviar</button></div>
+  <div class="alert" role="status" data-tone="success" data-form-status></div>
+</form>
+```
+
+- `initForm(form)` valida no envio: marca `aria-invalid`, cria `<p class="field__error" id="{id}-erro">` e a liga por `aria-describedby` (preservando a ajuda do campo), monta o resumo com um link por campo e leva o foco ao resumo. Corrigir o campo limpa o erro na hora.
+- Envio válido: o `[role="status"]` anuncia o sucesso, o foco não se move e o formulário é limpo. O evento cancelável `seraphim:enviar` carrega o `FormData`; o envio real depende do back-end.
+- Obrigatório é dito em texto, nunca só por asterisco ou cor. Placeholder não substitui rótulo. Alvo mínimo de 44 px (`.check` inclui o texto).
+- `.alert[hidden]` e `.alert:empty` não ocupam espaço. Links dentro do alerta herdam a cor do texto, em negrito e sublinhados.
+- `.field__input[readonly]` tem estilo próprio (fundo sutil, borda sutil); `:disabled` já existia.
+
+## Cartão clicável
+
+`<article class="card" data-interactive>` com um único `<a>` dentro: o `::after` do link cobre o cartão inteiro, o foco aparece como contorno do cartão e o hover (só com ponteiro) acende a borda de marca.
+
+## Modos de contraste do sistema
+
+- `forced-colors: active`: `box-shadow` é removido pelo navegador; por isso `.card`, `.alert`, `.table-cards tr`, `.logos__item` e `.photo--placeholder` ganham `border: 1px solid CanvasText`, e a moldura do `.wordmark` usa `forced-color-adjust: none`.
+- `prefers-contrast: more`: `--color-border-subtle` passa a `--color-border-strong` e `--color-text-secondary` a `--color-text-primary` (só `:root`, sem token novo).
+
+## Testes de acessibilidade
+
+- `npm run lint:html`: um `h1` por página, sem salto de nível, `lang`, `alt` em `img`, rótulo em controles. Faz parte do `npm run ci`.
+- `npm run test:browser`: Playwright + axe-core (WCAG 2.2 AA e best-practice) nas páginas do Site em 1440, 768 e 390 px, mais formulário, forced-colors, prefers-contrast e cartão clicável. Exige Chromium (`npx playwright install chromium`; use `PW_CHROMIUM=/caminho/do/chrome` para um navegador já instalado). Fora do `ci` rápido, em job próprio.
+- O axe não mede o contraste do `.wordmark` (moldura em pseudo-elemento) nem o do `textarea`; ambos estão na lista de exceções do teste e usam os mesmos tokens já medidos.

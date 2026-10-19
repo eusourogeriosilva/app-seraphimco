@@ -2,6 +2,17 @@
 
 Formato: [semver](https://semver.org/lang/pt-BR/). Token removido ou renomeado é major; token novo é minor; valor ou descrição alterados é patch. A CI recusa um pull request que mude `seraphim.tokens.json` sem o bump e sem a seção correspondente aqui.
 
+## Não lançado (sem mudança de token, versão segue 2.6.0)
+
+Base: acessibilidade, prancha "05 · Acessibilidade" do canvas.
+
+### Adicionado
+- Contraste: 70 pares no `tokens:check` (eram 60). Novos: texto primário sobre `bg.subtle` e sobre os quatro fundos de status (link dentro do alerta), `border.control` sobre `bg.subtle` (campo somente leitura), `border.brand` sobre `bg.surface`/`bg.subtle` (hover do cartão clicável) e `border.strong` sobre página e superfície (contraste aumentado).
+- `src/styles/components.css`: `textarea.field__input`, `.field__input[readonly]`, `.check`, `.card[data-interactive]` (cartão clicável), `.alert a`, `.alert[hidden]`/`.alert:empty`, `@media (forced-colors: active)` (contornos como `border`) e `@media (prefers-contrast: more)` (bordas e texto secundário sobem um degrau).
+- `src/components/form.ts` (`initForm`), `src/site/contato.html` e `contato.ts`.
+- `npm run lint:html` (um h1, níveis, `lang`, `alt`, rótulos; no `npm run ci`) e `npm run test:browser` (Playwright + axe-core, formulário, forced-colors, prefers-contrast; fora do `ci` rápido).
+- `docs/acessibilidade/`: roteiro de teste com leitor de tela e rascunho de declaração de acessibilidade.
+
 ## [2.6.0] - 2026-10-19
 
 Base: navegação e padrões responsivos aprovados na prancha "04 · Navegação e padrões responsivos" do canvas.

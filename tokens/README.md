@@ -8,7 +8,7 @@ Requisitos: Node 24 ou mais recente. Os scripts são TypeScript executado direto
 
 | Comando | O que faz |
 |---|---|
-| `npm run tokens:build` | Gera `dist/` a partir da fonte e testa os 60 pares de contraste |
+| `npm run tokens:build` | Gera `dist/` a partir da fonte e testa os 70 pares de contraste |
 | `npm run tokens:check` | Falha se `dist/` estiver desatualizado, se houver alias quebrado ou contraste reprovado |
 | `npm run tokens:version` | Compara com `origin/main` e exige o bump de versão e a seção no CHANGELOG |
 | `npm run lint:tokens` | Procura em `src/` cor solta (hex, `rgb()`…), token inexistente e primitivo de cor |

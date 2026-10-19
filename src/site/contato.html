@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Contato — Seraphim.co</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&amp;family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&amp;display=swap">
+<link rel="stylesheet" href="../../tokens/dist/tokens.css">
+<link rel="stylesheet" href="../styles/base.css">
+<link rel="stylesheet" href="../styles/components.css">
+<link rel="stylesheet" href="../styles/site.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Ir para o conteúdo</a>
+<header class="site-header">
+  <div class="container"><div class="site-header__inner">
+    <a class="site-header__brand" href="index.html" aria-label="Seraphim.co, página inicial"><span class="wordmark">SERAPHIM.CO</span></a>
+    <nav class="site-header__nav" aria-label="Principal"><a href="index.html#metodo">Método</a><a href="index.html#servicos">Serviços</a><a href="index.html#quem-lidera">Quem lidera</a></nav>
+    <a class="btn site-header__cta" data-size="sm" href="contato.html" aria-current="page" aria-label="Quero meu diagnóstico"><span class="is-full">Quero meu diagnóstico</span><span class="is-short" aria-hidden="true">Diagnóstico</span></a>
+  </div></div>
+</header>
+<main id="main">
+  <section class="section">
+    <div class="container"><div class="grid">
+      <div class="stack" data-span="5" data-span-md="8">
+        <div class="type-eyebrow eyebrow">Contato</div>
+        <h1 class="type-display-l">Vamos conversar sobre a sua carteira.</h1>
+        <p class="type-lead lead-muted">Conte um pouco sobre a corretora. Respondemos em até 1 dia útil, com os próximos passos do Diagnóstico NEXO™.</p>
+      </div>
+      <form class="form" data-span="6" data-span-md="8" action="#" method="post" novalidate>
+        <div class="alert" role="alert" data-tone="danger" data-form-summary hidden></div>
+        <div class="field"><label class="field__label" for="nome">Nome <span data-form-ignore style="font-weight: 400; color: var(--color-text-secondary)">(obrigatório)</span></label><input class="field__input" id="nome" name="nome" type="text" autocomplete="name" required></div>
+        <div class="field"><label class="field__label" for="email">E-mail <span data-form-ignore style="font-weight: 400; color: var(--color-text-secondary)">(obrigatório)</span></label><input class="field__input" id="email" name="email" type="email" autocomplete="email" required></div>
+        <div class="field"><label class="field__label" for="whatsapp">WhatsApp</label><input class="field__input" id="whatsapp" name="whatsapp" type="tel" autocomplete="tel" inputmode="tel" aria-describedby="whatsapp-ajuda"><p class="field__hint" id="whatsapp-ajuda">Com DDD. Usamos só para responder a esta mensagem.</p></div>
+        <div class="field"><label class="field__label" for="corretora">Corretora</label><input class="field__input" id="corretora" name="corretora" type="text" autocomplete="organization"></div>
+        <div class="field"><label class="field__label" for="mensagem">Mensagem <span data-form-ignore style="font-weight: 400; color: var(--color-text-secondary)">(obrigatório)</span></label><textarea class="field__input" id="mensagem" name="mensagem" rows="4" required></textarea></div>
+        <label class="check" for="lgpd"><input id="lgpd" name="lgpd" type="checkbox" required><span>Concordo em ser contatado(a) por e-mail ou WhatsApp sobre esta mensagem. <span data-form-ignore style="font-weight: 400; color: var(--color-text-secondary)">(obrigatório)</span></span></label>
+        <div class="actions"><button class="btn" data-variant="primary" type="submit">Enviar mensagem</button></div>
+        <div class="alert" role="status" data-tone="success" data-form-status></div>
+      </form>
+    </div></div>
+  </section>
+</main>
+<footer class="site-footer" data-surface="dark">
+  <div class="container">
+    <div class="grid">
+      <div class="stack" data-span="6" data-span-md="8"><span class="wordmark" style="--s: 18px; --c: var(--color-text-on-dark)">SERAPHIM.CO</span><span class="type-eyebrow lead-muted">Clareza para priorizar.<br>Estratégia para avançar.</span></div>
+      <div data-span="3" data-span-md="4"><div class="type-eyebrow eyebrow">Navegar</div><ul class="site-footer__links"><li><a href="index.html#metodo">Método</a></li><li><a href="index.html#servicos">Serviços</a></li><li><a href="index.html#quem-lidera">Quem lidera</a></li></ul></div>
+      <div data-span="3" data-span-md="4"><div class="type-eyebrow eyebrow">Contato</div><ul class="site-footer__links"><li><span>[e-mail]</span></li><li><span>[WhatsApp]</span></li><li><span>[Instagram]</span></li></ul></div>
+    </div>
+    <div class="site-footer__legal">© 2026 Seraphim.co. Todos os direitos reservados.</div>
+  </div>
+</footer>
+<script type="module" src="./contato.ts"></script>
+</body>
+</html>

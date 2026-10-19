@@ -77,3 +77,9 @@
 .site-footer__links a:focus-visible { outline: var(--border-width-focus) solid var(--color-focus-ring-on-dark); outline-offset: calc(-1 * var(--border-width-focus)); }
 @media (hover: hover) { .site-footer__links a:hover { color: var(--color-text-on-dark); } }
 .site-footer__legal { margin-top: var(--layout-section-gap); padding-top: var(--space-24); border-top: 1px solid var(--color-border-on-dark); font: 400 var(--font-size-14)/1.5 var(--font-family-sans); }
+
+.form { display: flex; flex-direction: column; gap: var(--space-24); }
+
+@media (forced-colors: active) {
+  .logos__item, .photo--placeholder { box-shadow: none; border: var(--border-width-control) solid CanvasText; }
+}
