@@ -1,7 +1,7 @@
 // Seraphim.co — gerado de seraphim.tokens.json (DTCG 2025.10). Não edite à mão.
 // Primitivos de cor ficam em `privatePrimitives` e fora de `cssVar`: use os semânticos.
 
-export const version = "2.3.1" as const;
+export const version = "2.4.0" as const;
 
 /** Tokens públicos (semânticos, de componente e escalas), com valores resolvidos. */
 export const tokens = {
@@ -103,6 +103,7 @@ export const tokens = {
   "space-96": "96px",
   "space-128": "128px",
   "layout-gap-inline": "16px",
+  "layout-gap-tight": "8px",
   "layout-gap-stack": "24px",
   "layout-section-gap": "56px",
   "layout-section-y": "96px",
@@ -111,6 +112,10 @@ export const tokens = {
   "layout-page-x": "64px",
   "layout-social-margin": "96px",
   "layout-container": "1200px",
+  "layout-gutter": "24px",
+  "layout-columns": 12,
+  "layout-measure-body": "680px",
+  "layout-measure-lead": "840px",
   "radius-none": "0px",
   "radius-control": "2px",
   "radius-pill": "999px",
@@ -148,15 +153,15 @@ export const tokens = {
   "font-size-72": "72px",
   "font-size-96": "96px",
   "font-size-120": "120px",
-  "font-tracking-tight": "-0.015em",
-  "font-tracking-normal": "0em",
-  "font-tracking-wordmark": "0.05em",
-  "font-tracking-caps-sm": "0.08em",
-  "font-tracking-caps": "0.14em",
-  "font-leading-display": "1.05",
-  "font-leading-heading": "1.15",
-  "font-leading-ui": "1.2",
-  "font-leading-body": "1.6",
+  "font-tracking-tight": -0.015,
+  "font-tracking-normal": 0,
+  "font-tracking-wordmark": 0.05,
+  "font-tracking-caps-sm": 0.08,
+  "font-tracking-caps": 0.14,
+  "font-leading-display": 1.05,
+  "font-leading-heading": 1.15,
+  "font-leading-ui": 1.2,
+  "font-leading-body": 1.6,
   "motion-duration-fast": "120ms",
   "motion-duration-base": "200ms",
   "motion-duration-slow": "320ms",
@@ -211,6 +216,29 @@ export const deprecated = {
   "color-button-inverse-bg": "Use color-button-primary-dark-bg. Remoção prevista na 3.0.0.",
   "color-button-inverse-text": "Use color-button-primary-dark-text. Remoção prevista na 3.0.0.",
   "color-button-outline-on-dark": "Use color-button-secondary-dark-text. Remoção prevista na 3.0.0."
+} as const;
+
+/** Valores de tablet (md, até 959 px) e celular (sm, até 639 px). O padrão em `tokens` é o desktop. */
+export const responsive = {
+  "layout-section-gap": {
+    "md": "48px",
+    "sm": "40px"
+  },
+  "layout-section-y": {
+    "md": "80px",
+    "sm": "64px"
+  },
+  "layout-page-x": {
+    "md": "32px",
+    "sm": "16px"
+  },
+  "layout-columns": {
+    "md": 8,
+    "sm": 4
+  },
+  "layout-gutter": {
+    "sm": "16px"
+  }
 } as const;
 
 /** Estilos de texto compostos. No CSS, as classes são `.type-<nome>`. */

@@ -96,6 +96,18 @@ function typoParts(t: Token) {
   };
 }
 
+// ---------- faixas responsivas: md (tablet) e sm (celular) sobrescrevem o valor padrão (desktop)
+const BANDS: ReadonlyArray<readonly [string, string]> = [['md', 'dimension.breakpoint.md'], ['sm', 'dimension.breakpoint.sm']];
+const bandMax = (bpPath: string): number => asDimension(resolve(tokens, bpPath)).value - 1;
+function responsiveOf(band: string): Array<[Token, Json]> {
+  const out: Array<[Token, Json]> = [];
+  for (const t of plain) {
+    const r = t.ext['responsive'];
+    if (r && typeof r === 'object' && !Array.isArray(r) && band in r) out.push([t, r[band] as Json]);
+  }
+  return out;
+}
+
 // ---------- tokens.css
 function buildCss(): string {
   const lines = ['/* Seraphim.co — gerado de seraphim.tokens.json (DTCG 2025.10). Não edite à mão. */', ':root {'];
@@ -119,6 +131,10 @@ function buildCss(): string {
     const n = `typography-${p.name}`;
     lines.push(`.type-${p.name} { font-family: var(--${n}-font-family); font-size: var(--${n}-font-size); font-weight: var(--${n}-font-weight); line-height: var(--${n}-line-height); letter-spacing: var(--${n}-letter-spacing); ${p.upper ? 'text-transform: uppercase; ' : ''}}`);
   }
+  for (const [name, bp] of BANDS) {
+    const rows = responsiveOf(name).map(([t, v]) => `--${cssName(t.path)}: ${cssValue({ ...t, value: v })};`);
+    if (rows.length) lines.push(`@media (max-width: ${bandMax(bp)}px) { :root { ${rows.join(' ')} } }`);
+  }
   lines.push('@media (prefers-reduced-motion: reduce) { :root { --motion-duration-fast: 0ms; --motion-duration-base: 0ms; --motion-duration-slow: 0ms; } }');
   return lines.join('\n') + '\n';
 }
@@ -135,6 +151,7 @@ function resolvedValue(t: Token): string | number | readonly number[] {
     });
     case 'cubicBezier': return v as number[];
     case 'fontWeight': return Number(v);
+    case 'number': return Number(v);
     default: return cssValue({ ...t, value: v });
   }
 }
@@ -143,6 +160,14 @@ function buildTs(): string {
   const pub: Record<string, unknown> = {};
   const priv: Record<string, unknown> = {};
   for (const t of plain) (privateColors.has(cssName(t.path)) ? priv : pub)[cssName(t.path)] = resolvedValue(t);
+  const responsive: Record<string, Record<string, unknown>> = {};
+  for (const [band] of BANDS) {
+    for (const [t, v] of responsiveOf(band)) {
+      const target = refTarget(v);
+      const raw = target ? resolve(tokens, target) : v;
+      (responsive[cssName(t.path)] ??= {})[band] = t.type === 'number' ? Number(raw) : dim(raw);
+    }
+  }
   const typography: Record<string, unknown> = {};
   for (const t of typo) {
     const p = typoParts(t);
@@ -168,6 +193,9 @@ export const privatePrimitives = ${j(priv)} as const;
 
 /** Tokens obsoletos e o que usar no lugar. Seguem funcionando até a próxima major. */
 export const deprecated = ${j(deprecatedMap)} as const;
+
+/** Valores de tablet (md, até 959 px) e celular (sm, até 639 px). O padrão em \`tokens\` é o desktop. */
+export const responsive = ${j(responsive)} as const;
 
 /** Estilos de texto compostos. No CSS, as classes são \`.type-<nome>\`. */
 export const typography = ${j(typography)} as const;
@@ -197,7 +225,7 @@ function buildDs(): string {
     const target = refTarget(t.value);
     return { name: cssName(t.path), value: target ? `{${cssName(target)}}` : hexa(t.value), usage: `${label[t.tier]}. ${t.description}`.trim() };
   });
-  const list = (prefix: string, value: (t: Token) => string = (t) => dim(resolve(tokens, t.path))) =>
+  const list = (prefix: string, value: (t: Token) => string = (t) => (t.type === 'number' ? fmt(Number(resolve(tokens, t.path))) : dim(resolve(tokens, t.path)))) =>
     plain.filter((t) => t.path.startsWith(prefix)).map((t) => ({ name: cssName(t.path), value: value(t), usage: t.description }));
   const shadow = tokens.get('shadow.overlay');
   const groups = new Map<string, Array<Record<string, unknown>>>([['Títulos', []], ['Texto', []], ['Redes sociais (base 1080)', []]]);

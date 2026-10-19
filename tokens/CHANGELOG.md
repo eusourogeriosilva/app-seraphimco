@@ -2,6 +2,28 @@
 
 Formato: [semver](https://semver.org/lang/pt-BR/). Token removido ou renomeado é major; token novo é minor; valor ou descrição alterados é patch. A CI recusa um pull request que mude `seraphim.tokens.json` sem o bump e sem a seção correspondente aqui.
 
+## [2.4.0] - 2026-10-18
+
+Base: grade e espaçamento aprovados na placa "04 · Grid e espaçamento" do canvas.
+
+### Adicionado
+- Grade por faixa de tela: `layout-columns` (12, 8, 4), `layout-gutter` (24, 24, 16). Faixas: desktop a partir de 960 px, tablet de 640 a 959 px, celular até 639 px.
+- `layout-gap-tight` (8 px), `layout-measure-body` (680 px) e `layout-measure-lead` (840 px).
+- Suporte a valores por faixa na fonte (`$extensions["co.seraphim"].responsive`, com `md` e `sm`): o `tokens.css` ganha blocos `@media (max-width: 959px)` e `(max-width: 639px)`, e o `tokens.ts` exporta o mapa `responsive`. O valor padrão do token é o de desktop. O `check-version` passa a comparar também esses valores.
+- Lint `espacamento-fora-da-escala`: `padding`, `margin` e `gap` só com `var(--space-*)`, 0, auto ou ±1 px. Falha a CI.
+- `src/styles/base.css`: `.grid` com `data-span` (desktop) e `data-span-md` (tablet), `.container`, `.measure-body` e `.measure-lead`. No celular a grade empilha.
+
+### Alterado
+- `layout-page-x` passa a 32 px no tablet e 16 px no celular (64 px no desktop, como antes).
+- `layout-section-y` passa a 80 px no tablet e 64 px no celular (96 px no desktop, como antes).
+- `layout-section-gap` passa a 48 px no tablet e 40 px no celular (56 px no desktop, como antes).
+- Descrições de `layout-gap-stack` e `layout-section-gap`.
+- Folha de componentes na escala: 10 px, 6 px, 14 px e 28 px viram 8, 8, 16 e 24 px (alerta 4 px mais alto); padding lateral da aba, de 2 px para 0.
+
+### Fora desta versão
+- Escala tipográfica por faixa e o site completo em tablet e celular.
+- Os breakpoints de `@media` em `base.css` (640 e 960) são literais, porque CSS não aceita `var()` em media query. Se `breakpoint-sm` ou `breakpoint-md` mudar, ajuste-os.
+
 ## [2.3.1] - 2026-10-18
 
 ### Alterado

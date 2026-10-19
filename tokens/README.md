@@ -47,3 +47,11 @@ Token renomeado nasce como novo e o nome antigo vira alias de mesmo valor com `$
 ## Lint de movimento
 
 `npm run lint:tokens` recusa `transition` e `animation` com tempo ou curva solta (`movimento-literal`) e arquivo com `animation` sem `prefers-reduced-motion` (`sem-movimento-reduzido`). Use `var(--motion-duration-*)` e `var(--motion-easing-*)`. `animation: none` e `transition: none` passam.
+
+## Valores por faixa de tela
+
+Um token pode ter valores de tablet e celular em `$extensions["co.seraphim"].responsive` (`md` até 959 px, `sm` até 639 px). O valor do token é o de desktop. O build gera os `@media` no `tokens.css` e o mapa `responsive` no `tokens.ts`. Hoje valem para `layout-columns`, `layout-gutter`, `layout-page-x`, `layout-section-y` e `layout-section-gap`.
+
+## Lint de espaçamento
+
+`padding`, `margin` e `gap` só aceitam `var(--space-*)`, 0, auto e ±1 px (sobreposição de borda). Valor fora da escala de `dimension.space.*` falha a CI (`espacamento-fora-da-escala`).

@@ -2,7 +2,7 @@
   "name": "Seraphim.co",
   "version": 1,
   "meta": {
-    "source": "seraphim.tokens.json 2.3.1 (W3C DTCG 2025.10), gerado por build-tokens.ts"
+    "source": "seraphim.tokens.json 2.4.0 (W3C DTCG 2025.10), gerado por build-tokens.ts"
   },
   "color": {
     "themes": [
@@ -747,19 +747,24 @@
         "usage": "Entre itens lado a lado."
       },
       {
+        "name": "layout-gap-tight",
+        "value": "8px",
+        "usage": "Ícone e texto, rótulo e campo, itens de lista."
+      },
+      {
         "name": "layout-gap-stack",
         "value": "24px",
-        "usage": "Entre blocos empilhados."
+        "usage": "Entre blocos de um mesmo grupo."
       },
       {
         "name": "layout-section-gap",
         "value": "56px",
-        "usage": "Entre seções de uma prancha ou página."
+        "usage": "Entre blocos distintos de uma seção (56 no desktop, 48 no tablet, 40 no celular)."
       },
       {
         "name": "layout-section-y",
         "value": "96px",
-        "usage": "Respiro vertical de seção no site (64 no celular)."
+        "usage": "Respiro vertical de seção no site (96 no desktop, 80 no tablet, 64 no celular)."
       },
       {
         "name": "layout-board-x",
@@ -774,7 +779,7 @@
       {
         "name": "layout-page-x",
         "value": "64px",
-        "usage": "Margem lateral do site no desktop (16 no celular)."
+        "usage": "Margem lateral do site (64 no desktop, 32 no tablet, 16 no celular)."
       },
       {
         "name": "layout-social-margin",
@@ -785,6 +790,26 @@
         "name": "layout-container",
         "value": "1200px",
         "usage": "Largura máxima do conteúdo no site."
+      },
+      {
+        "name": "layout-gutter",
+        "value": "24px",
+        "usage": "Espaço entre colunas (24 no desktop e no tablet, 16 no celular)."
+      },
+      {
+        "name": "layout-columns",
+        "value": "12",
+        "usage": "Colunas da grade (12 no desktop, 8 no tablet, 4 no celular)."
+      },
+      {
+        "name": "layout-measure-body",
+        "value": "680px",
+        "usage": "Largura máxima de texto corrido."
+      },
+      {
+        "name": "layout-measure-lead",
+        "value": "840px",
+        "usage": "Largura máxima do lead."
       }
     ]
   },

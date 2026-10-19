@@ -119,6 +119,7 @@
   --color-status-info: var(--color-azul-700);
   --color-status-info-bg: var(--color-azul-50);
   --layout-gap-inline: var(--space-16);
+  --layout-gap-tight: var(--space-8);
   --layout-gap-stack: var(--space-24);
   --layout-section-gap: var(--space-56);
   --layout-section-y: var(--space-96);
@@ -127,6 +128,10 @@
   --layout-page-x: var(--space-64);
   --layout-social-margin: var(--space-96);
   --layout-container: 1200px;
+  --layout-gutter: var(--space-24);
+  --layout-columns: 12;
+  --layout-measure-body: 680px;
+  --layout-measure-lead: 840px;
   --radius-none: 0px;
   --radius-control: 2px;
   --radius-pill: 999px;
@@ -268,4 +273,6 @@
 .type-social-body { font-family: var(--typography-social-body-font-family); font-size: var(--typography-social-body-font-size); font-weight: var(--typography-social-body-font-weight); line-height: var(--typography-social-body-line-height); letter-spacing: var(--typography-social-body-letter-spacing); }
 .type-social-eyebrow { font-family: var(--typography-social-eyebrow-font-family); font-size: var(--typography-social-eyebrow-font-size); font-weight: var(--typography-social-eyebrow-font-weight); line-height: var(--typography-social-eyebrow-line-height); letter-spacing: var(--typography-social-eyebrow-letter-spacing); text-transform: uppercase; }
 .type-social-footer { font-family: var(--typography-social-footer-font-family); font-size: var(--typography-social-footer-font-size); font-weight: var(--typography-social-footer-font-weight); line-height: var(--typography-social-footer-line-height); letter-spacing: var(--typography-social-footer-letter-spacing); text-transform: uppercase; }
+@media (max-width: 959px) { :root { --layout-section-gap: var(--space-48); --layout-section-y: var(--space-80); --layout-page-x: var(--space-32); --layout-columns: 8; } }
+@media (max-width: 639px) { :root { --layout-section-gap: var(--space-40); --layout-section-y: var(--space-64); --layout-page-x: var(--space-16); --layout-gutter: var(--space-16); --layout-columns: 4; } }
 @media (prefers-reduced-motion: reduce) { :root { --motion-duration-fast: 0ms; --motion-duration-base: 0ms; --motion-duration-slow: 0ms; } }

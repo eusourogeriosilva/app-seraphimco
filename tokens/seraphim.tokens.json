@@ -3,7 +3,7 @@
   "$description": "Seraphim.co Design System 2.1. Fonte única dos tokens. Três camadas: primitivos (paleta e escalas), semânticos (papéis) e componente. Consumidores usam só semânticos e de componente.",
   "$extensions": {
     "co.seraphim": {
-      "version": "2.3.1",
+      "version": "2.4.0",
       "updated": "2026-10-18"
     }
   },
@@ -931,17 +931,37 @@
         "$value": "{dimension.space.16}",
         "$description": "Entre itens lado a lado."
       },
+      "gap-tight": {
+        "$value": "{dimension.space.8}",
+        "$description": "Ícone e texto, rótulo e campo, itens de lista."
+      },
       "gap-stack": {
         "$value": "{dimension.space.24}",
-        "$description": "Entre blocos empilhados."
+        "$description": "Entre blocos de um mesmo grupo."
       },
       "section-gap": {
         "$value": "{dimension.space.56}",
-        "$description": "Entre seções de uma prancha ou página."
+        "$description": "Entre blocos distintos de uma seção (56 no desktop, 48 no tablet, 40 no celular).",
+        "$extensions": {
+          "co.seraphim": {
+            "responsive": {
+              "md": "{dimension.space.48}",
+              "sm": "{dimension.space.40}"
+            }
+          }
+        }
       },
       "section-y": {
         "$value": "{dimension.space.96}",
-        "$description": "Respiro vertical de seção no site (64 no celular)."
+        "$description": "Respiro vertical de seção no site (96 no desktop, 80 no tablet, 64 no celular).",
+        "$extensions": {
+          "co.seraphim": {
+            "responsive": {
+              "md": "{dimension.space.80}",
+              "sm": "{dimension.space.64}"
+            }
+          }
+        }
       },
       "board-x": {
         "$value": "{dimension.space.80}",
@@ -953,7 +973,15 @@
       },
       "page-x": {
         "$value": "{dimension.space.64}",
-        "$description": "Margem lateral do site no desktop (16 no celular)."
+        "$description": "Margem lateral do site (64 no desktop, 32 no tablet, 16 no celular).",
+        "$extensions": {
+          "co.seraphim": {
+            "responsive": {
+              "md": "{dimension.space.32}",
+              "sm": "{dimension.space.16}"
+            }
+          }
+        }
       },
       "social-margin": {
         "$value": "{dimension.space.96}",
@@ -965,6 +993,44 @@
           "unit": "px"
         },
         "$description": "Largura máxima do conteúdo no site."
+      },
+      "gutter": {
+        "$value": "{dimension.space.24}",
+        "$description": "Espaço entre colunas (24 no desktop e no tablet, 16 no celular).",
+        "$extensions": {
+          "co.seraphim": {
+            "responsive": {
+              "sm": "{dimension.space.16}"
+            }
+          }
+        }
+      },
+      "columns": {
+        "$type": "number",
+        "$value": 12,
+        "$description": "Colunas da grade (12 no desktop, 8 no tablet, 4 no celular).",
+        "$extensions": {
+          "co.seraphim": {
+            "responsive": {
+              "md": 8,
+              "sm": 4
+            }
+          }
+        }
+      },
+      "measure-body": {
+        "$value": {
+          "value": 680,
+          "unit": "px"
+        },
+        "$description": "Largura máxima de texto corrido."
+      },
+      "measure-lead": {
+        "$value": {
+          "value": 840,
+          "unit": "px"
+        },
+        "$description": "Largura máxima do lead."
       }
     },
     "radius": {

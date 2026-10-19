@@ -8,11 +8,12 @@
 //   token-obsoleto    var(--x) com $deprecated na fonte: AVISO, não falha. Migre antes da próxima major.
 //   movimento-literal       transition ou animation com tempo ou curva solta (ex.: 200ms, ease): use motion-*
 //   sem-movimento-reduzido  arquivo com animation sem bloco prefers-reduced-motion
+//   espacamento-fora-da-escala  padding, margin ou gap com px fora de dimension.space.* (aceita 0, auto, var() e ±1px)
 // Exceções: comentário "tokens-ignore" na linha, ou "tokens-ignore-file" no arquivo
 // (ex.: templates de e-mail, que não suportam variáveis CSS).
 import { readdirSync, readFileSync, statSync } from 'node:fs';
 import { extname, join, relative } from 'node:path';
-import { DIST, colorPrimitives, cssName, loadSource, walk } from './lib.ts';
+import { DIST, asDimension, colorPrimitives, cssName, loadSource, walk } from './lib.ts';
 
 const EXTS = new Set(['.css', '.ts', '.tsx', '.mts', '.html']);
 const SKIP_DIRS = new Set(['node_modules', 'dist', '.git', 'coverage']);
@@ -21,12 +22,15 @@ const COLOR_FN = /\b(?:rgba?|hsla?|hwb|lab|lch|oklab|oklch|color)\(/g;
 const MOTION_DECL = /(?<![\w-])(transition|animation)(?:-duration|-timing-function|-delay)?\s*:\s*([^;}\n]*)/g;
 const TIME = /(?<![\w.-])\d*\.?\d+m?s\b/;
 const CURVE = /\b(?:ease|ease-in|ease-out|ease-in-out|linear|step-start|step-end)\b|cubic-bezier\(|steps\(/;
+const SPACE_DECL = /(?<![\w-])(?:padding|margin)(?:-(?:top|right|bottom|left|inline|block)(?:-(?:start|end))?)?\s*:\s*([^;}\n]*)|(?<![\w-])(?:gap|row-gap|column-gap)\s*:\s*([^;}\n]*)/g;
+const PX = /(-?\d*\.?\d+)px\b/g;
 const VAR = /var\(\s*--([\w-]+)/g;
 const STRING = /(['"`])((?:\\.|(?!\1)[^\\\n])*)\1/g;
 
 const defined = new Set([...readFileSync(join(DIST, 'tokens.css'), 'utf8').matchAll(/--([\w-]+)\s*:/g)].map((m) => m[1]!));
 const allTokens = walk(loadSource());
 const primitives = colorPrimitives(allTokens);
+const spaceScale = new Set([...allTokens.values()].filter((x) => x.path.startsWith('dimension.space.') && x.type === 'dimension').map((x) => asDimension(x.value).value));
 const deprecated = new Map([...allTokens.values()].filter((t) => t.deprecated).map((t) => [cssName(t.path), t.deprecated as string]));
 
 interface Issue { file: string; line: number; col: number; rule: string; message: string }
@@ -70,6 +74,15 @@ function scanLine(file: string, lineNo: number, text: string, offset: number, lo
       if (/^\s*(none|0s?)\s*$/.test(value)) continue;
       if (TIME.test(value) || (CURVE.test(value) && !(m[1] === 'animation' && /\blinear\b/.test(value) && !TIME.test(value))))
         report('movimento-literal', m.index, `${m[1]}: use var(--motion-duration-*) e var(--motion-easing-*), não ${value.trim()}`);
+    }
+  }
+  if (file.endsWith('.css') || file.endsWith('.html')) {
+    for (const m of text.matchAll(SPACE_DECL)) {
+      const value = (m[1] ?? m[2] ?? '').replace(/var\([^)]*\)/g, '');
+      for (const px of value.matchAll(PX)) {
+        const n = Math.abs(Number(px[1]));
+        if (n !== 1 && !spaceScale.has(n)) report('espacamento-fora-da-escala', m.index, `${px[0]} não está na escala: use var(--space-*) (${[...spaceScale].join(', ')})`);
+      }
     }
   }
   for (const m of text.matchAll(VAR)) {

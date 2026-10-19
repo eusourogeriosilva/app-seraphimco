@@ -24,7 +24,7 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;
+  gap: var(--layout-gap-tight);
   height: var(--size-control);
   padding: 0 var(--space-24);
   font: 600 15px/1 var(--font-family-sans);
@@ -148,7 +148,7 @@
   display: flex;
   align-items: flex-start;
   gap: var(--space-12);
-  padding: 14px var(--space-16);
+  padding: var(--space-16);
   font: 500 14px/1.5 var(--font-family-sans);
   color: var(--c);
   background: var(--bgc);
@@ -161,12 +161,12 @@
 .alert__text { color: var(--color-text-primary); font-weight: 400; }
 
 /* ---------- campo ---------- */
-.field { display: flex; flex-direction: column; gap: 6px; }
+.field { display: flex; flex-direction: column; gap: var(--layout-gap-tight); }
 .field__label { font: 600 14px/1.3 var(--font-family-sans); }
 .field__hint { font: 400 13px/1.4 var(--font-family-sans); color: var(--color-text-secondary); }
 .field__input {
   height: var(--size-control);
-  padding: 0 14px;
+  padding: 0 var(--space-16);
   font: 400 15px/1 var(--font-family-sans);
   color: var(--color-text-primary);
   background: var(--color-input-bg);
@@ -188,7 +188,7 @@
 .field__error {
   display: flex;
   align-items: flex-start;
-  gap: 6px;
+  gap: var(--layout-gap-tight);
   font: 500 13px/1.4 var(--font-family-sans);
   color: var(--color-status-danger);
 }
@@ -208,7 +208,7 @@
 .tabs,
 .steps {
   display: flex;
-  gap: 28px;
+  gap: var(--space-24);
   margin: 0;
   padding: 0;
   border-bottom: 1px solid var(--color-border-subtle);
@@ -219,7 +219,7 @@
   display: inline-flex;
   align-items: center;
   min-height: var(--size-touch-min);
-  padding: 0 2px;
+  padding: 0;
   margin-bottom: -1px;
   background: none;
   border: 0;

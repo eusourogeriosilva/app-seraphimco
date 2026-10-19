@@ -39,5 +39,17 @@ initTabs();
 
 Navegação por etapas (`.steps`, links com endereço próprio) e abas de painel (`.tabs`, mesmo painel) têm o mesmo visual e marcação diferente. Não misture.
 
+## Grade
+```html
+<div class="container">
+  <div class="grid">
+    <article data-span="4" data-span-md="4">…</article>
+    <article data-span="4" data-span-md="4">…</article>
+    <article data-span="4" data-span-md="8">…</article>
+  </div>
+</div>
+```
+12, 8 ou 4 colunas por faixa. `data-span` vale a partir de 960 px, `data-span-md` de 640 a 959 px; no celular tudo empilha. Sem atributo, o item ocupa a linha inteira.
+
 ## Verificado em navegador
-Teclado das abas (setas, Home, End, volta nas pontas, foco móvel, Tab para o painel), FAQ com itens independentes (Enter e Espaço), alturas (botão 48/44/32, aba 44, linha do FAQ 56), hover, desabilitado, indicador de carregando com e sem `prefers-reduced-motion`, rolagem horizontal das abas em 390 px. Ainda não verificado com leitor de tela.
+Teclado das abas (setas, Home, End, volta nas pontas, foco móvel, Tab para o painel), FAQ com itens independentes (Enter e Espaço), alturas (botão 48/44/32, aba 44, linha do FAQ 56), hover, desabilitado, indicador de carregando com e sem `prefers-reduced-motion`, rolagem horizontal das abas em 390 px, grade (colunas, gutter, margem e respiros) em 1280, 1000, 768 e 390 px, sem rolagem horizontal da página. Ainda não verificado com leitor de tela.
