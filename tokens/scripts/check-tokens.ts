@@ -10,6 +10,7 @@
 //   sem-movimento-reduzido  arquivo com animation sem bloco prefers-reduced-motion
 //   espacamento-fora-da-escala  padding, margin ou gap com px fora de dimension.space.* (aceita 0, auto, var() e ±1px)
 //   fonte-fora-da-escala  font-size ou font com tamanho literal (px, rem, em, pt): use var(--font-size-*) ou var(--typography-*)
+//   espaco-fluido  clamp(), vw, vh e afins em padding, margin ou gap: a margem vem de token, por faixa
 // Exceções: comentário "tokens-ignore" na linha, ou "tokens-ignore-file" no arquivo
 // (ex.: templates de e-mail, que não suportam variáveis CSS).
 import { readdirSync, readFileSync, statSync } from 'node:fs';
@@ -27,6 +28,7 @@ const SPACE_DECL = /(?<![\w-])(?:padding|margin)(?:-(?:top|right|bottom|left|inl
 const PX = /(-?\d*\.?\d+)px\b/g;
 const FONT_DECL = /(?<![\w-])(font-size|font)\s*:\s*([^;}\n]*)/g;
 const FONT_LEN = /(?<![\w.-])\d*\.?\d+(?:px|rem|em|pt)\b/;
+const FLUID = /\bclamp\(|(?<![\w.-])\d*\.?\d+(?:vw|vh|vi|vb|vmin|vmax|svw|svh|lvw|lvh|dvw|dvh)\b/;
 const VAR = /var\(\s*--([\w-]+)/g;
 const STRING = /(['"`])((?:\\.|(?!\1)[^\\\n])*)\1/g;
 
@@ -82,6 +84,8 @@ function scanLine(file: string, lineNo: number, text: string, offset: number, lo
   if (file.endsWith('.css') || file.endsWith('.html')) {
     for (const m of text.matchAll(SPACE_DECL)) {
       const value = (m[1] ?? m[2] ?? '').replace(/var\([^)]*\)/g, '');
+      const fluid = FLUID.exec(value);
+      if (fluid) report('espaco-fluido', m.index, `${fluid[0]} em espaçamento: use var(--layout-*) ou var(--space-*), que mudam por faixa`);
       for (const px of value.matchAll(PX)) {
         const n = Math.abs(Number(px[1]));
         if (n !== 1 && !spaceScale.has(n)) report('espacamento-fora-da-escala', m.index, `${px[0]} não está na escala: use var(--space-*) (${[...spaceScale].join(', ')})`);

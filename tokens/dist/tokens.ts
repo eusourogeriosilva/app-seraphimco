@@ -1,7 +1,7 @@
 // Seraphim.co — gerado de seraphim.tokens.json (DTCG 2025.10). Não edite à mão.
 // Primitivos de cor ficam em `privatePrimitives` e fora de `cssVar`: use os semânticos.
 
-export const version = "2.5.0" as const;
+export const version = "2.6.0" as const;
 
 /** Tokens públicos (semânticos, de componente e escalas), com valores resolvidos. */
 export const tokens = {
@@ -104,6 +104,7 @@ export const tokens = {
   "space-128": "128px",
   "layout-gap-inline": "16px",
   "layout-gap-tight": "8px",
+  "layout-card-padding": "32px",
   "layout-gap-stack": "24px",
   "layout-section-gap": "56px",
   "layout-section-y": "96px",
@@ -235,6 +236,9 @@ export const responsive = {
   "layout-columns": {
     "md": 8,
     "sm": 4
+  },
+  "layout-card-padding": {
+    "sm": "24px"
   },
   "layout-gutter": {
     "sm": "16px"

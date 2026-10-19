@@ -2,6 +2,29 @@
 
 Formato: [semver](https://semver.org/lang/pt-BR/). Token removido ou renomeado é major; token novo é minor; valor ou descrição alterados é patch. A CI recusa um pull request que mude `seraphim.tokens.json` sem o bump e sem a seção correspondente aqui.
 
+## [2.6.0] - 2026-10-19
+
+Base: navegação e padrões responsivos aprovados na prancha "04 · Navegação e padrões responsivos" do canvas.
+
+### Adicionado
+- `layout-card-padding`: 32 px no desktop e no tablet, 24 px no celular (valor por faixa, como os demais tokens de layout).
+- Lint `espaco-fluido`: `clamp()`, `vw`, `vh` e afins em `padding`, `margin` ou `gap` falham a CI; a margem vem de token, por faixa.
+- `src/styles/components.css`:
+  - `.actions`: linha no tablet e no desktop; coluna com botões de largura total no celular.
+  - `.site-header`: até 4 links sempre visíveis (uma linha a partir de 640 px, duas no celular); `data-nav="menu"` recolhe os links atrás do botão Menu abaixo de 960 px; botão de ação com rótulos `.is-full` e `.is-short`; `.skip-link`.
+  - `.table-cards`: tabela de texto vira cartões no celular (rótulo em `data-label`); `.table-scroll`: região rolável com primeira coluna fixa e sombra de indício.
+  - `.blueprint`: 5 colunas, 2 + 2 + 1 e 1 coluna, com o último bloco em destaque.
+  - `.photo` e `.photo-cover`: proporção e ponto focal por faixa; texto sobre foto só a partir de 640 px.
+- `src/components/menu.ts`: `initMenu()` (aria-expanded, Esc devolve o foco, fecha ao escolher um link e ao chegar ao desktop).
+
+### Alterado
+- `.card` usa `layout-card-padding`.
+- Os links do cabeçalho usam 16 px (`font-size-16`), não os 15 px da prancha, para ficar na escala; o cabeçalho segue cabendo em 320 px.
+
+### Fora desta versão
+- O Site completo em tablet e celular (rodapé e formulário de contato incluídos) e o `srcset` das imagens.
+- Os breakpoints de `@media` seguem literais em `base.css` e `components.css` (CSS não aceita `var()` em media query).
+
 ## [2.5.0] - 2026-10-19
 
 Base: tipografia responsiva aprovada na prancha "03 · Tipografia responsiva" do canvas.

@@ -54,5 +54,30 @@ Navegação por etapas (`.steps`, links com endereço próprio) e abas de painel
 ```
 12, 8 ou 4 colunas por faixa. `data-span` vale a partir de 960 px, `data-span-md` de 640 a 959 px; no celular tudo empilha. Sem atributo, o item ocupa a linha inteira.
 
+## Padrões responsivos
+Faixas: celular até 639 px, tablet 640 a 959 px, desktop 960 px ou mais.
+
+```html
+<a class="skip-link" href="#main">Ir para o conteúdo</a>
+<header class="site-header"><!-- data-nav="menu" quando houver 5 ou mais links -->
+  <div class="container"><div class="site-header__inner">
+    <a class="site-header__brand" href="/" aria-label="Seraphim.co, página inicial">…</a>
+    <!-- com data-nav="menu": <button class="site-header__toggle" aria-expanded="false" aria-controls="menu">Menu</button> -->
+    <nav class="site-header__nav" id="menu" aria-label="Principal"><a href="#metodo" aria-current="page">Método</a>…</nav>
+    <a class="btn site-header__cta" data-size="sm" href="#contato" aria-label="Quero meu diagnóstico"><span class="is-full">Quero meu diagnóstico</span><span class="is-short" aria-hidden="true">Diagnóstico</span></a>
+  </div></div>
+</header>
+```
+```ts
+import { initMenu } from './components/menu.ts';
+initMenu();
+```
+- Cabeçalho: até 4 links sempre visíveis; a partir do 5º use `data-nav="menu"`. Cada link tem 44 px de altura (48 px no menu aberto). Esc fecha o menu e devolve o foco ao botão. O cabeçalho é estático, não fixo.
+- `.actions`: contêiner de botões; no celular empilha, com largura total e o primário em cima.
+- `.table-cards`: tabela de texto que vira cartões no celular. Marque `role="table"`, `rowgroup`, `row`, `columnheader` e `cell` (com `display: block` alguns leitores de tela perdem a semântica) e `data-label` em cada `td`. Use quando a linha faz sentido sozinha.
+- `.table-scroll`: `<div class="table-scroll" role="region" aria-label="…" tabindex="0"><table>…</table></div>` para dados que precisam ser comparados. A primeira coluna fica fixa.
+- `.blueprint`: `<section class="blueprint"><div class="container"><ol class="blueprint__list"><li class="blueprint__item">…</li>×5</ol></div></section>`. O último item é o fechamento, com filete framboesa.
+- `.photo`: `data-photo="portrait"` (4:5, 1:1 no celular) ou `"support"` (3:2, 4:3 no celular). Sempre com `width`, `height`, `alt` e `loading="lazy"` (exceto a primeira imagem); ponto focal em `style="--photo-focus: 50% 20%"`. Texto por cima da foto só em `.photo-cover`: abaixo de 640 px o texto desce para um bloco bordô.
+
 ## Verificado em navegador
-Teclado das abas (setas, Home, End, volta nas pontas, foco móvel, Tab para o painel), FAQ com itens independentes (Enter e Espaço), alturas (botão 48/44/32, aba 44, linha do FAQ 56), tamanhos dos títulos nas três faixas, texto a 200% sem corte em 1280, 390 e 320 px, hover, desabilitado, indicador de carregando com e sem `prefers-reduced-motion`, rolagem horizontal das abas em 390 px, grade (colunas, gutter, margem e respiros) em 1280, 1000, 768 e 390 px, sem rolagem horizontal da página. Ainda não verificado com leitor de tela.
+Teclado das abas (setas, Home, End, volta nas pontas, foco móvel, Tab para o painel), FAQ com itens independentes (Enter e Espaço), alturas (botão 48/44/32, aba 44, linha do FAQ 56), tamanhos dos títulos nas três faixas, texto a 200% sem corte em 1280, 390 e 320 px, cabeçalho, menu, tabelas, Blueprint, card, fotos e grupo de ações em 1280, 960, 959, 768, 640, 639, 390 e 320 px, hover, desabilitado, indicador de carregando com e sem `prefers-reduced-motion`, rolagem horizontal das abas em 390 px, grade (colunas, gutter, margem e respiros) em 1280, 1000, 768 e 390 px, sem rolagem horizontal da página. Ainda não verificado com leitor de tela.

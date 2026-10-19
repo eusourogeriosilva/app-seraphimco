@@ -3,7 +3,7 @@
   "$description": "Seraphim.co Design System 2.1. Fonte única dos tokens. Três camadas: primitivos (paleta e escalas), semânticos (papéis) e componente. Consumidores usam só semânticos e de componente.",
   "$extensions": {
     "co.seraphim": {
-      "version": "2.5.0",
+      "version": "2.6.0",
       "updated": "2026-10-19"
     }
   },
@@ -934,6 +934,17 @@
       "gap-tight": {
         "$value": "{dimension.space.8}",
         "$description": "Ícone e texto, rótulo e campo, itens de lista."
+      },
+      "card-padding": {
+        "$value": "{dimension.space.32}",
+        "$description": "Padding interno do card: 32 no desktop e no tablet, 24 no celular.",
+        "$extensions": {
+          "co.seraphim": {
+            "responsive": {
+              "sm": "{dimension.space.24}"
+            }
+          }
+        }
       },
       "gap-stack": {
         "$value": "{dimension.space.24}",

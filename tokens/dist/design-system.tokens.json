@@ -2,7 +2,7 @@
   "name": "Seraphim.co",
   "version": 1,
   "meta": {
-    "source": "seraphim.tokens.json 2.5.0 (W3C DTCG 2025.10), gerado por build-tokens.ts"
+    "source": "seraphim.tokens.json 2.6.0 (W3C DTCG 2025.10), gerado por build-tokens.ts"
   },
   "color": {
     "themes": [
@@ -750,6 +750,11 @@
         "name": "layout-gap-tight",
         "value": "8px",
         "usage": "Ícone e texto, rótulo e campo, itens de lista."
+      },
+      {
+        "name": "layout-card-padding",
+        "value": "32px",
+        "usage": "Padding interno do card: 32 no desktop e no tablet, 24 no celular."
       },
       {
         "name": "layout-gap-stack",

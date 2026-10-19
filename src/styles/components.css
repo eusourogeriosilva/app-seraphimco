@@ -195,7 +195,7 @@
 
 /* ---------- casca de card ---------- */
 .card {
-  padding: var(--space-32);
+  padding: var(--layout-card-padding);
   background: var(--color-card-light-bg);
   box-shadow: inset 0 0 0 1px var(--color-card-light-border);
 }
@@ -290,4 +290,136 @@
 :where([data-surface="dark"]) .faq__answer { color: var(--color-text-secondary-on-dark); }
 @media (prefers-reduced-motion: no-preference) {
   .faq::details-content { transition: opacity var(--motion-duration-base) var(--motion-easing-standard); }
+}
+
+/* ============ padrões responsivos ============
+ * Faixas: celular até 639 px, tablet 640 a 959 px, desktop 960 px ou mais.
+ * Larguras de media query são literais (CSS não aceita var() ali); veja base.css. */
+
+/* ---------- grupo de ações: linha, e coluna com botões de largura total no celular ---------- */
+.actions { display: flex; flex-wrap: wrap; gap: var(--space-12); }
+@media (max-width: 639px) {
+  .actions { flex-direction: column; gap: var(--layout-gap-tight); }
+  .actions > .btn { width: 100%; }
+}
+
+/* ---------- cabeçalho do site ----------
+ * Até 4 links sempre visíveis: uma linha a partir de 640 px; duas linhas no celular.
+ * data-nav="menu" (5 ou mais links): abaixo de 960 px os links ficam atrás do botão Menu (ver menu.ts).
+ * O botão de ação tem dois rótulos: .is-full (960 px ou mais) e .is-short (abaixo disso). */
+.skip-link { position: absolute; inset-inline-start: var(--space-8); top: var(--space-8); z-index: 1; background: var(--color-bg-surface); color: var(--color-text-brand); padding: var(--space-12) var(--space-16); transform: translateY(-200%); }
+.skip-link:focus-visible { transform: none; outline: var(--border-width-focus) solid var(--color-focus-ring); outline-offset: var(--border-width-focus-offset); }
+.site-header { background: var(--color-bg-page); }
+.site-header__inner { display: flex; align-items: center; justify-content: space-between; gap: var(--space-24); padding-block: var(--space-20); }
+.site-header__brand { color: var(--color-text-primary); text-decoration: none; }
+.site-header__nav { display: flex; flex-wrap: wrap; align-items: center; gap: 0 var(--space-24); }
+.site-header__nav a {
+  box-sizing: border-box;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--size-touch-min);
+  color: var(--color-text-primary);
+  font: 500 var(--font-size-16)/1 var(--font-family-sans);
+  text-decoration: none;
+}
+.site-header__nav a[aria-current] { color: var(--color-text-brand); }
+.site-header__nav a[aria-current]::after { content: ""; position: absolute; inset-inline: 0; bottom: var(--space-8); height: var(--border-width-focus); background: var(--color-border-brand); }
+@media (hover: hover) { .site-header__nav a:not([aria-current]):hover { color: var(--color-text-brand); } }
+.site-header__nav a:focus-visible,
+.site-header__brand:focus-visible,
+.site-header__toggle:focus-visible { outline: var(--border-width-focus) solid var(--color-focus-ring); outline-offset: var(--border-width-focus-offset); }
+.site-header__toggle { display: none; align-items: center; gap: var(--layout-gap-tight); min-height: var(--size-touch-min); padding: 0 var(--space-16); background: transparent; color: var(--color-text-primary); box-shadow: inset 0 0 0 var(--border-width-control) var(--color-border-control); border: 0; border-radius: var(--radius-control); font: 600 var(--font-size-14)/1 var(--font-family-sans); cursor: pointer; }
+.site-header .is-short { display: none; }
+@media (min-width: 960px) {
+  .site-header__nav { column-gap: var(--space-32); }
+  .site-header__inner { gap: var(--space-32); }
+}
+@media (max-width: 959px) {
+  .site-header .is-full { display: none; }
+  .site-header .is-short { display: inline; }
+}
+@media (max-width: 639px) {
+  .site-header__inner { flex-wrap: wrap; padding-block: var(--space-12) 0; row-gap: 0; }
+  .site-header__nav { order: 3; width: 100%; margin-top: var(--space-12); border-top: 1px solid var(--color-border-subtle); }
+}
+@media (max-width: 959px) {
+  .site-header[data-nav="menu"] .site-header__toggle { display: inline-flex; }
+  .site-header[data-nav="menu"] .site-header__inner { flex-wrap: wrap; padding-block: var(--space-12); row-gap: 0; }
+  .site-header[data-nav="menu"] .site-header__nav,
+  .site-header[data-nav="menu"] .site-header__cta { display: none; }
+  .site-header[data-nav="menu"][data-open] .site-header__nav { display: flex; order: 3; flex-direction: column; align-items: stretch; gap: 0; width: 100%; margin-top: var(--space-12); border-top: 1px solid var(--color-border-subtle); }
+  .site-header[data-nav="menu"][data-open] .site-header__nav a { min-height: var(--size-control); padding-inline: var(--space-16); border-bottom: 1px solid var(--color-border-subtle); }
+  .site-header[data-nav="menu"][data-open] .site-header__nav a[aria-current]::after { inset-inline: var(--space-16); }
+  .site-header[data-nav="menu"][data-open] .site-header__cta { display: flex; order: 4; width: 100%; margin-block: var(--space-16); }
+}
+
+/* ---------- tabela de texto: vira cartões no celular ----------
+ * Marque role="table", "row", "cell" e "columnheader" no HTML: com display: block alguns leitores de tela
+ * perdem a semântica de tabela. O rótulo de cada célula sai de data-label. */
+.table-cards { width: 100%; border-collapse: collapse; background: var(--color-bg-surface); }
+.table-cards th { padding: var(--space-12) var(--space-12) var(--space-8) var(--space-16); border-bottom: var(--border-width-control) solid var(--color-border-strong); color: var(--color-text-secondary); font: 600 var(--font-size-12)/1.2 var(--font-family-sans); letter-spacing: var(--font-tracking-caps-sm); text-align: start; text-transform: uppercase; }
+.table-cards td { padding: var(--space-12) var(--space-12) var(--space-12) var(--space-16); border-bottom: 1px solid var(--color-border-subtle); vertical-align: top; font: 400 var(--font-size-14)/1.5 var(--font-family-sans); }
+@media (max-width: 639px) {
+  .table-cards, .table-cards tbody, .table-cards tr, .table-cards td { display: block; }
+  .table-cards { background: transparent; }
+  .table-cards thead { position: absolute; inline-size: 1px; block-size: 1px; overflow: hidden; clip-path: inset(50%); }
+  .table-cards tbody { display: flex; flex-direction: column; gap: var(--space-12); }
+  .table-cards tr { display: flex; flex-direction: column; gap: var(--layout-gap-tight); padding: var(--layout-card-padding); background: var(--color-card-light-bg); box-shadow: inset 0 0 0 1px var(--color-card-light-border); }
+  .table-cards td { padding: 0; border: 0; font-size: var(--font-size-16); }
+  .table-cards td[data-label]::before { content: attr(data-label); display: block; margin-bottom: var(--space-4); color: var(--color-text-secondary); font: 600 var(--font-size-12)/1.2 var(--font-family-sans); letter-spacing: var(--font-tracking-caps-sm); text-transform: uppercase; }
+}
+
+/* ---------- tabela de dados: região rolável, primeira coluna fixa, sombra nas bordas ----------
+ * <div class="table-scroll" role="region" aria-label="…" tabindex="0"><table>…</table></div> */
+.table-scroll {
+  max-width: 100%;
+  overflow-x: auto;
+  background-color: var(--color-bg-surface);
+  background-image:
+    linear-gradient(to right, var(--color-bg-surface) 30%, transparent),
+    linear-gradient(to left, var(--color-bg-surface) 30%, transparent),
+    linear-gradient(to right, var(--color-border-frame), transparent),
+    linear-gradient(to left, var(--color-border-frame), transparent);
+  background-position: left center, right center, left center, right center;
+  background-size: 40px 100%, 40px 100%, 16px 100%, 16px 100%;
+  background-repeat: no-repeat;
+  background-attachment: local, local, scroll, scroll;
+}
+.table-scroll:focus-visible { outline: var(--border-width-focus) solid var(--color-focus-ring); outline-offset: calc(-1 * var(--border-width-focus)); }
+.table-scroll table { width: max-content; min-width: 100%; border-collapse: collapse; }
+.table-scroll th { padding: var(--space-12) var(--space-16) var(--space-8); border-bottom: var(--border-width-control) solid var(--color-border-strong); color: var(--color-text-secondary); font: 600 var(--font-size-12)/1.2 var(--font-family-sans); letter-spacing: var(--font-tracking-caps-sm); text-align: start; text-transform: uppercase; white-space: nowrap; }
+.table-scroll td { padding: var(--space-12) var(--space-16); border-bottom: 1px solid var(--color-border-subtle); font: 400 var(--font-size-14)/1.5 var(--font-family-sans); white-space: nowrap; }
+.table-scroll :is(th, td):first-child { position: sticky; inset-inline-start: 0; background: var(--color-bg-surface); }
+
+/* ---------- Blueprint do Método: 5 colunas, 2 + 2 + 1 e 1 coluna ---------- */
+.blueprint { background: var(--color-bg-ink); color: var(--color-text-on-dark); padding-block: var(--layout-section-y); }
+.blueprint__list { display: grid; grid-template-columns: 1fr; gap: var(--space-32) var(--layout-gutter); margin: 0; padding: 0; list-style: none; }
+.blueprint__item { display: flex; flex-direction: column; gap: var(--layout-gap-tight); padding-top: var(--space-16); border-top: 1px solid var(--color-border-on-dark); }
+.blueprint__item:last-child { border-top: var(--border-width-rule) solid var(--color-accent-rule-on-dark); }
+.blueprint__item ul { margin: 0; padding-inline-start: var(--space-16); color: var(--color-text-secondary-on-dark); }
+@media (min-width: 640px) {
+  .blueprint__list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .blueprint__item:last-child { grid-column: 1 / -1; }
+}
+@media (min-width: 960px) {
+  .blueprint__list { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+  .blueprint__item:last-child { grid-column: auto; }
+}
+
+/* ---------- fotografia: proporção e ponto focal por faixa ----------
+ * <img class="photo" data-photo="portrait|support" width height alt loading="lazy" style="--photo-focus: 50% 20%">
+ * portrait: 4:5, e 1:1 no celular. support: 3:2, e 4:3 no celular. */
+.photo { --photo-focus: 50% 50%; display: block; width: 100%; height: auto; object-fit: cover; object-position: var(--photo-focus); aspect-ratio: 3 / 2; }
+.photo[data-photo="portrait"] { aspect-ratio: 4 / 5; }
+@media (max-width: 639px) {
+  .photo { aspect-ratio: 4 / 3; }
+  .photo[data-photo="portrait"] { aspect-ratio: 1 / 1; }
+}
+/* Texto sobre foto só a partir de 640 px; no celular o texto desce para um bloco bordô sólido. */
+.photo-cover { display: grid; }
+.photo-cover__text { padding: var(--layout-card-padding); background: var(--color-bg-brand); color: var(--color-text-on-dark); }
+@media (min-width: 640px) {
+  .photo-cover > * { grid-area: 1 / 1; }
+  .photo-cover__text { align-self: end; background: transparent; }
 }

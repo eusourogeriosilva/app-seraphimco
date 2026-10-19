@@ -61,3 +61,7 @@ Os estilos compostos de tipografia aceitam o mesmo bloco, com `fontSize`, `lineH
 ## Lint de fonte
 
 `fonte-fora-da-escala` barra `font-size` e `font` com tamanho literal (px, rem, em, pt) em `src/`. Use `var(--font-size-*)` ou, num texto inteiro, a classe `.type-*`. Entrelinha dentro de `font` em px também falha: use valor sem unidade, para acompanhar o texto ampliado.
+
+## Lint de espaço fluido
+
+`espaco-fluido` barra `clamp()`, `vw`, `vh`, `dvh` e afins em `padding`, `margin` e `gap`. A margem lateral e os respiros vêm de `layout-*`, que mudam por faixa e batem com a grade.
