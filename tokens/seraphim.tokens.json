@@ -3,7 +3,7 @@
   "$description": "Seraphim.co Design System 2.1. Fonte única dos tokens. Três camadas: primitivos (paleta e escalas), semânticos (papéis) e componente. Consumidores usam só semânticos e de componente.",
   "$extensions": {
     "co.seraphim": {
-      "version": "2.3.0",
+      "version": "2.3.1",
       "updated": "2026-10-18"
     }
   },
@@ -1052,10 +1052,10 @@
       },
       "control-sm": {
         "$value": {
-          "value": 40,
+          "value": 44,
           "unit": "px"
         },
-        "$description": "Botão compacto da navegação."
+        "$description": "Botão sm (cabeçalho e navegação). 44 px, o mesmo alvo da aba."
       },
       "touch-min": {
         "$value": {

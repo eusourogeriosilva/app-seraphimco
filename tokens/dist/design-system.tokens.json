@@ -2,7 +2,7 @@
   "name": "Seraphim.co",
   "version": 1,
   "meta": {
-    "source": "seraphim.tokens.json 2.3.0 (W3C DTCG 2025.10), gerado por build-tokens.ts"
+    "source": "seraphim.tokens.json 2.3.1 (W3C DTCG 2025.10), gerado por build-tokens.ts"
   },
   "color": {
     "themes": [
@@ -854,8 +854,8 @@
       },
       {
         "name": "size-control-sm",
-        "value": "40px",
-        "usage": "Botão compacto da navegação."
+        "value": "44px",
+        "usage": "Botão sm (cabeçalho e navegação). 44 px, o mesmo alvo da aba."
       },
       {
         "name": "size-touch-min",

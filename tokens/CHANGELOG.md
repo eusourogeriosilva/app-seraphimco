@@ -2,6 +2,11 @@
 
 Formato: [semver](https://semver.org/lang/pt-BR/). Token removido ou renomeado é major; token novo é minor; valor ou descrição alterados é patch. A CI recusa um pull request que mude `seraphim.tokens.json` sem o bump e sem a seção correspondente aqui.
 
+## [2.3.1] - 2026-10-18
+
+### Alterado
+- `size-control-sm`: de 40 px para 44 px. Alinha o token à decisão de botão sm da placa "05 · Variantes" (o cabeçalho tinha 40 px em Componentes e 44 px no Site) e ao alvo da aba. Nenhuma peça em `src/` o usava antes.
+
 ## [2.3.0] - 2026-10-18
 
 Base: matriz de estados aprovada na placa "05 · Estados" do canvas (estado vem de pseudo-classe ou atributo ARIA, nunca de classe).

@@ -1,7 +1,7 @@
 // Seraphim.co — gerado de seraphim.tokens.json (DTCG 2025.10). Não edite à mão.
 // Primitivos de cor ficam em `privatePrimitives` e fora de `cssVar`: use os semânticos.
 
-export const version = "2.3.0" as const;
+export const version = "2.3.1" as const;
 
 /** Tokens públicos (semânticos, de componente e escalas), com valores resolvidos. */
 export const tokens = {
@@ -120,7 +120,7 @@ export const tokens = {
   "border-width-rule": "3px",
   "border-width-focus-offset": "3px",
   "size-control": "48px",
-  "size-control-sm": "40px",
+  "size-control-sm": "44px",
   "size-touch-min": "44px",
   "size-icon-sm": "16px",
   "size-icon": "24px",

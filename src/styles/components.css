@@ -1,0 +1,293 @@
+/* Seraphim.co — componentes.
+ * Variação por atributo: data-variant, data-tone, data-size, data-surface (declarado no contêiner).
+ * Estado vem do navegador e do ARIA, nunca de classe: :hover, :focus-visible, :disabled,
+ * [aria-disabled], [aria-busy], [aria-invalid], [aria-selected], [open].
+ * Só tokens semânticos e de componente. Inclua tokens.css antes, ou use o @import abaixo.
+ */
+@import url("../../tokens/dist/tokens.css");
+
+.btn,
+.tag,
+.alert,
+.field__input,
+.card,
+.tab,
+.steps a,
+.faq > summary { box-sizing: border-box; }
+
+/* ---------- botão: tipo x tamanho x superfície ---------- */
+.btn {
+  --bg: var(--color-button-primary-light-bg);
+  --fg: var(--color-button-primary-light-text);
+  --bd: transparent;
+  --bb: var(--bd);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  height: var(--size-control);
+  padding: 0 var(--space-24);
+  font: 600 15px/1 var(--font-family-sans);
+  white-space: nowrap;
+  border-radius: var(--radius-control);
+  border-style: solid;
+  border-width: var(--border-width-control);
+  border-color: var(--bd) var(--bd) var(--bb);
+  background: var(--bg);
+  color: var(--fg);
+  cursor: pointer;
+  transition: background var(--motion-duration-fast) var(--motion-easing-standard),
+    color var(--motion-duration-fast) var(--motion-easing-standard);
+}
+.btn[data-size="sm"] { height: var(--size-control-sm); padding: 0 var(--space-20); font-size: 14px; }
+.btn[data-variant="secondary"] {
+  --bg: transparent;
+  --fg: var(--color-button-secondary-light-text);
+  --bd: var(--color-button-secondary-light-border);
+}
+.btn[data-variant="tertiary"] {
+  --bg: transparent;
+  --fg: var(--color-button-tertiary-light-text);
+  --bd: transparent;
+  --bb: var(--color-button-tertiary-light-underline);
+  height: 32px;
+  padding: 0 var(--space-4);
+  border-radius: 0;
+}
+:where([data-surface="dark"]) .btn { --bg: var(--color-button-primary-dark-bg); --fg: var(--color-button-primary-dark-text); }
+:where([data-surface="dark"]) .btn[data-variant="secondary"] {
+  --bg: transparent;
+  --fg: var(--color-button-secondary-dark-text);
+  --bd: var(--color-button-secondary-dark-border);
+}
+:where([data-surface="dark"]) .btn[data-variant="tertiary"] {
+  --bg: transparent;
+  --fg: var(--color-button-tertiary-dark-text);
+  --bd: transparent;
+  --bb: var(--color-button-tertiary-dark-underline);
+}
+
+@media (hover: hover) {
+  .btn[data-variant="primary"]:hover { --bg: var(--color-button-primary-light-bg-hover); }
+  .btn[data-variant="secondary"]:hover { --bg: var(--color-button-secondary-light-bg-hover); }
+  .btn[data-variant="tertiary"]:hover { --bb: var(--color-button-tertiary-light-underline-hover); }
+  :where([data-surface="dark"]) .btn[data-variant="primary"]:hover { --bg: var(--color-button-primary-dark-bg-hover); }
+  :where([data-surface="dark"]) .btn[data-variant="secondary"]:hover {
+    --bg: var(--color-button-secondary-dark-bg-hover);
+    --fg: var(--color-button-secondary-dark-text-hover);
+  }
+  :where([data-surface="dark"]) .btn[data-variant="tertiary"]:hover {
+    --fg: var(--color-button-tertiary-dark-text-hover);
+    --bb: var(--color-button-tertiary-dark-underline-hover);
+  }
+}
+
+.btn:focus-visible { outline: var(--border-width-focus) solid var(--color-focus-ring); outline-offset: var(--border-width-focus-offset); }
+:where([data-surface="dark"]) .btn:focus-visible { outline-color: var(--color-focus-ring-on-dark); }
+
+.btn:disabled,
+.btn[aria-disabled="true"] {
+  --bg: var(--color-button-disabled-bg);
+  --fg: var(--color-button-disabled-text);
+  --bd: transparent;
+  --bb: transparent;
+  cursor: not-allowed;
+}
+.btn[data-variant="tertiary"]:disabled,
+.btn[data-variant="tertiary"][aria-disabled="true"] { --bg: transparent; --bb: var(--color-border-subtle); }
+:where([data-surface="dark"]) .btn:disabled,
+:where([data-surface="dark"]) .btn[aria-disabled="true"] {
+  --bg: transparent;
+  --fg: var(--color-button-disabled-dark-text);
+  --bd: var(--color-button-disabled-dark-border);
+  --bb: var(--color-button-disabled-dark-border);
+}
+
+.btn[aria-busy="true"] { cursor: progress; }
+.btn[aria-busy="true"]::before {
+  content: "";
+  flex: none;
+  width: 14px;
+  height: 14px;
+  border: 2px solid currentcolor;
+  border-right-color: transparent;
+  border-radius: 50%;
+  animation: seraphim-gira var(--motion-duration-spin) linear infinite;
+}
+@keyframes seraphim-gira { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) {
+  .btn[aria-busy="true"]::before { animation: none; border-right-color: currentcolor; }
+}
+
+/* ---------- tag: tom x tamanho ---------- */
+.tag {
+  --bg: var(--color-bg-page);
+  --fg: var(--color-text-primary);
+  display: inline-flex;
+  align-items: center;
+  height: 28px;
+  padding: 0 var(--space-12);
+  border-radius: var(--radius-pill);
+  font: 600 12px/1 var(--font-family-sans);
+  letter-spacing: var(--font-tracking-wordmark);
+  background: var(--bg);
+  color: var(--fg);
+}
+.tag[data-size="sm"] { height: 26px; font-size: 11px; }
+.tag[data-tone="brand"] { --bg: var(--color-bg-brand); --fg: var(--color-text-on-dark); }
+.tag[data-tone="accent"] { --bg: var(--color-bg-accent-subtle); --fg: var(--color-text-brand); }
+.tag[data-tone="success"] { --bg: var(--color-status-success-bg); --fg: var(--color-status-success); }
+.tag[data-tone="warning"] { --bg: var(--color-status-warning-bg); --fg: var(--color-status-warning); }
+.tag[data-tone="danger"] { --bg: var(--color-status-danger-bg); --fg: var(--color-status-danger); }
+.tag[data-tone="info"] { --bg: var(--color-status-info-bg); --fg: var(--color-status-info); }
+
+/* ---------- alerta: tom ---------- */
+.alert {
+  --c: var(--color-status-success);
+  --bgc: var(--color-status-success-bg);
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-12);
+  padding: 14px var(--space-16);
+  font: 500 14px/1.5 var(--font-family-sans);
+  color: var(--c);
+  background: var(--bgc);
+  box-shadow: inset 0 0 0 1px currentcolor;
+}
+.alert[data-tone="warning"] { --c: var(--color-status-warning); --bgc: var(--color-status-warning-bg); }
+.alert[data-tone="danger"] { --c: var(--color-status-danger); --bgc: var(--color-status-danger-bg); }
+.alert[data-tone="info"] { --c: var(--color-status-info); --bgc: var(--color-status-info-bg); }
+.alert > :is(strong, b) { display: block; }
+.alert__text { color: var(--color-text-primary); font-weight: 400; }
+
+/* ---------- campo ---------- */
+.field { display: flex; flex-direction: column; gap: 6px; }
+.field__label { font: 600 14px/1.3 var(--font-family-sans); }
+.field__hint { font: 400 13px/1.4 var(--font-family-sans); color: var(--color-text-secondary); }
+.field__input {
+  height: var(--size-control);
+  padding: 0 14px;
+  font: 400 15px/1 var(--font-family-sans);
+  color: var(--color-text-primary);
+  background: var(--color-input-bg);
+  border: var(--border-width-control) solid var(--color-input-border);
+  border-radius: var(--radius-control);
+}
+.field__input:focus-visible {
+  border-color: var(--color-input-border-focus);
+  outline: var(--border-width-focus) solid var(--color-focus-ring);
+  outline-offset: var(--border-width-focus-offset);
+}
+.field__input[aria-invalid="true"] { border-color: var(--color-input-border-error); }
+.field__input:disabled {
+  background: var(--color-input-bg-disabled);
+  border-color: var(--color-input-bg-disabled);
+  color: var(--color-text-disabled);
+  cursor: not-allowed;
+}
+.field__error {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  font: 500 13px/1.4 var(--font-family-sans);
+  color: var(--color-status-danger);
+}
+
+/* ---------- casca de card ---------- */
+.card {
+  padding: var(--space-32);
+  background: var(--color-card-light-bg);
+  box-shadow: inset 0 0 0 1px var(--color-card-light-border);
+}
+:where([data-surface="dark"]) .card { background: var(--color-card-dark-bg); box-shadow: none; }
+
+/* ---------- esqueleto ---------- */
+.skeleton { background: var(--color-bg-skeleton); min-height: var(--space-16); }
+
+/* ---------- abas de painel (ver tabs.ts) e navegação por etapas ---------- */
+.tabs,
+.steps {
+  display: flex;
+  gap: 28px;
+  margin: 0;
+  padding: 0;
+  border-bottom: 1px solid var(--color-border-subtle);
+}
+.tab,
+.steps a {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--size-touch-min);
+  padding: 0 2px;
+  margin-bottom: -1px;
+  background: none;
+  border: 0;
+  border-bottom: 3px solid transparent;
+  font: 600 15px/1 var(--font-family-sans);
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  text-decoration: none;
+  transition: color var(--motion-duration-fast) var(--motion-easing-standard);
+}
+.tab[aria-selected="true"],
+.steps a[aria-current] { color: var(--color-text-primary); border-bottom-color: var(--color-accent-rule); }
+@media (hover: hover) {
+  .tab:not([aria-selected="true"]):hover,
+  .steps a:not([aria-current]):hover { color: var(--color-text-primary); border-bottom-color: var(--color-border-control); }
+}
+.tab:focus-visible,
+.steps a:focus-visible { outline: var(--border-width-focus) solid var(--color-focus-ring); outline-offset: var(--border-width-focus-offset); }
+.tabpanel[hidden] { display: none; }
+:where([data-surface="dark"]) .tabs,
+:where([data-surface="dark"]) .steps { border-bottom-color: var(--color-border-on-dark); }
+:where([data-surface="dark"]) :is(.tab, .steps a) { color: var(--color-text-secondary-on-dark); }
+:where([data-surface="dark"]) :is(.tab[aria-selected="true"], .steps a[aria-current]) { color: var(--color-text-on-dark); border-bottom-color: var(--color-accent-rule-on-dark); }
+@media (hover: hover) {
+  :where([data-surface="dark"]) :is(.tab:not([aria-selected="true"]), .steps a:not([aria-current])):hover { color: var(--color-text-on-dark); border-bottom-color: var(--color-border-on-dark); }
+}
+:where([data-surface="dark"]) :is(.tab, .steps a):focus-visible { outline-color: var(--color-focus-ring-on-dark); }
+/* Em telas estreitas as abas rolam na horizontal, sem quebrar. A máscara só usa alfa. */
+@media (max-width: 640px) {
+  .tabs {
+    overflow-x: auto;
+    scrollbar-width: none;
+    -webkit-mask-image: linear-gradient(to right, var(--color-bg-ink) 85%, transparent);
+    mask-image: linear-gradient(to right, var(--color-bg-ink) 85%, transparent);
+  }
+  .tabs::-webkit-scrollbar { display: none; }
+}
+
+/* ---------- FAQ: details e summary nativos, itens independentes ---------- */
+.faq { border-bottom: 1px solid var(--color-border-subtle); }
+.faq > summary {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-24);
+  min-height: 56px;
+  padding: var(--space-16) 0;
+  font: 600 16px/24px var(--font-family-sans);
+  color: var(--color-text-primary);
+  cursor: pointer;
+  list-style: none;
+}
+.faq > summary::-webkit-details-marker { display: none; }
+@media (hover: hover) { .faq > summary:hover { color: var(--color-text-brand); } }
+.faq > summary:focus-visible { outline: var(--border-width-focus) solid var(--color-focus-ring); outline-offset: 2px; }
+.faq__sign { flex: none; position: relative; width: 14px; height: 14px; color: var(--color-text-accent); }
+.faq__sign::before,
+.faq__sign::after { content: ""; position: absolute; background: currentcolor; }
+.faq__sign::before { left: 0; right: 0; top: 6px; height: 2px; }
+.faq__sign::after { top: 0; bottom: 0; left: 6px; width: 2px; }
+.faq[open] .faq__sign::after { display: none; }
+.faq__answer { max-width: 680px; padding: 0 48px 20px 0; font: 400 15px/24px var(--font-family-sans); color: var(--color-text-secondary); }
+:where([data-surface="dark"]) .faq { border-bottom-color: var(--color-border-on-dark); }
+:where([data-surface="dark"]) .faq > summary { color: var(--color-text-on-dark); }
+@media (hover: hover) { :where([data-surface="dark"]) .faq > summary:hover { color: var(--color-text-accent-on-dark); } }
+:where([data-surface="dark"]) .faq > summary:focus-visible { outline-color: var(--color-focus-ring-on-dark); }
+:where([data-surface="dark"]) .faq__sign { color: var(--color-text-accent-on-dark); }
+:where([data-surface="dark"]) .faq__answer { color: var(--color-text-secondary-on-dark); }
+@media (prefers-reduced-motion: no-preference) {
+  .faq::details-content { transition: opacity var(--motion-duration-base) var(--motion-easing-standard); }
+}
