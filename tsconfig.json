@@ -15,5 +15,5 @@
     "isolatedModules": true,
     "skipLibCheck": true
   },
-  "include": ["tokens/**/*.ts", "src/**/*.ts", "tests/**/*.ts"]
+  "include": ["tokens/**/*.ts", "src/**/*.ts", "tests/**/*.ts", "scripts/**/*.ts"]
 }

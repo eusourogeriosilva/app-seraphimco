@@ -1,0 +1,4 @@
+#!/bin/sh
+# Gate local antes do push: substitui o CI enquanto o GitHub Actions não estiver disponível.
+# Pular em emergência: git push --no-verify
+exec node scripts/gate.ts --hook

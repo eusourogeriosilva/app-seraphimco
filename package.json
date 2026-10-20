@@ -13,7 +13,10 @@
     "lint:css": "stylelint \"src/**/*.css\"",
     "typecheck": "tsc -p tsconfig.json",
     "typecheck:ts6": "npx --yes -p typescript@6.0.3 tsc -p tsconfig.json",
-    "ci": "npm run tokens:check && npm run typecheck && npm run typecheck:ts6 && npm run lint:css && npm run lint:tokens && npm run lint:html",
+    "ci": "node scripts/gate.ts",
+    "ci:rapido": "node scripts/gate.ts --no-browser",
+    "ci:navegador": "node scripts/gate.ts --browser",
+    "prepare": "node scripts/install-hooks.ts",
     "test:browser": "node --test --test-concurrency=1 \"tests/browser/*.test.ts\"",
     "lint:html": "node tokens/scripts/check-html.ts src"
   },
