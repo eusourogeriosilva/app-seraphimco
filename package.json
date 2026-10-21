@@ -16,6 +16,7 @@
     "ci": "node scripts/gate.ts",
     "ci:rapido": "node scripts/gate.ts --no-browser",
     "ci:navegador": "node scripts/gate.ts --browser",
+    "health": "node scripts/health.ts",
     "prepare": "node scripts/install-hooks.ts",
     "test:browser": "node --test --test-concurrency=1 \"tests/browser/*.test.ts\"",
     "lint:html": "node tokens/scripts/check-html.ts src"

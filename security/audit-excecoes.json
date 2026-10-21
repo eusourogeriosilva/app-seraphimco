@@ -1,0 +1,13 @@
+{
+  "excecoes": [
+    {
+      "id": "GHSA-vfj7-8cjw-p6xm",
+      "cve": "CVE-2026-93687",
+      "pacote": "braces",
+      "escopo": "dev",
+      "motivo": "Sem versão corrigida (braces 3.0.3 é a mais recente). Só o stylelint usa, em desenvolvimento; os padrões de glob vêm da nossa configuração, não de terceiros. Pior caso: o lint de CSS cai. Produção: 0 alertas.",
+      "registrada": "2026-10-20",
+      "revisarAte": "2027-01-31"
+    }
+  ]
+}
