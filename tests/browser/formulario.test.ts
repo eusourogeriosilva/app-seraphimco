@@ -63,6 +63,73 @@ test('envio válido: status anunciado, foco não se move, formulário limpo', as
   await page.close();
 });
 
+test('erro de campo, resumo e sucesso trazem ícone e texto (nunca só cor)', async () => {
+  const page = await abrir(amb, URL, 1440);
+  await page.getByRole('button', { name: 'Enviar mensagem' }).click();
+  const erro = await page.evaluate(() => [...document.querySelectorAll('.field__error')].map((p) => [p.querySelector('svg')?.getAttribute('aria-hidden'), p.querySelector('svg')?.getAttribute('width'), p.textContent!.trim().length > 0]));
+  assert.equal(erro.length, 4);
+  for (const e of erro) assert.deepEqual(e, ['true', '16', true]);
+  const resumo = await page.evaluate(() => { const s = document.querySelector('[data-form-summary]')!; return [s.firstElementChild?.tagName.toLowerCase(), s.querySelector('svg')?.getAttribute('width'), s.querySelector('svg')?.getAttribute('aria-hidden')]; });
+  assert.deepEqual(resumo, ['svg', '20', 'true']);
+  await page.fill('#nome', 'Ana Souza'); await page.fill('#email', 'ana@corretora.com.br'); await page.fill('#mensagem', 'Quero entender a minha carteira.');
+  await page.check('#lgpd');
+  await page.getByRole('button', { name: 'Enviar mensagem' }).click();
+  const ok = await page.evaluate(() => { const s = document.querySelector('[data-form-status]')!; return [s.firstElementChild?.tagName.toLowerCase(), s.querySelector('svg')?.getAttribute('width'), s.querySelector('strong')?.textContent]; });
+  assert.deepEqual(ok, ['svg', '20', 'Mensagem enviada']);
+  await page.close();
+});
+
+test('depois do primeiro envio, valida ao sair do campo e atualiza o resumo', async () => {
+  const page = await abrir(amb, URL, 1440);
+  await page.getByRole('button', { name: 'Enviar mensagem' }).click();
+  await page.fill('#email', 'abc');
+  assert.match((await page.textContent('#email-erro')) ?? '', /Preencha/, 'a mensagem só muda ao sair do campo');
+  await page.locator('#email').press('Tab');
+  assert.match((await page.textContent('#email-erro')) ?? '', /e-mail completo/);
+  await page.fill('#nome', 'Ana'); await page.locator('#nome').press('Tab');
+  assert.equal(await page.getAttribute('#nome', 'aria-invalid'), null);
+  await page.fill('#nome', ''); await page.locator('#nome').press('Tab');
+  assert.equal(await page.getAttribute('#nome', 'aria-invalid'), 'true');
+  const links = await page.evaluate(() => [...document.querySelectorAll('[data-form-summary] a')].map((a) => a.textContent));
+  assert.ok(links.some((t) => /^E-mail: Informe um e-mail completo/.test(t ?? '')), JSON.stringify(links));
+  await page.close();
+});
+
+test('antes do primeiro envio, sair do campo vazio não acusa erro', async () => {
+  const page = await abrir(amb, URL, 1440);
+  await page.focus('#nome'); await page.locator('#nome').press('Tab');
+  assert.equal(await page.getAttribute('#nome', 'aria-invalid'), null);
+  assert.equal(await page.locator('.field__error').count(), 0);
+  await page.close();
+});
+
+test('consentimento: erro fora do rótulo, abaixo dele, e fora do nome acessível', async () => {
+  const page = await abrir(amb, URL, 1440);
+  await page.getByRole('button', { name: 'Enviar mensagem' }).click();
+  const r = await page.evaluate(() => {
+    const err = document.getElementById('lgpd-erro')!; const lbl = document.querySelector('label.check')!;
+    return { dentro: lbl.contains(err), abaixo: err.getBoundingClientRect().top >= lbl.getBoundingClientRect().bottom, link: document.querySelector('[data-form-summary] a[href="#lgpd"]')!.textContent };
+  });
+  assert.equal(r.dentro, false); assert.equal(r.abaixo, true);
+  assert.equal(r.link, 'Concordo em ser contatado(a) por e-mail ou WhatsApp sobre esta mensagem: Marque a caixa para continuar');
+  const nome = await page.getByRole('checkbox').evaluate((c) => (c as HTMLInputElement).labels![0]!.textContent!);
+  assert.doesNotMatch(nome, /Marque a caixa/);
+  await page.check('#lgpd');
+  assert.equal(await page.locator('#lgpd-erro').count(), 0);
+  await page.close();
+});
+
+test('seraphim:enviar cancelado: nada é anunciado nem limpo', async () => {
+  const page = await abrir(amb, URL, 1440);
+  await page.evaluate(() => document.querySelector('form')!.addEventListener('seraphim:enviar', (e) => e.preventDefault()));
+  await page.fill('#nome', 'Ana Souza'); await page.fill('#email', 'ana@corretora.com.br'); await page.fill('#mensagem', 'Oi.');
+  await page.check('#lgpd');
+  await page.getByRole('button', { name: 'Enviar mensagem' }).click();
+  const r = await page.evaluate(() => ({ status: document.querySelector('[data-form-status]')!.textContent, nome: (document.getElementById('nome') as HTMLInputElement).value }));
+  assert.equal(r.status, ''); assert.equal(r.nome, 'Ana Souza');
+  await page.close();
+});
+
 test('todo controle tem rótulo, type e autocomplete; alvo de 44 px', async () => {
   const page = await abrir(amb, URL, 390);
   const r = await page.evaluate(() => [...document.querySelectorAll<HTMLInputElement>('input, textarea')].map((c) => ({ id: c.id, rotulo: !!c.labels?.length, auto: c.type === 'checkbox' || c.tagName === 'TEXTAREA' || !!c.autocomplete, h: Math.round((c.closest('.check') ?? c).getBoundingClientRect().height) })));

@@ -159,7 +159,8 @@
 .alert[data-tone="warning"] { --c: var(--color-status-warning); --bgc: var(--color-status-warning-bg); }
 .alert[data-tone="danger"] { --c: var(--color-status-danger); --bgc: var(--color-status-danger-bg); }
 .alert[data-tone="info"] { --c: var(--color-status-info); --bgc: var(--color-status-info-bg); }
-.alert > :is(strong, b) { display: block; }
+.alert > :is(strong, b), .alert > div > :is(strong, b) { display: block; }
+.alert > svg { flex: none; }
 .alert__text { color: var(--color-text-primary); font-weight: 400; }
 .alert[hidden], .alert:empty { display: none; }
 .alert ul { margin: 0; padding-left: var(--space-16); }
@@ -220,6 +221,7 @@ textarea.field__input { padding: var(--space-12) var(--space-16); line-height: 1
   font: 500 var(--font-size-14)/1.4 var(--font-family-sans);
   color: var(--color-status-danger);
 }
+.field__error > svg { flex: none; }
 
 /* ---------- casca de card ---------- */
 .card {

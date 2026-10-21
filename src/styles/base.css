@@ -48,6 +48,8 @@ body {
   .grid > [data-span="11"] { grid-column: span 11; }
   .grid > [data-span="12"] { grid-column: span 12; }
 }
+/* Títulos quebram palavra longa em vez de estourar a linha (320 px), sem hifenização. */
+:is(h1, h2, h3, .type-display-xl, .type-display-l, .type-h1, .type-h2, .type-h3) { overflow-wrap: break-word; hyphens: manual; }
 .measure-body { max-width: var(--layout-measure-body); }
 .measure-lead { max-width: var(--layout-measure-lead); }
 

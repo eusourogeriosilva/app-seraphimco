@@ -33,8 +33,32 @@ test('marca: textos seguem as decisões aprovadas e a Voz', async () => {
   const final = (await pg.evaluate(() => document.querySelector('#contato .btn')!.textContent!.trim())) as string;
   v.ok('home: chamada final "Quero meu diagnóstico"', final === 'Quero meu diagnóstico', final);
   const links = (await pg.evaluate(() => [...document.querySelectorAll('.link-more')].map((a) => [a.textContent!.trim(), a.getAttribute('aria-label') ?? '', a.closest('article')!.querySelector('h3')!.textContent!.trim()]))) as [string, string, string][];
-  v.ok('home: "Saiba mais" com nome próprio por cartão, começando pelo texto visível, sem a seta', links.length === 3 && links.every(([t, n, h]) => t === 'Saiba mais →' && n === `Saiba mais sobre o ${h}`) && new Set(links.map((l) => l[1])).size === 3, links);
+  const artigo = (h: string) => (h.startsWith('Mentoria') ? 'a' : 'o');
+  v.ok('home: "Saiba mais" com nome próprio por cartão, começando pelo texto visível, sem a seta', links.length === 3 && links.every(([t, n, h]) => t === 'Saiba mais →' && n === `Saiba mais sobre ${artigo(h)} ${h}`) && new Set(links.map((l) => l[1])).size === 3, links);
+  const titulos = (await pg.evaluate(() => [...document.querySelectorAll('h1, h2, h3')].map((h) => getComputedStyle(h).overflowWrap))) as string[];
+  v.ok('home: títulos com overflow-wrap: break-word', titulos.length > 0 && titulos.every((o) => o === 'break-word'), [...new Set(titulos)]);
   await pg.close();
+  v.fim();
+});
+
+test('marca: todo botão declara a variante e o primário reage ao hover', async () => {
+  const v = verificacoes();
+  for (const url of PAGINAS) {
+    const pg = await abrir(amb, url, 1440);
+    const nome = url.split('/').pop();
+    const sem = (await pg.evaluate(() => [...document.querySelectorAll('.btn:not([data-variant])')].map((b) => b.textContent!.trim()))) as string[];
+    v.ok(`${nome}: nenhum .btn sem data-variant`, sem.length === 0, sem);
+    const ids = (await pg.evaluate(() => [...document.querySelectorAll('.btn[data-variant="primary"]')].map((b, i) => { b.setAttribute('data-t', String(i)); return i; }))) as number[];
+    for (const i of ids) {
+      const sel = `[data-t="${i}"]`;
+      await pg.mouse.move(0, 0);
+      const antes = (await pg.$eval(sel, (b) => getComputedStyle(b).backgroundColor)) as string;
+      await pg.hover(sel); await pg.waitForTimeout(300); // transição de motion-duration-fast
+      const depois = (await pg.$eval(sel, (b) => getComputedStyle(b).backgroundColor)) as string;
+      v.ok(`${nome}: hover muda o fundo do primário ${i}`, antes !== depois, [antes, depois]);
+    }
+    await pg.close();
+  }
   v.fim();
 });
 

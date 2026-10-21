@@ -7,6 +7,7 @@
 - Estado nunca é classe: `:hover` (só com `@media (hover: hover)`), `:focus-visible`, `:disabled` ou `[aria-disabled="true"]`, `[aria-busy="true"]`, `[aria-invalid="true"]`, `[aria-selected]`, `[aria-current]`, `[open]`.
 - Use `aria-disabled` quando houver motivo a explicar (mantém o foco); `disabled` nos demais casos.
 
+- Todo `.btn` declara `data-variant`. Sem o atributo o botão tem a cor do primário, mas não o hover, que depende da variante.
 - Alturas são mínimas (`min-height`): botão 48, botão sm 44, terciário 32, campo 48, tag 28 e 26. Em contêiner flex com `align-items` padrão, itens de tamanhos diferentes na mesma linha se esticam; use `align-items: flex-start` ou `center`.
 - Tamanho de fonte só por token (`var(--font-size-*)`); botão, campo e corpo ficam em 16 px, apoio em 14 px e tag em 12 px. O lint `fonte-fora-da-escala` barra o resto.
 
@@ -64,7 +65,7 @@ Faixas: celular até 639 px, tablet 640 a 959 px, desktop 960 px ou mais.
     <a class="site-header__brand" href="/" aria-label="Seraphim.co, página inicial">…</a>
     <!-- com data-nav="menu": <button class="site-header__toggle" aria-expanded="false" aria-controls="menu">Menu</button> -->
     <nav class="site-header__nav" id="menu" aria-label="Principal"><a href="#metodo" aria-current="page">Método</a>…</nav>
-    <a class="btn site-header__cta" data-size="sm" href="#contato" aria-label="Quero meu diagnóstico"><span class="is-full">Quero meu diagnóstico</span><span class="is-short" aria-hidden="true">Diagnóstico</span></a>
+    <a class="btn site-header__cta" data-variant="primary" data-size="sm" href="#contato" aria-label="Quero meu diagnóstico"><span class="is-full">Quero meu diagnóstico</span><span class="is-short" aria-hidden="true">Diagnóstico</span></a>
   </div></div>
 </header>
 ```
@@ -92,14 +93,16 @@ Teclado das abas (setas, Home, End, volta nas pontas, foco móvel, Tab para o pa
     <input class="field__input" id="email" name="email" type="email" autocomplete="email" required>
   </div>
   <div class="field"><label class="field__label" for="mensagem">Mensagem …</label><textarea class="field__input" id="mensagem" name="mensagem" rows="4" required></textarea></div>
-  <label class="check" for="lgpd"><input id="lgpd" name="lgpd" type="checkbox" required><span>Concordo … (obrigatório)</span></label>
+  <div class="field"><label class="check" for="lgpd"><input id="lgpd" name="lgpd" type="checkbox" required><span>Concordo … <span class="field__req" data-form-ignore>(obrigatório)</span></span></label></div>
   <div class="actions"><button class="btn" data-variant="primary" type="submit">Enviar</button></div>
   <div class="alert" role="status" data-tone="success" data-form-status></div>
 </form>
 ```
 
-- `initForm(form)` valida no envio: marca `aria-invalid`, cria `<p class="field__error" id="{id}-erro">` e a liga por `aria-describedby` (preservando a ajuda do campo), monta o resumo com um link por campo e leva o foco ao resumo. Corrigir o campo limpa o erro na hora.
-- Envio válido: o `[role="status"]` anuncia o sucesso, o foco não se move e o formulário é limpo. O evento cancelável `seraphim:enviar` carrega o `FormData`; o envio real depende do back-end.
+- `initForm(form)` valida no envio: marca `aria-invalid`, cria `<p class="field__error" id="{id}-erro">` (ícone de 16 px e texto) e a liga por `aria-describedby` (preservando a ajuda do campo), monta o resumo (ícone de 20 px, título e um link por campo) e leva o foco ao resumo.
+- Depois do primeiro envio, cada campo valida ao sair dele (o checkbox, ao mudar) e o resumo se atualiza sem mover o foco. Corrigir o campo limpa o erro na hora; um erro que continua só troca de mensagem ao sair do campo. Antes do primeiro envio, sair de um campo vazio não acusa nada.
+- O checkbox fica dentro de um `.field`: o erro entra depois do `<label class="check">`, nunca dentro dele (senão o texto do erro entraria no nome do controle).
+- Envio válido: o `[role="status"]` anuncia o sucesso (ícone e texto), o foco não se move e o formulário é limpo. O evento `seraphim:enviar` carrega o `FormData`; quem trata o envio chama `preventDefault()` e passa a anunciar ele mesmo o sucesso ou a falha, e o formulário não é limpo.
 - Obrigatório é dito em texto, nunca só por asterisco ou cor: `<span class="field__req" data-form-ignore>(obrigatório)</span>` dentro do rótulo (peso regular, texto secundário; `data-form-ignore` o tira do resumo de erros). Placeholder não substitui rótulo. Alvo mínimo de 44 px (`.check` inclui o texto).
 - `.alert[hidden]` e `.alert:empty` não ocupam espaço. Links dentro do alerta herdam a cor do texto, em negrito e sublinhados.
 - `.field__input[readonly]` tem estilo próprio (fundo sutil, borda sutil); `:disabled` já existia.

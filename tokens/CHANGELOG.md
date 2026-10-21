@@ -14,8 +14,18 @@ Base: fidelidade do site ao design system e decisões de marca aprovadas pela Ta
 - Estilos inline do site viram classes: `.field__req` (componente de campo) para "(obrigatório)" e `.text-secondary` (site.css). Resta só `--s` no logotipo do rodapé.
 - "Saiba mais →": cada link ganha nome acessível próprio ("Saiba mais sobre o Diagnóstico NEXO" e afins), que começa pelo texto visível; a seta deixa de ser lida e os três links deixam de ter o mesmo nome.
 
+- Botões primários do site sem `data-variant="primary"`: tinham a cor, mas não o hover (cabeçalho, hero e chamada final). README: todo `.btn` declara a variante.
+- Formulário (`form.ts`), conforme os estados do design system:
+  - erro de campo, resumo e confirmação com ícone e texto, não só cor (ícones da prancha "05 · Componentes");
+  - depois do primeiro envio, valida ao sair do campo e atualiza o resumo;
+  - erro do consentimento fora do `<label>` (checkbox dentro de `.field`), em vez de ao lado do texto e dentro do nome acessível;
+  - `seraphim:enviar` cancelado não anuncia sucesso nem limpa o formulário.
+- Títulos (`h1` a `h3` e `.type-display-*`, `.type-h*`) com `overflow-wrap: break-word`, sem hifenização, como decidido na tipografia responsiva (`base.css`).
+- Nome acessível "Saiba mais sobre a Mentoria NEXO" (concordância).
+
 ### Adicionado
-- `tests/browser/marca.test.ts`: NEXO sem ™, sem "clique aqui", "consultoria de marketing" nem emoji, grafia Seraphim.co, chamadas do hero, do cabeçalho e final, estilo inline só no logotipo, proporção e cor do logotipo em 1440, 768 e 390 px. Conferido que reprova o site anterior.
+- `tests/browser/formulario.test.ts`: ícones, validação ao sair do campo (e não antes do primeiro envio), erro do consentimento fora do rótulo, evento cancelado.
+- `tests/browser/marca.test.ts`: todo `.btn` com variante e hover do primário; títulos com `overflow-wrap`; NEXO sem ™, sem "clique aqui", "consultoria de marketing" nem emoji, grafia Seraphim.co, chamadas do hero, do cabeçalho e final, estilo inline só no logotipo, proporção e cor do logotipo em 1440, 768 e 390 px. Conferido que reprova o site anterior.
 
 ## [2.7.0] - 2026-10-20
 
