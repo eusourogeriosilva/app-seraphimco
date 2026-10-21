@@ -52,6 +52,8 @@ const CONTRAST: ReadonlyArray<readonly [string, string, number]> = [
   ['color.button.disabled-dark-border', 'color.bg.brand', 3], ['color.button.disabled-dark-border', 'color.bg.ink', 3],
   ['color.text.disabled', 'color.input.bg-disabled', 3], ['color.text.disabled', 'color.button.disabled-bg', 3],
   ['color.input.border-error', 'color.input.bg', 3], ['color.status.danger', 'color.input.bg', 4.5],
+  // hover de campo: nunca abaixo do mínimo de borda de controle
+  ['color.input.border-hover', 'color.input.bg', 3], ['color.input.border-hover', 'color.bg.page', 3],
   // campo somente leitura, link dentro do alerta, cartão clicável (hover) e modo de contraste aumentado
   ['color.text.primary', 'color.bg.subtle', 4.5],
   ['color.text.primary', 'color.status.success-bg', 4.5], ['color.text.primary', 'color.status.warning-bg', 4.5],

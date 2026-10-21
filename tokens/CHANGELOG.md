@@ -2,12 +2,14 @@
 
 Formato: [semver](https://semver.org/lang/pt-BR/). Token removido ou renomeado é major; token novo é minor; valor ou descrição alterados é patch. A CI recusa um pull request que mude `seraphim.tokens.json` sem o bump e sem a seção correspondente aqui.
 
-## Não lançado (sem mudança de token, versão segue 2.6.0)
+## [2.7.0] - 2026-10-20
 
-Base: acessibilidade, prancha "05 · Acessibilidade" do canvas.
+Base: hover de campo (proposta aprovada pelo dono do sistema em 2026-10-20) e acessibilidade, prancha "05 · Acessibilidade" do canvas.
 
 ### Adicionado
-- Contraste: 70 pares no `tokens:check` (eram 60). Novos: texto primário sobre `bg.subtle` e sobre os quatro fundos de status (link dentro do alerta), `border.control` sobre `bg.subtle` (campo somente leitura), `border.brand` sobre `bg.surface`/`bg.subtle` (hover do cartão clicável) e `border.strong` sobre página e superfície (contraste aumentado).
+- `color.border.control-hover` (semântico, `pedra-600`) e `color.input.border-hover` (componente, aponta para o semântico): borda do campo sob o cursor. 206 tokens (eram 204).
+- `src/styles/components.css`: hover de `.field__input` (também em `textarea`) dentro de `@media (hover: hover)`, sem transição; não vale com erro, foco, desabilitado nem somente leitura (o cinza do hover fica a 1,13:1 do vermelho de erro).
+- Contraste: 72 pares no `tokens:check` (eram 60). Novos: texto primário sobre `bg.subtle` e sobre os quatro fundos de status (link dentro do alerta), `border.control` sobre `bg.subtle` (campo somente leitura), `border.brand` sobre `bg.surface`/`bg.subtle` (hover do cartão clicável), `border.strong` sobre página e superfície (contraste aumentado) e `input.border-hover` sobre `input.bg` e `bg.page` (hover de campo).
 - `src/styles/components.css`: `textarea.field__input`, `.field__input[readonly]`, `.check`, `.card[data-interactive]` (cartão clicável), `.alert a`, `.alert[hidden]`/`.alert:empty`, `@media (forced-colors: active)` (contornos como `border`) e `@media (prefers-contrast: more)` (bordas e texto secundário sobem um degrau).
 - `src/components/form.ts` (`initForm`), `src/site/contato.html` e `contato.ts`.
 - `npm run lint:html` (um h1, níveis, `lang`, `alt`, rótulos; no `npm run ci`) e `npm run test:browser` (Playwright + axe-core, formulário, forced-colors, prefers-contrast; fora do `ci` rápido).

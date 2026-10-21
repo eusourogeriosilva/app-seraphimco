@@ -2,7 +2,7 @@
   "name": "Seraphim.co",
   "version": 1,
   "meta": {
-    "source": "seraphim.tokens.json 2.6.0 (W3C DTCG 2025.10), gerado por build-tokens.ts"
+    "source": "seraphim.tokens.json 2.7.0 (W3C DTCG 2025.10), gerado por build-tokens.ts"
   },
   "color": {
     "themes": [
@@ -278,6 +278,11 @@
         "usage": "Semântico. Borda de campo (3,6:1)."
       },
       {
+        "name": "color-border-control-hover",
+        "value": "{color-pedra-600}",
+        "usage": "Semântico. Borda de campo sob o cursor (5,8:1 sobre a superfície, 5,0:1 sobre a página)."
+      },
+      {
         "name": "color-border-brand",
         "value": "{color-bordo-700}",
         "usage": "Semântico. Borda de botão secundário, foco de campo, moldura."
@@ -471,6 +476,11 @@
         "name": "color-input-border",
         "value": "{color-border-control}",
         "usage": "Componente. Borda em repouso."
+      },
+      {
+        "name": "color-input-border-hover",
+        "value": "{color-border-control-hover}",
+        "usage": "Componente. Borda sob o cursor (só com hover: hover). Não vale com erro, foco, desabilitado ou somente leitura."
       },
       {
         "name": "color-input-border-focus",

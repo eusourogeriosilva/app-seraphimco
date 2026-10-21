@@ -198,6 +198,11 @@
   outline: var(--border-width-focus) solid var(--color-focus-ring);
   outline-offset: var(--border-width-focus-offset);
 }
+/* Hover: só a borda escurece, sem transição. Fora com erro (o cinza do hover fica a 1,13:1 do vermelho),
+   foco, desabilitado e somente leitura. */
+@media (hover: hover) {
+  .field__input:hover:not(:disabled, [readonly], [aria-invalid="true"], :focus-visible) { border-color: var(--color-input-border-hover); }
+}
 .field__input[aria-invalid="true"] { border-color: var(--color-input-border-error); }
 .field__input:disabled {
   background: var(--color-input-bg-disabled);

@@ -3,8 +3,8 @@
   "$description": "Seraphim.co Design System 2.1. Fonte única dos tokens. Três camadas: primitivos (paleta e escalas), semânticos (papéis) e componente. Consumidores usam só semânticos e de componente.",
   "$extensions": {
     "co.seraphim": {
-      "version": "2.6.0",
-      "updated": "2026-10-19"
+      "version": "2.7.0",
+      "updated": "2026-10-20"
     }
   },
   "color": {
@@ -543,6 +543,10 @@
         "$value": "{color.pedra.400}",
         "$description": "Borda de campo (3,6:1)."
       },
+      "control-hover": {
+        "$value": "{color.pedra.600}",
+        "$description": "Borda de campo sob o cursor (5,8:1 sobre a superfície, 5,0:1 sobre a página)."
+      },
       "brand": {
         "$value": "{color.bordo.700}",
         "$description": "Borda de botão secundário, foco de campo, moldura."
@@ -766,6 +770,10 @@
       "border": {
         "$value": "{color.border.control}",
         "$description": "Borda em repouso."
+      },
+      "border-hover": {
+        "$value": "{color.border.control-hover}",
+        "$description": "Borda sob o cursor (só com hover: hover). Não vale com erro, foco, desabilitado ou somente leitura."
       },
       "border-focus": {
         "$value": "{color.border.brand}",

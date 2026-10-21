@@ -1,7 +1,7 @@
 // Seraphim.co — gerado de seraphim.tokens.json (DTCG 2025.10). Não edite à mão.
 // Primitivos de cor ficam em `privatePrimitives` e fora de `cssVar`: use os semânticos.
 
-export const version = "2.6.0" as const;
+export const version = "2.7.0" as const;
 
 /** Tokens públicos (semânticos, de componente e escalas), com valores resolvidos. */
 export const tokens = {
@@ -31,6 +31,7 @@ export const tokens = {
   "color-border-subtle": "#e2deda",
   "color-border-strong": "#1f1e1e",
   "color-border-control": "#8c8581",
+  "color-border-control-hover": "#6b6460",
   "color-border-brand": "#6e1423",
   "color-border-on-dark": "rgba(255, 255, 255, 0.2)",
   "color-border-frame": "rgba(31, 30, 30, 0.12)",
@@ -78,6 +79,7 @@ export const tokens = {
   "color-button-outline-on-dark": "#ffffff",
   "color-input-bg": "#ffffff",
   "color-input-border": "#8c8581",
+  "color-input-border-hover": "#6b6460",
   "color-input-border-focus": "#6e1423",
   "color-input-border-error": "#b42318",
   "color-input-bg-disabled": "#e2deda",

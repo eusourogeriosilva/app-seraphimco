@@ -105,6 +105,7 @@
   --color-border-subtle: var(--color-papel-200);
   --color-border-strong: var(--color-grafite-900);
   --color-border-control: var(--color-pedra-400);
+  --color-border-control-hover: var(--color-pedra-600);
   --color-border-brand: var(--color-bordo-700);
   --color-border-on-dark: var(--color-alpha-white-20);
   --color-border-frame: var(--color-alpha-ink-12);
@@ -186,6 +187,7 @@
   --color-button-outline-on-dark: var(--color-button-secondary-dark-text);
   --color-input-bg: var(--color-bg-surface);
   --color-input-border: var(--color-border-control);
+  --color-input-border-hover: var(--color-border-control-hover);
   --color-input-border-focus: var(--color-border-brand);
   --color-input-border-error: var(--color-status-danger);
   --color-input-bg-disabled: var(--color-bg-disabled);

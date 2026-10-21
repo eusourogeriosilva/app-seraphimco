@@ -48,6 +48,28 @@ test('componentes: abas, FAQ, botões, campo e foco', async () => {
   v.ok('escuro: desabilitado sem preenchimento', ['rgba(0, 0, 0, 0)', 'transparent'].includes(await cs('#d3', 'backgroundColor')), await cs('#d3', 'backgroundColor'));
   v.ok('escuro: primário é claro', (await cs('#d1', 'backgroundColor')) !== bg0, await cs('#d1', 'backgroundColor'));
   v.ok('campo erro: borda de erro', (await cs('#in1', 'borderTopColor')) !== (await cs('#in2', 'borderTopColor')));
+  // hover de campo: só a borda escurece, e só no estado de repouso
+  const tok = (n: string) => pg.evaluate((t) => { const d = document.createElement('div'); d.style.color = `var(${t})`; document.body.append(d); const c = getComputedStyle(d).color; d.remove(); return c; }, n);
+  const bHover = await tok('--color-input-border-hover');
+  const bRepouso = await tok('--color-input-border');
+  const borda = (s: string) => cs(s, 'borderTopColor');
+  const sobCursor = async (s: string) => { await pg.mouse.move(0, 0); const a = await borda(s); await pg.hover(s); const b = await borda(s); return [a, b] as const; };
+  const [in3a, in3b] = await sobCursor('#in3');
+  v.ok('hover de campo: repouso usa a borda do campo', in3a === bRepouso, [in3a, bRepouso]);
+  v.ok('hover de campo: borda escurece para o token', in3b === bHover && in3b !== in3a, [in3a, in3b, bHover]);
+  const [, ta1b] = await sobCursor('#ta1');
+  v.ok('hover de campo: vale em textarea', ta1b === bHover, [ta1b, bHover]);
+  const fundo0 = await cs('#in3', 'backgroundColor'); await pg.hover('#in3');
+  v.ok('hover de campo: fundo não muda', (await cs('#in3', 'backgroundColor')) === fundo0);
+  for (const [id, nome] of [['#in1', 'com erro'], ['#in2', 'desabilitado'], ['#in4', 'somente leitura']] as const) {
+    const [a, b] = await sobCursor(id);
+    v.ok(`hover de campo: não vale ${nome}`, a === b && b !== bHover, [a, b]);
+  }
+  await pg.focus('#in3'); await pg.hover('#in3');
+  const focoCor = await borda('#in3');
+  v.ok('hover de campo: foco vence o hover', focoCor === (await tok('--color-input-border-focus')), [focoCor]);
+  await pg.evaluate(() => (document.activeElement as HTMLElement).blur());
+  await pg.mouse.move(0, 0);
   // foco visível
   await pg.keyboard.press('Escape'); await pg.focus('#b1'); await pg.keyboard.press('Shift+Tab'); await pg.keyboard.press('Tab');
   v.ok('foco visível no botão: outline 2px', (await cs('#b1', 'outlineWidth')) === '2px', await cs('#b1', 'outlineWidth'));
