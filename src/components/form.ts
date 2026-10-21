@@ -102,7 +102,7 @@ export function initForm(form: HTMLFormElement): void {
   const montarResumo = (focar: boolean): number => {
     const erros = controles().map((c) => ({ c, msg: c.getAttribute('aria-invalid') === 'true' ? mensagemDe(c) : '' })).filter((x) => x.msg);
     if (!resumo) return erros.length;
-    if (!erros.length) { resumo.hidden = true; resumo.replaceChildren(); return 0; }
+    if (!erros.length) { resumo.hidden = true; resumo.replaceChildren(); delete resumo.dataset['conteudo']; return 0; }
     const ul = document.createElement('ul');
     ul.className = 'alert__text';
     for (const { c, msg } of erros) {
@@ -115,7 +115,13 @@ export function initForm(form: HTMLFormElement): void {
       ul.append(li);
     }
     const n = erros.length;
-    alerta(resumo, 'erro', n === 1 ? 'Revise 1 campo antes de enviar' : `Revise ${n} campos antes de enviar`, ul);
+    const titulo = n === 1 ? 'Revise 1 campo antes de enviar' : `Revise ${n} campos antes de enviar`;
+    // role="alert" anuncia cada mudança: fora do envio, só refaz o resumo se o conteúdo mudou.
+    const novo = `${titulo}|${[...ul.querySelectorAll('a')].map((a) => a.textContent).join('|')}`;
+    if (focar || resumo.hidden || resumo.dataset['conteudo'] !== novo) {
+      alerta(resumo, 'erro', titulo, ul);
+      resumo.dataset['conteudo'] = novo;
+    }
     resumo.hidden = false;
     if (focar) { resumo.tabIndex = -1; resumo.focus(); }
     return n;

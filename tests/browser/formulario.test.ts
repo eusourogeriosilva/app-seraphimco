@@ -95,6 +95,18 @@ test('depois do primeiro envio, valida ao sair do campo e atualiza o resumo', as
   await page.close();
 });
 
+test('resumo (role="alert") não é refeito quando sair do campo não muda nada', async () => {
+  const page = await abrir(amb, URL, 1440);
+  await page.getByRole('button', { name: 'Enviar mensagem' }).click();
+  await page.evaluate(() => { const w = window as unknown as { mut: number }; w.mut = 0; new MutationObserver((m) => { w.mut += m.length; }).observe(document.querySelector('[data-form-summary]')!, { childList: true, subtree: true, characterData: true }); });
+  await page.focus('#nome'); await page.locator('#nome').press('Tab'); await page.locator('#email').press('Tab');
+  assert.equal(await page.evaluate(() => (window as unknown as { mut: number }).mut), 0, 'sem mudança, sem novo anúncio');
+  await page.fill('#corretora', 'x'); await page.focus('#nome'); await page.fill('#nome', 'Ana'); await page.locator('#nome').press('Tab');
+  assert.ok((await page.evaluate(() => (window as unknown as { mut: number }).mut)) > 0, 'corrigir um campo atualiza o resumo');
+  assert.equal(await page.evaluate(() => document.querySelector('[data-form-summary] strong')!.textContent), 'Revise 3 campos antes de enviar');
+  await page.close();
+});
+
 test('antes do primeiro envio, sair do campo vazio não acusa erro', async () => {
   const page = await abrir(amb, URL, 1440);
   await page.focus('#nome'); await page.locator('#nome').press('Tab');

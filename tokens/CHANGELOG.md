@@ -17,7 +17,7 @@ Base: fidelidade do site ao design system e decisões de marca aprovadas pela Ta
 - Botões primários do site sem `data-variant="primary"`: tinham a cor, mas não o hover (cabeçalho, hero e chamada final). README: todo `.btn` declara a variante.
 - Formulário (`form.ts`), conforme os estados do design system:
   - erro de campo, resumo e confirmação com ícone e texto, não só cor (ícones da prancha "05 · Componentes");
-  - depois do primeiro envio, valida ao sair do campo e atualiza o resumo;
+  - depois do primeiro envio, valida ao sair do campo e atualiza o resumo, só quando o conteúdo muda (o `role="alert"` não reanuncia à toa);
   - erro do consentimento fora do `<label>` (checkbox dentro de `.field`), em vez de ao lado do texto e dentro do nome acessível;
   - `seraphim:enviar` cancelado não anuncia sucesso nem limpa o formulário.
 - Títulos (`h1` a `h3` e `.type-display-*`, `.type-h*`) com `overflow-wrap: break-word`, sem hifenização, como decidido na tipografia responsiva (`base.css`).
