@@ -19,6 +19,9 @@
     "health": "node scripts/health.ts",
     "prepare": "node scripts/install-hooks.ts",
     "test:browser": "node --test --test-concurrency=1 \"tests/browser/*.test.ts\"",
+    "test:browser:firefox": "node scripts/test-browser.ts firefox",
+    "test:browser:webkit": "node scripts/test-browser.ts webkit",
+    "test:browser:todos": "node scripts/test-browser.ts todos",
     "lint:html": "node tokens/scripts/check-html.ts src"
   },
   "devDependencies": {

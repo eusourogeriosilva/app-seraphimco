@@ -1,11 +1,20 @@
-// Auxiliares dos testes de navegador: servidor estático (transpila .ts para o navegador) e Chromium.
+// Auxiliares dos testes de navegador: servidor estático (transpila .ts para o navegador) e o navegador escolhido.
+// Motor: PW_BROWSER = chromium (padrão) | firefox | webkit. Chromium aceita PW_CHROMIUM (caminho de um executável).
 import { createServer, type Server } from 'node:http';
 import { readFile } from 'node:fs/promises';
 import { stripTypeScriptTypes } from 'node:module';
 import { extname, join, normalize } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import assert from 'node:assert/strict';
-import { chromium, type Browser, type Page } from 'playwright';
+import { chromium, firefox, webkit, type Browser, type Page } from 'playwright';
+
+const MOTORES = { chromium, firefox, webkit } as const;
+export type Motor = keyof typeof MOTORES;
+export const MOTOR: Motor = (() => {
+  const m = process.env['PW_BROWSER'] || 'chromium';
+  if (!(m in MOTORES)) throw new Error(`PW_BROWSER inválido: ${m} (use chromium, firefox ou webkit)`);
+  return m as Motor;
+})();
 
 const RAIZ = fileURLToPath(new URL('../../', import.meta.url));
 const MIME: Record<string, string> = { '.woff': 'font/woff', '.woff2': 'font/woff2', '.svg': 'image/svg+xml', '.html': 'text/html; charset=utf-8', '.css': 'text/css; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.ts': 'text/javascript; charset=utf-8', '.json': 'application/json' };
@@ -27,7 +36,7 @@ export async function subir(): Promise<Ambiente> {
   });
   await new Promise<void>((ok) => server.listen(0, '127.0.0.1', ok));
   const porta = (server.address() as { port: number }).port;
-  const browser = await chromium.launch({ executablePath: process.env['PW_CHROMIUM'] || undefined });
+  const browser = await MOTORES[MOTOR].launch({ executablePath: (MOTOR === 'chromium' && process.env['PW_CHROMIUM']) || undefined });
   return { server, base: `http://127.0.0.1:${porta}`, browser };
 }
 

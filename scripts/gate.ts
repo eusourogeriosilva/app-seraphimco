@@ -58,12 +58,12 @@ function resolverBase(): { ref: string; aviso?: string } {
   return { ref: 'HEAD', aviso: 'origin/main não existe neste clone; a checagem de versão compara com HEAD e não pega mudanças já commitadas.' };
 }
 
-async function chromiumDisponivel(): Promise<boolean> {
+async function motorDisponivel(m: 'chromium' | 'firefox' | 'webkit'): Promise<boolean> {
   const manual = process.env['PW_CHROMIUM'];
-  if (manual) return existsSync(manual);
+  if (m === 'chromium' && manual) return existsSync(manual);
   try {
-    const { chromium } = await import('playwright');
-    return existsSync(chromium.executablePath());
+    const pw = await import('playwright');
+    return existsSync(pw[m].executablePath());
   } catch {
     return false;
   }
@@ -95,13 +95,20 @@ async function main(): Promise<number> {
     avisos.push('testes de navegador não rodaram: as verificações estáticas falharam.');
   } else if (semNavegador) {
     avisos.push('testes de navegador pulados (--no-browser ou GATE_SKIP_BROWSER=1).');
-  } else if (await chromiumDisponivel()) {
-    resultados.push(passo('testes de navegador (axe, formulário, layout por faixa)', ['run', 'test:browser']));
-  } else if (exigeNavegador) {
-    console.log('✘ testes de navegador: Chromium indisponível (defina PW_CHROMIUM ou rode `npx playwright install chromium`).');
-    resultados.push({ nome: 'testes de navegador', ok: false, ms: 0 });
   } else {
-    avisos.push('testes de navegador PULADOS: Chromium indisponível. Defina PW_CHROMIUM ou rode `npx playwright install chromium`.');
+    if (await motorDisponivel('chromium')) {
+      resultados.push(passo('testes de navegador: Chromium (axe, formulário, layout por faixa)', ['run', 'test:browser']));
+    } else if (exigeNavegador) {
+      console.log('✘ testes de navegador: Chromium indisponível (defina PW_CHROMIUM ou rode `npx playwright install chromium`).');
+      resultados.push({ nome: 'testes de navegador', ok: false, ms: 0 });
+    } else {
+      avisos.push('testes de navegador PULADOS: Chromium indisponível. Defina PW_CHROMIUM ou rode `npx playwright install chromium`.');
+    }
+    // Firefox e WebKit: rodam quando instalados; ausentes só geram aviso (o Chromium é o mínimo exigido).
+    for (const [m, nome] of [['firefox', 'Firefox'], ['webkit', 'WebKit']] as const) {
+      if (await motorDisponivel(m)) resultados.push(passo(`testes de navegador: ${nome}`, ['run', `test:browser:${m}`]));
+      else avisos.push(`testes de navegador em ${nome} pulados: não instalado (npx playwright install ${m}).`);
+    }
   }
 
   const falhas = resultados.filter((r) => !r.ok);

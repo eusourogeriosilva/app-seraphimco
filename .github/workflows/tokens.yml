@@ -58,6 +58,10 @@ jobs:
 
   browser:
     runs-on: ubuntu-24.04
+    strategy:
+      fail-fast: false
+      matrix:
+        navegador: [chromium, firefox, webkit]
     steps:
       - uses: actions/checkout@v5
 
@@ -68,8 +72,8 @@ jobs:
 
       - run: npm ci
 
-      - name: Chromium para o Playwright
-        run: npx playwright install --with-deps chromium
+      - name: ${{ matrix.navegador }} para o Playwright
+        run: npx playwright install --with-deps ${{ matrix.navegador }}
 
-      - name: Testes de navegador (axe-core, formulário, layout por faixa)
-        run: npm run test:browser
+      - name: Testes de navegador em ${{ matrix.navegador }} (axe-core, formulário, layout por faixa)
+        run: node scripts/test-browser.ts ${{ matrix.navegador }} --exigir
