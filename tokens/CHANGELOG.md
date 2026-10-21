@@ -2,6 +2,21 @@
 
 Formato: [semver](https://semver.org/lang/pt-BR/). Token removido ou renomeado é major; token novo é minor; valor ou descrição alterados é patch. A CI recusa um pull request que mude `seraphim.tokens.json` sem o bump e sem a seção correspondente aqui.
 
+## Não lançado (sem mudança de token, versão segue 2.7.0)
+
+Base: fidelidade do site ao design system e decisões de marca aprovadas pela Tatiane Seraphim em 2026-10-20 (01, 02 e 04).
+
+### Alterado
+- Site: NEXO sem ™ em todo o texto (7 ocorrências), até a confirmação do uso do nome como marca; botão secundário do hero "Ver como funciona o NEXO", como nos padrões de chamada da Voz.
+
+### Corrigido
+- `.wordmark`: a moldura esticava dentro de flex ou grid (no rodapé saía quase 4 vezes mais larga que no cabeçalho); agora abraça o texto em qualquer contêiner. Sobre `data-surface="dark"` a cor passa a ser automática (`color-text-on-dark`), como nos demais componentes.
+- Estilos inline do site viram classes: `.field__req` (componente de campo) para "(obrigatório)" e `.text-secondary` (site.css). Resta só `--s` no logotipo do rodapé.
+- "Saiba mais →": cada link ganha nome acessível próprio ("Saiba mais sobre o Diagnóstico NEXO" e afins), que começa pelo texto visível; a seta deixa de ser lida e os três links deixam de ter o mesmo nome.
+
+### Adicionado
+- `tests/browser/marca.test.ts`: NEXO sem ™, sem "clique aqui", "consultoria de marketing" nem emoji, grafia Seraphim.co, chamadas do hero, do cabeçalho e final, estilo inline só no logotipo, proporção e cor do logotipo em 1440, 768 e 390 px. Conferido que reprova o site anterior.
+
 ## [2.7.0] - 2026-10-20
 
 Base: hover de campo (proposta aprovada pelo dono do sistema em 2026-10-20) e acessibilidade, prancha "05 · Acessibilidade" do canvas.

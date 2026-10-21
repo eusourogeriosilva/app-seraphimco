@@ -24,6 +24,7 @@
 .brand-em { color: var(--color-text-brand); font-style: italic; }
 .text-brand { color: var(--color-text-brand); }
 .text-on-dark { color: var(--color-text-on-dark); }
+.text-secondary { color: var(--color-text-secondary); }
 
 /* ---------- moldura aberta em foto: canto inferior direito ---------- */
 .frame { position: relative; padding: 0 var(--space-16) var(--space-16) 0; }

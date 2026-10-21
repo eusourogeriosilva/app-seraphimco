@@ -182,6 +182,7 @@
 /* ---------- campo ---------- */
 .field { display: flex; flex-direction: column; gap: var(--layout-gap-tight); }
 .field__label { font: 600 var(--font-size-14)/1.3 var(--font-family-sans); }
+.field__req { font-weight: var(--font-weight-regular); color: var(--color-text-secondary); }
 .field__hint, .field__error { margin: 0; }
 .field__hint { font: 400 var(--font-size-14)/1.4 var(--font-family-sans); color: var(--color-text-secondary); }
 .field__input {
@@ -452,11 +453,14 @@ textarea.field__input { padding: var(--space-12) var(--space-16); line-height: 1
 }
 
 /* ---------- logotipo: SERAPHIM.CO na moldura aberta ----------
- * <span class="wordmark">SERAPHIM.CO</span>. Tamanho em --s (px do corpo); cor em --c. Mínimo recomendado: 15 px. */
+ * <span class="wordmark">SERAPHIM.CO</span>. Tamanho em --s (px do corpo); cor em --c (sobre escuro, automática pela
+ * superfície). Mínimo recomendado: 15 px. A moldura abraça o texto: dentro de flex ou grid, o wordmark não estica. */
 .wordmark {
   --s: 15px;
   position: relative;
   display: inline-block;
+  align-self: flex-start;
+  justify-self: start;
   margin: 0.3em 0 0 0.35em;
   padding: 0 1.5em 1.4em 0;
   color: var(--c, var(--color-text-primary));
@@ -473,6 +477,7 @@ textarea.field__input { padding: var(--space-12) var(--space-16); line-height: 1
     linear-gradient(currentColor, currentColor) right top / 1.1em 0.07em no-repeat,
     linear-gradient(currentColor, currentColor) left bottom / 0.07em 0.8em no-repeat;
 }
+:where([data-surface="dark"]) .wordmark { --c: var(--color-text-on-dark); }
 
 /* ---------- modos de contraste do sistema ----------
  * forced-colors: o navegador remove box-shadow e background-image; contornos e a moldura do logotipo

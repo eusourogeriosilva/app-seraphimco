@@ -100,9 +100,13 @@ Teclado das abas (setas, Home, End, volta nas pontas, foco móvel, Tab para o pa
 
 - `initForm(form)` valida no envio: marca `aria-invalid`, cria `<p class="field__error" id="{id}-erro">` e a liga por `aria-describedby` (preservando a ajuda do campo), monta o resumo com um link por campo e leva o foco ao resumo. Corrigir o campo limpa o erro na hora.
 - Envio válido: o `[role="status"]` anuncia o sucesso, o foco não se move e o formulário é limpo. O evento cancelável `seraphim:enviar` carrega o `FormData`; o envio real depende do back-end.
-- Obrigatório é dito em texto, nunca só por asterisco ou cor. Placeholder não substitui rótulo. Alvo mínimo de 44 px (`.check` inclui o texto).
+- Obrigatório é dito em texto, nunca só por asterisco ou cor: `<span class="field__req" data-form-ignore>(obrigatório)</span>` dentro do rótulo (peso regular, texto secundário; `data-form-ignore` o tira do resumo de erros). Placeholder não substitui rótulo. Alvo mínimo de 44 px (`.check` inclui o texto).
 - `.alert[hidden]` e `.alert:empty` não ocupam espaço. Links dentro do alerta herdam a cor do texto, em negrito e sublinhados.
 - `.field__input[readonly]` tem estilo próprio (fundo sutil, borda sutil); `:disabled` já existia.
+
+## Logotipo (`.wordmark`)
+
+`<span class="wordmark">SERAPHIM.CO</span>`, na moldura aberta. Tamanho por `--s` (padrão 15 px; o rodapé usa `style="--s: 18px"`, o único estilo inline permitido no site). A cor vem da superfície: sobre `data-surface="dark"` usa `color-text-on-dark` sem configuração; `--c` só para exceções. Dentro de flex ou grid a moldura não estica (`align-self` e `justify-self` no início), então mantém a proporção em qualquer contêiner.
 
 ## Cartão clicável
 
