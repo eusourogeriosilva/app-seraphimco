@@ -110,6 +110,19 @@ test('páginas: sem rolagem horizontal em 390 e 320 px, também com texto a 200%
   v.fim();
 });
 
+test('navegação: cabeçalho e rodapé iguais em todas as páginas', async () => {
+  const v = verificacoes();
+  let ref = '';
+  for (const url of PAGINAS) {
+    const pg = await abrir(amb, url, 1440);
+    const nav = (await pg.evaluate(() => [...document.querySelectorAll('.site-header__nav a, .site-footer__links a')].map((a) => a.textContent!.trim()).join('|'))) as string;
+    if (!ref) ref = nav;
+    v.ok(`${url.split('/').pop()}: links do cabeçalho e do rodapé`, nav === ref && nav.includes('Palestras') && nav.includes('Perguntas frequentes'), nav);
+    await pg.close();
+  }
+  v.fim();
+});
+
 test('marca: todo botão declara a variante e o primário reage ao hover', async () => {
   const v = verificacoes();
   for (const url of PAGINAS) {
