@@ -6,7 +6,7 @@ import { createRequire } from 'node:module';
 import { abrir, descer, subir, type Ambiente } from './helpers.ts';
 
 const axeFonte = readFileSync(createRequire(import.meta.url).resolve('axe-core/axe.min.js'), 'utf8');
-const PAGINAS = ['/src/site/index.html', '/src/site/contato.html'];
+const PAGINAS = ['/src/site/index.html', '/src/site/contato.html', '/src/site/servicos/diagnostico-nexo.html', '/src/site/servicos/consultoria-nexo.html', '/src/site/palestras.html'];
 const LARGURAS = [1440, 768, 390];
 let amb: Ambiente;
 before(async () => { amb = await subir(); });
@@ -24,7 +24,10 @@ for (const pagina of PAGINAS) {
       assert.deepEqual(resumo, []);
       // Itens que o axe não decide: contraste do logotipo (moldura em pseudo-elemento) e do textarea
       // (o axe não mede textarea; ele usa os mesmos tokens do input, que o axe mede e aprova).
-      const inesperados = r.incomplete.flatMap((i) => i.nodes.map((n) => `${i.id}: ${n.target.join(' ')}`)).filter((t) => !/wordmark|^color-contrast: #mensagem$/.test(t));
+      // Abaixo de 640 px as abas que passam da largura ficam sob o esmaecimento aprovado (máscara de alfa), que o axe
+      // não mede; o teste "abas: esmaecimento…" em marca.test.ts garante que ele some ao rolar até o fim.
+      const abaSobMascara = (t: string) => largura <= 640 && /^color-contrast: #aba-/.test(t);
+      const inesperados = r.incomplete.flatMap((i) => i.nodes.map((n) => `${i.id}: ${n.target.join(' ')}`)).filter((t) => !/wordmark|^color-contrast: #mensagem$/.test(t) && !abaSobMascara(t));
       assert.deepEqual(inesperados, []);
       await page.close();
     });

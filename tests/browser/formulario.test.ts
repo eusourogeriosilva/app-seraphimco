@@ -142,9 +142,31 @@ test('seraphim:enviar cancelado: nada é anunciado nem limpo', async () => {
   await page.close();
 });
 
+test('?interesse= pré-seleciona a opção; valor desconhecido não seleciona nada', async () => {
+  for (const [q, esperado] of [['palestra', 'palestra'], ['consultoria', 'consultoria'], ['x"]', null], ['', null]] as const) {
+    const page = await abrir(amb, `${URL}${q ? `?interesse=${encodeURIComponent(q)}` : ''}`, 1440);
+    await page.waitForFunction(() => document.querySelector('form')?.noValidate === true);
+    const v = await page.evaluate(() => (document.querySelector('input[name="interesse"]:checked') as HTMLInputElement | null)?.value ?? null);
+    assert.equal(v, esperado, q);
+    await page.close();
+  }
+});
+
+test('interesse é opcional e vai no envio', async () => {
+  const page = await abrir(amb, `${URL}?interesse=palestra`, 1440);
+  await page.waitForFunction(() => document.querySelector('form')?.noValidate === true);
+  await page.evaluate(() => document.querySelector('form')!.addEventListener('seraphim:enviar', (e) => { (window as unknown as { dados: string }).dados = String((e as CustomEvent<FormData>).detail.get('interesse')); }));
+  await page.fill('#nome', 'Ana Souza'); await page.fill('#email', 'ana@corretora.com.br'); await page.fill('#mensagem', 'Evento em março.');
+  await page.check('#lgpd');
+  await page.getByRole('button', { name: 'Enviar mensagem' }).click();
+  assert.equal(await page.evaluate(() => (window as unknown as { dados: string }).dados), 'palestra');
+  assert.equal(await page.locator('[aria-invalid="true"]').count(), 0);
+  await page.close();
+});
+
 test('todo controle tem rótulo, type e autocomplete; alvo de 44 px', async () => {
   const page = await abrir(amb, URL, 390);
-  const r = await page.evaluate(() => [...document.querySelectorAll<HTMLInputElement>('input, textarea')].map((c) => ({ id: c.id, rotulo: !!c.labels?.length, auto: c.type === 'checkbox' || c.tagName === 'TEXTAREA' || !!c.autocomplete, h: Math.round((c.closest('.check') ?? c).getBoundingClientRect().height) })));
+  const r = await page.evaluate(() => [...document.querySelectorAll<HTMLInputElement>('input, textarea')].map((c) => ({ id: c.id, rotulo: !!c.labels?.length, auto: c.type === 'checkbox' || c.type === 'radio' || c.tagName === 'TEXTAREA' || !!c.autocomplete, h: Math.round((c.closest('.check') ?? c).getBoundingClientRect().height) })));
   for (const x of r) { assert.equal(x.rotulo, true, x.id); assert.equal(x.auto, true, x.id); assert.ok(x.h >= 44, `${x.id} ${x.h}`); }
   await page.close();
 });

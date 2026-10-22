@@ -7,7 +7,7 @@ let amb: Ambiente;
 before(async () => { amb = await subir(); });
 after(async () => { await descer(amb); });
 
-const PAGINAS = ['/src/site/index.html', '/src/site/contato.html'];
+const PAGINAS = ['/src/site/index.html', '/src/site/contato.html', '/src/site/servicos/diagnostico-nexo.html', '/src/site/servicos/consultoria-nexo.html', '/src/site/palestras.html'];
 
 test('marca: textos seguem as decisões aprovadas e a Voz', async () => {
   const v = verificacoes();
@@ -33,11 +33,80 @@ test('marca: textos seguem as decisões aprovadas e a Voz', async () => {
   const final = (await pg.evaluate(() => document.querySelector('#contato .btn')!.textContent!.trim())) as string;
   v.ok('home: chamada final "Quero meu diagnóstico"', final === 'Quero meu diagnóstico', final);
   const links = (await pg.evaluate(() => [...document.querySelectorAll('.link-more')].map((a) => [a.textContent!.trim(), a.getAttribute('aria-label') ?? '', a.closest('article')!.querySelector('h3')!.textContent!.trim()]))) as [string, string, string][];
-  const artigo = (h: string) => (h.startsWith('Mentoria') ? 'a' : 'o');
+  const artigo = (h: string) => (/^(Consultoria|Palestra|Mentoria)/.test(h) ? 'a' : 'o');
   v.ok('home: "Saiba mais" com nome próprio por cartão, começando pelo texto visível, sem a seta', links.length === 3 && links.every(([t, n, h]) => t === 'Saiba mais →' && n === `Saiba mais sobre ${artigo(h)} ${h}`) && new Set(links.map((l) => l[1])).size === 3, links);
   const titulos = (await pg.evaluate(() => [...document.querySelectorAll('h1, h2, h3')].map((h) => getComputedStyle(h).overflowWrap))) as string[];
   v.ok('home: títulos com overflow-wrap: break-word', titulos.length > 0 && titulos.every((o) => o === 'break-word'), [...new Set(titulos)]);
   await pg.close();
+  v.fim();
+});
+
+test('conteúdo: portfólio da Tatiane (19/10) aplicado, sem notas internas', async () => {
+  const v = verificacoes();
+  const INTERNO = /Você vende|Valor estratégico|Público PRINCIPAL|Canal de aquisição|gancho natural|Oferta principal|Para vender (diagnóstico|palestras)/i;
+  let todo = '';
+  for (const url of PAGINAS) {
+    const pg = await abrir(amb, url, 1440);
+    const nome = url.split('/').pop();
+    // inclui painéis de abas ocultos e respostas fechadas do FAQ
+    const texto = (await pg.evaluate(() => document.body.textContent!.replace(/\s+/g, ' '))) as string;
+    todo += texto;
+    v.ok(`${nome}: sem notas internas do documento`, !INTERNO.test(texto), texto.match(INTERNO));
+    v.ok(`${nome}: sem "Programa NEXO" nem "Mentoria NEXO"`, !/Programa NEXO|Mentoria NEXO/.test(texto));
+    v.ok(`${nome}: Consultoria sem "8 semanas"`, !/8 semanas|oito semanas/i.test(texto));
+    v.ok(`${nome}: nome completo, sem "Tati "`, !/\bTati\b/.test(texto));
+    await pg.close();
+  }
+  v.ok('site: pilares N Negócio, E Experiência, X Expansão, O Oportunidade', ['Negócio', 'Experiência', 'Expansão', 'Oportunidade'].every((p) => todo.includes(p)) && !/Núcleo da carteira|Oportunidades de crescimento/.test(todo));
+  v.ok('site: "Conectando relacionamento, carteira e crescimento"', todo.includes('Conectando relacionamento, carteira e crescimento'));
+  v.ok('site: Consultoria em 90 dias / 3 meses', /90 dias/.test(todo) && /3 meses/.test(todo));
+  const pg = await abrir(amb, PAGINAS[0]!, 1440);
+  await pg.waitForFunction(() => !!document.querySelector('script[type="application/ld+json"]'));
+  const ld = JSON.parse((await pg.evaluate(() => document.querySelector('script[type="application/ld+json"]')!.textContent)) as string) as { '@type': string; mainEntity: { name: string; acceptedAnswer: { text: string } }[] };
+  const faq = (await pg.evaluate(() => [...document.querySelectorAll('#perguntas summary')].map((s) => s.textContent!.trim()))) as string[];
+  v.ok('home: FAQPage com as 8 perguntas da página', ld['@type'] === 'FAQPage' && ld.mainEntity.length === 8 && ld.mainEntity.every((q, i) => q.name === faq[i] && q.acceptedAnswer.text.length > 40), ld.mainEntity.map((q) => q.name));
+  await pg.close();
+  v.fim();
+});
+
+test('abas nas páginas: página não rola ao carregar; esmaecimento some no fim da rolagem', async () => {
+  const v = verificacoes();
+  for (const url of ['/src/site/servicos/consultoria-nexo.html', '/src/site/palestras.html']) {
+    const nome = url.split('/').pop();
+    for (const w of [1440, 390]) {
+      const pg = await abrir(amb, url, w, { fontes: true, esperar: 300 });
+      v.ok(`${nome} ${w}px: abre no topo`, (await pg.evaluate(() => scrollY)) === 0, await pg.evaluate(() => scrollY));
+      const mascara = () => pg.evaluate(() => { const l = document.querySelector('.tabs')!; const s = getComputedStyle(l); return { fim: l.hasAttribute('data-fim'), mask: s.maskImage || s.getPropertyValue('-webkit-mask-image'), sobra: l.scrollWidth - l.clientWidth }; });
+      const ini = await mascara();
+      if (ini.sobra > 1) {
+        v.ok(`${nome} ${w}px: com rolagem, começa esmaecida`, !ini.fim && ini.mask !== 'none', ini);
+        await pg.focus('.tab[aria-selected="true"]');
+        const y0 = (await pg.evaluate(() => scrollY)) as number;
+        await pg.keyboard.press('End'); await pg.waitForTimeout(100);
+        const y1 = (await pg.evaluate(() => scrollY)) as number;
+        const fim = await mascara();
+        const visivel = (await pg.evaluate(() => { const l = document.querySelector('.tabs')!.getBoundingClientRect(); const t = document.querySelector('.tab[aria-selected="true"]')!.getBoundingClientRect(); return t.left >= l.left - 1 && t.right <= l.right + 1; })) as boolean;
+        v.ok(`${nome} ${w}px: End leva à última aba, inteira e sem esmaecimento`, fim.fim && fim.mask === 'none' && visivel, [fim, visivel]);
+        v.ok(`${nome} ${w}px: teclado nas abas não rola a página`, y0 === y1, [y0, y1]);
+      } else {
+        v.ok(`${nome} ${w}px: sem rolagem, sem esmaecimento`, ini.fim, ini);
+      }
+      await pg.close();
+    }
+  }
+  v.fim();
+});
+
+test('páginas: sem rolagem horizontal em 390 e 320 px, também com texto a 200%', async () => {
+  const v = verificacoes();
+  for (const url of PAGINAS) {
+    for (const [w, css] of [[390, ''], [320, ''], [390, 'html{font-size:200%}'], [320, 'html{font-size:200%}']] as const) {
+      const pg = await abrir(amb, url, w, { fontes: true, extraCss: css || undefined, esperar: 200 });
+      const r = (await pg.evaluate(() => ({ sw: document.documentElement.scrollWidth, fora: [...document.querySelectorAll('main *, header *, footer *')].filter((e) => !e.closest('.tabs') && e.getBoundingClientRect().right > innerWidth + 1).map((e) => `${e.tagName}.${e.className}`).slice(0, 4) }))) as { sw: number; fora: string[] };
+      v.ok(`${url.split('/').pop()} ${w}px${css ? ' texto 200%' : ''}: nada passa da largura`, r.sw <= w && r.fora.length === 0, r);
+      await pg.close();
+    }
+  }
   v.fim();
 });
 

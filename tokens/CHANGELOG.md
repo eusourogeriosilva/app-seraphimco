@@ -4,7 +4,21 @@ Formato: [semver](https://semver.org/lang/pt-BR/). Token removido ou renomeado �
 
 ## Não lançado (sem mudança de token, versão segue 2.7.0)
 
-Base: fidelidade do site ao design system e decisões de marca aprovadas pela Tatiane Seraphim em 2026-10-20 (01, 02 e 04).
+Base: fidelidade do site ao design system e decisões de marca aprovadas pela Tatiane Seraphim em 2026-10-20 (01, 02 e 04); portfólio de serviços da Tatiane (documento de 19/10/2026, recebido em 2026-10-22).
+
+### Conteúdo (portfólio de serviços)
+- Home: pilares do método N Negócio, E Experiência, X Expansão, O Oportunidade; "Conectando relacionamento, carteira e crescimento"; diferencial; serviços Diagnóstico, Consultoria e Palestra (saem Programa e Mentoria); Quem lidera com o texto e a citação de Tatiane Seraphim, sócia-fundadora; seção de perguntas frequentes (8) com FAQPage gerado da própria página (`home.ts`); "Palestras" no cabeçalho e no rodapé.
+- Páginas novas: `servicos/diagnostico-nexo.html`, `servicos/consultoria-nexo.html` (etapas N, E, X, O em abas; escopo incluído e fora do escopo) e `palestras.html` (três temas em abas).
+- Contato: "Tenho interesse em" (Diagnóstico, Consultoria, Palestra), pré-selecionado por `?interesse=`.
+- Decisões do dono do sistema (2026-10-22): NEXO sem ™ (vale a aprovação de 20/10); Consultoria de 90 dias; posição "consultoria de crescimento", com marketing no corpo do texto; home + uma página por serviço.
+
+### Corrigido (componentes)
+- `.btn`: o rótulo não quebrava linha e passava da tela com texto a 200% em 390 e 320 px (já acontecia na home). Agora quebra, com entrelinha e respiro vertical; alturas mínimas inalteradas.
+- `tabs.ts`: ao iniciar, `scrollIntoView` rolava a página até as abas (as páginas abriam 736 a 951 px abaixo do topo); agora só a lista rola, na horizontal. O esmaecimento da borda direita (≤ 640 px) some no fim da rolagem (`data-fim`), deixando a última aba legível.
+
+### Adicionado (componentes e site)
+- `.choice` (grupo de opções em fieldset). Em `site.css`: `.checklist`, `.facts`, `.deliverables`, `.deliverable`, `.quote`, `.steps-list` e respostas de FAQ com vários parágrafos.
+- Testes: as cinco páginas no axe e nos testes de marca; conteúdo do portfólio (sem notas internas, sem Programa/Mentoria, sem "8 semanas", pilares e frase do método, FAQPage); abas sem rolar a página e sem esmaecimento no fim; sem rolagem horizontal em 390 e 320 px, também com texto a 200%; `?interesse=` e envio com interesse.
 
 ### Alterado
 - Site: NEXO sem ™ em todo o texto (7 ocorrências), até a confirmação do uso do nome como marca; botão secundário do hero "Ver como funciona o NEXO", como nos padrões de chamada da Voz.

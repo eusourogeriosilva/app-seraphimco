@@ -81,6 +81,48 @@
 
 .form { display: flex; flex-direction: column; gap: var(--space-24); }
 
+/* ---------- páginas de serviço ---------- */
+/* Lista com ícone de check (o ✅ do conteúdo; emoji é vetado pela Voz). O ícone é decorativo. */
+.checklist { display: flex; flex-direction: column; gap: var(--space-12); margin: 0; padding: 0; list-style: none; }
+.checklist li { display: flex; align-items: flex-start; gap: var(--space-12); font: 400 var(--font-size-16)/1.5 var(--font-family-sans); }
+.checklist svg { flex: none; color: var(--color-text-brand); }
+:where([data-surface="dark"]) .checklist svg { color: var(--color-text-accent-on-dark); }
+.checklist--minus svg { color: var(--color-text-secondary); }
+
+/* Ficha de dados (prazo, formato): rótulo em eyebrow, valor em corpo. */
+.facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr)); gap: var(--space-24); margin: 0; padding-top: var(--space-24); border-top: 1px solid var(--color-border-subtle); }
+.facts dt { margin-bottom: var(--space-8); color: var(--color-text-secondary); font: 600 var(--font-size-12)/1.2 var(--font-family-sans); letter-spacing: var(--font-tracking-caps-sm); text-transform: uppercase; }
+.facts dd { margin: 0; font: 400 var(--font-size-16)/1.5 var(--font-family-sans); }
+
+/* Entregáveis e blocos de conteúdo dentro de abas: filete no topo, título, texto e exemplo. */
+.deliverables { row-gap: var(--layout-gap-stack); padding-top: var(--layout-gap-stack); }
+.deliverable { display: flex; flex-direction: column; gap: var(--space-8); padding-top: var(--space-16); border-top: 1px solid var(--color-border-subtle); }
+.deliverable > * { margin: 0; }
+.deliverable p, .deliverable li { color: var(--color-text-secondary); font: 400 var(--font-size-16)/1.5 var(--font-family-sans); }
+.deliverable ul { padding-left: var(--space-16); }
+.deliverable .example { padding-left: var(--space-16); border-left: var(--border-width-control) solid var(--color-accent-rule); }
+.deliverable .example b, .deliverable .applied b { color: var(--color-text-primary); }
+.panel-lead { margin: 0; padding-top: var(--layout-gap-stack); color: var(--color-text-secondary); font: italic 400 var(--font-size-16)/1.5 var(--font-family-sans); }
+.key-message { margin: 0; padding-top: var(--layout-gap-stack); max-width: var(--layout-measure-lead); }
+
+/* Citação da fundadora. */
+.quote { display: flex; flex-direction: column; gap: var(--space-12); margin: 0; padding-left: var(--space-24); border-left: var(--border-width-rule) solid var(--color-accent-rule); }
+.quote blockquote { margin: 0; font-family: var(--font-family-serif); font-style: italic; }
+.quote figcaption { color: var(--color-text-secondary); font: 600 var(--font-size-14)/1.4 var(--font-family-sans); }
+:where([data-surface="dark"]) .quote { border-left-color: var(--color-accent-rule-on-dark); }
+:where([data-surface="dark"]) .quote figcaption { color: var(--color-text-secondary-on-dark); }
+
+/* Passos numerados (como funciona). */
+.steps-list { display: flex; flex-direction: column; gap: var(--space-16); margin: 0; padding: 0; list-style: none; counter-reset: passo; }
+.steps-list li { display: flex; gap: var(--space-16); align-items: baseline; font: 400 var(--font-size-16)/1.5 var(--font-family-sans); counter-increment: passo; }
+.steps-list li::before { content: counter(passo, decimal-leading-zero); flex: none; width: var(--space-32); color: var(--color-text-accent); font: 700 var(--font-size-16)/1 var(--font-family-sans); }
+
+/* Respostas do FAQ com mais de um parágrafo. */
+.faq__answer > * { margin: 0; }
+.faq__answer > * + * { margin-top: var(--space-12); }
+.faq__answer ul, .faq__answer ol { padding-left: var(--space-24); }
+.faq__answer a { color: var(--color-text-brand); font-weight: 600; }
+
 @media (forced-colors: active) {
   .logos__item, .photo--placeholder { box-shadow: none; border: var(--border-width-control) solid CanvasText; }
 }

@@ -7,6 +7,7 @@
 - Estado nunca é classe: `:hover` (só com `@media (hover: hover)`), `:focus-visible`, `:disabled` ou `[aria-disabled="true"]`, `[aria-busy="true"]`, `[aria-invalid="true"]`, `[aria-selected]`, `[aria-current]`, `[open]`.
 - Use `aria-disabled` quando houver motivo a explicar (mantém o foco); `disabled` nos demais casos.
 
+- O rótulo do `.btn` quebra linha quando não cabe (texto ampliado, 320 px); em uma linha as alturas mínimas valem como antes.
 - Todo `.btn` declara `data-variant`. Sem o atributo o botão tem a cor do primário, mas não o hover, que depende da variante.
 - Alturas são mínimas (`min-height`): botão 48, botão sm 44, terciário 32, campo 48, tag 28 e 26. Em contêiner flex com `align-items` padrão, itens de tamanhos diferentes na mesma linha se esticam; use `align-items: flex-start` ou `center`.
 - Tamanho de fonte só por token (`var(--font-size-*)`); botão, campo e corpo ficam em 16 px, apoio em 14 px e tag em 12 px. O lint `fonte-fora-da-escala` barra o resto.
@@ -42,6 +43,8 @@ initTabs();
 ```
 
 Navegação por etapas (`.steps`, links com endereço próprio) e abas de painel (`.tabs`, mesmo painel) têm o mesmo visual e marcação diferente. Não misture.
+
+`initTabs` rola só a lista de abas, na horizontal, para mostrar a aba ativa: nunca rola a página (nem ao carregar). Abaixo de 640 px, quando as abas passam da largura, a borda direita esmaece; no fim da rolagem, ou sem rolagem, `tabs.ts` marca `data-fim` e o esmaecimento some, para a última aba ficar legível.
 
 ## Grade
 ```html
@@ -101,6 +104,7 @@ Teclado das abas (setas, Home, End, volta nas pontas, foco móvel, Tab para o pa
 
 - `initForm(form)` valida no envio: marca `aria-invalid`, cria `<p class="field__error" id="{id}-erro">` (ícone de 16 px e texto) e a liga por `aria-describedby` (preservando a ajuda do campo), monta o resumo (ícone de 20 px, título e um link por campo) e leva o foco ao resumo.
 - Depois do primeiro envio, cada campo valida ao sair dele (o checkbox, ao mudar) e o resumo se atualiza sem mover o foco. Corrigir o campo limpa o erro na hora; um erro que continua só troca de mensagem ao sair do campo. Antes do primeiro envio, sair de um campo vazio não acusa nada.
+- Grupo de opções (rádios ou checkboxes): `<fieldset class="choice"><legend class="field__label">Tenho interesse em</legend><label class="check" for="…"><input type="radio" …><span>…</span></label>…</fieldset>`.
 - O checkbox fica dentro de um `.field`: o erro entra depois do `<label class="check">`, nunca dentro dele (senão o texto do erro entraria no nome do controle).
 - Envio válido: o `[role="status"]` anuncia o sucesso (ícone e texto), o foco não se move e o formulário é limpo. O evento `seraphim:enviar` carrega o `FormData`; quem trata o envio chama `preventDefault()` e passa a anunciar ele mesmo o sucesso ou a falha, e o formulário não é limpo.
 - Obrigatório é dito em texto, nunca só por asterisco ou cor: `<span class="field__req" data-form-ignore>(obrigatório)</span>` dentro do rótulo (peso regular, texto secundário; `data-form-ignore` o tira do resumo de erros). Placeholder não substitui rótulo. Alvo mínimo de 44 px (`.check` inclui o texto).

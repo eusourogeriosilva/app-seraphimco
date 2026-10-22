@@ -26,10 +26,15 @@
       <div class="stack" data-span="5" data-span-md="8">
         <div class="type-eyebrow eyebrow">Contato</div>
         <h1 class="type-display-l">Vamos conversar sobre a sua carteira.</h1>
-        <p class="type-lead lead-muted">Conte um pouco sobre a corretora. Respondemos em até 1 dia útil, com os próximos passos do Diagnóstico NEXO.</p>
+        <p class="type-lead lead-muted">Conte um pouco sobre a corretora. Respondemos em até 1 dia útil, com os próximos passos.</p>
       </div>
       <form class="form" data-span="6" data-span-md="8" action="#" method="post" novalidate>
         <div class="alert" role="alert" data-tone="danger" data-form-summary hidden></div>
+        <fieldset class="choice"><legend class="field__label">Tenho interesse em</legend>
+          <label class="check" for="interesse-diagnostico"><input id="interesse-diagnostico" name="interesse" type="radio" value="diagnostico"><span>Diagnóstico NEXO</span></label>
+          <label class="check" for="interesse-consultoria"><input id="interesse-consultoria" name="interesse" type="radio" value="consultoria"><span>Consultoria NEXO</span></label>
+          <label class="check" for="interesse-palestra"><input id="interesse-palestra" name="interesse" type="radio" value="palestra"><span>Palestra para a minha organização ou evento</span></label>
+        </fieldset>
         <div class="field"><label class="field__label" for="nome">Nome <span class="field__req" data-form-ignore>(obrigatório)</span></label><input class="field__input" id="nome" name="nome" type="text" autocomplete="name" required></div>
         <div class="field"><label class="field__label" for="email">E-mail <span class="field__req" data-form-ignore>(obrigatório)</span></label><input class="field__input" id="email" name="email" type="email" autocomplete="email" required></div>
         <div class="field"><label class="field__label" for="whatsapp">WhatsApp</label><input class="field__input" id="whatsapp" name="whatsapp" type="tel" autocomplete="tel" inputmode="tel" aria-describedby="whatsapp-ajuda"><p class="field__hint" id="whatsapp-ajuda">Com DDD. Usamos só para responder a esta mensagem.</p></div>
