@@ -12,6 +12,14 @@ Base: fidelidade do site ao design system e decisões de marca aprovadas pela Ta
 - Contato: "Tenho interesse em" (Diagnóstico, Consultoria, Palestra), pré-selecionado por `?interesse=`.
 - Decisões do dono do sistema (2026-10-22): NEXO sem ™ (vale a aprovação de 20/10); Consultoria de 90 dias; posição "consultoria de crescimento", com marketing no corpo do texto; home + uma página por serviço.
 
+### Conteúdo (segunda rodada, aprovada pela Tatiane Seraphim em 2026-10-22)
+- Assinatura "Tatiane Seraphim", sem cargo.
+- Sem prazo de resposta: "Entramos em contato para apresentar os próximos passos" (contato e confirmação do formulário).
+- Faixa "Corretoras que confiam" retirada até haver logos autorizados (o padrão `.logos` segue no sistema; o teste de layout volta a valer quando a faixa existir).
+- Hero: "…para gerar mais receita com a própria carteira de clientes."
+- "O cenário": "Muitos corretores procuram…" no lugar de "A maioria dos corretores…".
+- Mantidos: Diagnóstico sem "dependem de indicações" na lista de público; devolutiva online de até 90 minutos.
+
 ### Corrigido (componentes)
 - `.btn`: o rótulo não quebrava linha e passava da tela com texto a 200% em 390 e 320 px (já acontecia na home). Agora quebra, com entrelinha e respiro vertical; alturas mínimas inalteradas.
 - `tabs.ts`: ao iniciar, `scrollIntoView` rolava a página até as abas (as páginas abriam 736 a 951 px abaixo do topo); agora só a lista rola, na horizontal. O esmaecimento da borda direita (≤ 640 px) some no fim da rolagem (`data-fim`), deixando a última aba legível.

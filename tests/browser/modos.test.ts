@@ -7,10 +7,10 @@ let amb: Ambiente;
 before(async () => { amb = await subir(); });
 after(async () => { await descer(amb); });
 
-test('forced-colors: cartões, logos e alertas mantêm contorno como border', async () => {
+test('forced-colors: cartões, logos e fotos mantêm contorno como border', async () => {
   const page = await abrir(amb, '/src/site/index.html', 1440, { forcedColors: 'active' });
   const r = await page.evaluate(() => [...document.querySelectorAll('.card, .logos__item, .photo--placeholder')].map((e) => { const s = getComputedStyle(e); return { c: e.className, borda: s.borderTopStyle, largura: s.borderTopWidth, sombra: s.boxShadow }; }));
-  assert.ok(r.length >= 7, 'esperava cartões, logos e foto');
+  assert.ok(r.length >= 5, 'esperava cartões e fotos (logos, quando houver)');
   for (const x of r) { assert.equal(x.borda, 'solid', x.c); assert.equal(x.largura, '1px', x.c); assert.equal(x.sombra, 'none', x.c); }
   await page.close();
 });

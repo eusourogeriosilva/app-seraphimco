@@ -55,6 +55,11 @@ test('conteúdo: portfólio da Tatiane (19/10) aplicado, sem notas internas', as
     v.ok(`${nome}: sem "Programa NEXO" nem "Mentoria NEXO"`, !/Programa NEXO|Mentoria NEXO/.test(texto));
     v.ok(`${nome}: Consultoria sem "8 semanas"`, !/8 semanas|oito semanas/i.test(texto));
     v.ok(`${nome}: nome completo, sem "Tati "`, !/\bTati\b/.test(texto));
+    // Segunda rodada (Tatiane, 2026-10-22): sem cargo na assinatura, sem prazo de resposta, sem logos sem autorização, sem "a maioria".
+    v.ok(`${nome}: assinatura "Tatiane Seraphim", sem cargo`, !/sócia|fundadora/i.test(texto));
+    v.ok(`${nome}: sem prazo de resposta prometido`, !/Respondemos|1 dia útil/i.test(texto));
+    v.ok(`${nome}: sem faixa de logos`, !/Corretoras que confiam|\[LOGO\]/.test(texto));
+    v.ok(`${nome}: sem "a maioria dos corretores"`, !/a maioria dos corretores/i.test(texto));
     await pg.close();
   }
   v.ok('site: pilares N Negócio, E Experiência, X Expansão, O Oportunidade', ['Negócio', 'Experiência', 'Expansão', 'Oportunidade'].every((p) => todo.includes(p)) && !/Núcleo da carteira|Oportunidades de crescimento/.test(todo));

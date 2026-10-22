@@ -158,7 +158,7 @@ export function initForm(form: HTMLFormElement): void {
     if (status) {
       const s = document.createElement('span');
       s.className = 'alert__text';
-      s.textContent = 'Respondemos em até 1 dia útil.';
+      s.textContent = 'Entramos em contato para apresentar os próximos passos.';
       alerta(status, 'sucesso', 'Mensagem enviada', s);
     }
     form.reset();

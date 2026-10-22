@@ -22,8 +22,11 @@ for (const w of [1440, 1280, 960, 959, 768, 640, 639, 390, 320]) {
     v.ok(`${w}px: hero ${band === 'd' ? 'lado a lado' : 'empilhado'}`, lado === (band === 'd'), [tx.w, ph.l]);
     const h1 = await g<number>(`parseFloat(getComputedStyle(document.querySelector('h1')).fontSize)`);
     v.ok(`${w}px: h1 ${{ d: 72, t: 56, c: 40 }[band]} px`, h1 === { d: 72, t: 56, c: 40 }[band], h1);
-    const lc = await g<number>(`getComputedStyle(document.querySelector('.logos')).gridTemplateColumns.split(' ').length`);
-    v.ok(`${w}px: logos em ${band !== 'c' ? 4 : 2} colunas`, lc === (band !== 'c' ? 4 : 2), lc);
+    // Faixa de logos fora até haver logos autorizados (Tatiane, 2026-10-22); o padrão volta a ser testado quando existir.
+    if (await g<boolean>(`!!document.querySelector('.logos')`)) {
+      const lc = await g<number>(`getComputedStyle(document.querySelector('.logos')).gridTemplateColumns.split(' ').length`);
+      v.ok(`${w}px: logos em ${band !== 'c' ? 4 : 2} colunas`, lc === (band !== 'c' ? 4 : 2), lc);
+    }
     const mi = await g<number[]>(`[...document.querySelectorAll('.method__item')].map(e=>Math.round(e.getBoundingClientRect().top))`);
     v.ok(`${w}px: Método ${{ d: 4, t: 2, c: 1 }[band]} por linha`, mi.filter((x) => x === mi[0]).length === { d: 4, t: 2, c: 1 }[band], mi);
     const sv = await g<number[][]>(`[...document.querySelectorAll('.card--service')].map(e=>{const q=e.getBoundingClientRect();return [Math.round(q.top),Math.round(q.width)]})`);
