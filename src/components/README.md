@@ -10,7 +10,7 @@
 - O rótulo do `.btn` quebra linha quando não cabe (texto ampliado, 320 px); em uma linha as alturas mínimas valem como antes.
 - Todo `.btn` declara `data-variant`. Sem o atributo o botão tem a cor do primário, mas não o hover, que depende da variante.
 - Alturas são mínimas (`min-height`): botão 48, botão sm 44, terciário 32, campo 48, tag 28 e 26. Em contêiner flex com `align-items` padrão, itens de tamanhos diferentes na mesma linha se esticam; use `align-items: flex-start` ou `center`.
-- Tamanho de fonte só por token (`var(--font-size-*)`); botão, campo e corpo ficam em 16 px, apoio em 14 px e tag em 12 px. O lint `fonte-fora-da-escala` barra o resto.
+- Tamanho de fonte só por token (`var(--font-size-*)`); botão, campo e corpo ficam em 16 px, apoio em 14 px e tag em 12 px. O lint `fonte-fora-da-escala` barra o resto. Única exceção declarada: o logotipo (ver "Logotipo").
 
 ## Marcação
 ```html
@@ -114,6 +114,8 @@ Teclado das abas (setas, Home, End, volta nas pontas, foco móvel, Tab para o pa
 ## Logotipo (`.wordmark`)
 
 `<span class="wordmark">SERAPHIM.CO</span>`, na moldura aberta. Tamanho por `--s` (padrão 15 px; o rodapé usa `style="--s: 18px"`, o único estilo inline permitido no site). A cor vem da superfície: sobre `data-surface="dark"` usa `color-text-on-dark` sem configuração; `--c` só para exceções. Dentro de flex ou grid a moldura não estica (`align-self` e `justify-self` no início), então mantém a proporção em qualquer contêiner.
+
+**Exceção à escala de fonte.** O logotipo é marca gráfica, não texto corrido: o tamanho em `--s` fica fora da escala tipográfica e do lint `fonte-fora-da-escala`. Valores em uso: 15 px (cabeçalho, padrão) e 18 px (rodapé); o mínimo é 15 px. Outro tamanho entra primeiro nesta lista. O teste `marca: o logotipo só usa os tamanhos declarados` reprova qualquer outro.
 
 ## Cartão clicável
 
