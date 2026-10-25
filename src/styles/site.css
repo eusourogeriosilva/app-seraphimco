@@ -80,6 +80,8 @@
 .site-footer__legal { margin-top: var(--layout-section-gap); padding-top: var(--space-24); border-top: 1px solid var(--color-border-on-dark); font: 400 var(--font-size-14)/1.5 var(--font-family-sans); }
 
 .form { display: flex; flex-direction: column; gap: var(--space-24); }
+/* Campos que só existem para um interesse (ver contato.ts): .field define display, então hidden precisa de regra. */
+.form [data-mostrar-se][hidden] { display: none; }
 
 /* ---------- páginas de serviço ---------- */
 /* Lista com ícone de check (o ✅ do conteúdo; emoji é vetado pela Voz). O ícone é decorativo. */

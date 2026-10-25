@@ -166,7 +166,7 @@ test('interesse é opcional e vai no envio', async () => {
 
 test('todo controle tem rótulo, type e autocomplete; alvo de 44 px', async () => {
   const page = await abrir(amb, URL, 390);
-  const r = await page.evaluate(() => [...document.querySelectorAll<HTMLInputElement>('input, textarea')].map((c) => ({ id: c.id, rotulo: !!c.labels?.length, auto: c.type === 'checkbox' || c.type === 'radio' || c.tagName === 'TEXTAREA' || !!c.autocomplete, h: Math.round((c.closest('.check') ?? c).getBoundingClientRect().height) })));
+  const r = await page.evaluate(() => [...document.querySelectorAll<HTMLInputElement>('input, textarea')].filter((c) => !c.closest('[hidden]')).map((c) => ({ id: c.id, rotulo: !!c.labels?.length, auto: c.type === 'checkbox' || c.type === 'radio' || c.tagName === 'TEXTAREA' || !!c.autocomplete, h: Math.round((c.closest('.check') ?? c).getBoundingClientRect().height) })));
   for (const x of r) { assert.equal(x.rotulo, true, x.id); assert.equal(x.auto, true, x.id); assert.ok(x.h >= 44, `${x.id} ${x.h}`); }
   await page.close();
 });
@@ -177,4 +177,47 @@ test('zoom de texto a 200% sem rolagem horizontal em 390 px', async () => {
   const r = await page.evaluate(() => ({ sw: document.documentElement.scrollWidth, cw: document.documentElement.clientWidth }));
   assert.ok(r.sw <= r.cw, JSON.stringify(r));
   await page.close();
+});
+
+test('palestra: campos de organização e data só aparecem e só vão no envio com esse interesse', async () => {
+  const ler = (page: import('playwright').Page) => page.evaluate(() => [...document.querySelectorAll<HTMLInputElement>('[data-mostrar-se] input')].map((c) => ({ id: c.id, oculto: (c.closest('[data-mostrar-se]') as HTMLElement).hidden, desabilitado: c.disabled, visivel: c.getBoundingClientRect().height > 0, rotulo: c.labels?.[0]?.textContent?.trim() })));
+  const page = await abrir(amb, URL, 390);
+  await page.waitForFunction(() => document.querySelector('form')?.noValidate === true);
+  let c = await ler(page);
+  assert.deepEqual(c.map((x) => x.id), ['evento', 'data-evento']);
+  assert.ok(c.every((x) => x.oculto && x.desabilitado && !x.visivel), 'sem interesse: ocultos e desabilitados');
+  await page.check('#interesse-diagnostico');
+  c = await ler(page);
+  assert.ok(c.every((x) => x.oculto && x.desabilitado && !x.visivel), 'diagnóstico: ocultos');
+  await page.check('#interesse-palestra');
+  c = await ler(page);
+  assert.ok(c.every((x) => !x.oculto && !x.desabilitado && x.visivel), 'palestra: visíveis e habilitados');
+  assert.deepEqual(c.map((x) => x.rotulo), ['Organização ou evento', 'Data prevista do evento']);
+  const alturas = await page.evaluate(() => ['evento', 'data-evento'].map((id) => document.getElementById(id)!.getBoundingClientRect().height));
+  assert.ok(alturas.every((h) => h >= 44), `alvo de 44 px: ${alturas}`);
+  await page.fill('#evento', 'Sincor-SP'); await page.fill('#data-evento', 'março de 2027');
+  await page.check('#interesse-consultoria');
+  c = await ler(page);
+  assert.ok(c.every((x) => x.oculto && x.desabilitado && !x.visivel), 'trocar de interesse oculta de novo');
+  await page.evaluate(() => document.querySelector('form')!.addEventListener('seraphim:enviar', (e) => { (window as unknown as { dados: string }).dados = JSON.stringify([...(e as CustomEvent<FormData>).detail.keys()]); }));
+  await page.fill('#nome', 'Ana'); await page.fill('#email', 'ana@c.com.br'); await page.fill('#mensagem', 'Oi'); await page.check('#lgpd');
+  await page.getByRole('button', { name: 'Enviar mensagem' }).click();
+  const enviados = JSON.parse(await page.evaluate(() => (window as unknown as { dados: string }).dados)) as string[];
+  assert.ok(!enviados.includes('evento') && !enviados.includes('data_evento'), `consultoria não envia: ${enviados}`);
+  await page.close();
+
+  const p2 = await abrir(amb, `${URL}?interesse=palestra`, 1440);
+  await p2.waitForFunction(() => document.querySelector('form')?.noValidate === true);
+  c = await ler(p2);
+  assert.ok(c.every((x) => !x.oculto && !x.desabilitado && x.visivel), '?interesse=palestra: visíveis ao carregar');
+  await p2.evaluate(() => document.querySelector('form')!.addEventListener('seraphim:enviar', (e) => { const d = (e as CustomEvent<FormData>).detail; (window as unknown as { dados: string }).dados = `${d.get('evento')}|${d.get('data_evento')}`; }));
+  await p2.fill('#evento', 'Sincor-SP'); await p2.fill('#data-evento', 'março de 2027');
+  await p2.fill('#nome', 'Ana'); await p2.fill('#email', 'ana@c.com.br'); await p2.fill('#mensagem', 'Oi'); await p2.check('#lgpd');
+  await p2.getByRole('button', { name: 'Enviar mensagem' }).click();
+  assert.equal(await p2.evaluate(() => (window as unknown as { dados: string }).dados), 'Sincor-SP|março de 2027');
+  assert.equal(await p2.locator('[aria-invalid="true"]').count(), 0, 'campos opcionais não geram erro');
+  await p2.waitForTimeout(100);
+  c = await ler(p2);
+  assert.ok(c.every((x) => x.oculto && x.desabilitado), 'depois do envio o formulário é limpo e os campos somem');
+  await p2.close();
 });
