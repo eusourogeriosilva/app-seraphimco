@@ -173,3 +173,15 @@ test('marca: logotipo abraça o texto e pega a cor da superfície', async () => 
   await pg.close();
   v.fim();
 });
+
+test('marca: a página de contato tem um único primário (Enviar mensagem)', async () => {
+  const v = verificacoes();
+  const pg = await abrir(amb, '/src/site/contato.html', 1440);
+  const primarios = (await pg.evaluate(() => [...document.querySelectorAll('.btn[data-variant="primary"]')].map((b) => b.textContent!.trim()))) as string[];
+  v.ok('contato.html: um primário por tela', primarios.length === 1, primarios);
+  v.ok('contato.html: o primário é o envio do formulário', primarios[0] === 'Enviar mensagem', primarios);
+  const cta = (await pg.evaluate(() => document.querySelector('.site-header__cta')?.getAttribute('data-variant'))) as string;
+  v.ok('contato.html: CTA do cabeçalho é secundário', cta === 'secondary', cta);
+  await pg.close();
+  v.fim();
+});
