@@ -22,7 +22,8 @@
     "test:browser:firefox": "node scripts/test-browser.ts firefox",
     "test:browser:webkit": "node scripts/test-browser.ts webkit",
     "test:browser:todos": "node scripts/test-browser.ts todos",
-    "lint:html": "node tokens/scripts/check-html.ts src"
+    "lint:html": "node tokens/scripts/check-html.ts src",
+    "site": "node scripts/servir.ts"
   },
   "devDependencies": {
     "@fontsource/hanken-grotesk": "5.3.0",
