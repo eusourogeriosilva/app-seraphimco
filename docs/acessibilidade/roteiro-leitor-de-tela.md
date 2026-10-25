@@ -4,6 +4,12 @@ Executar uma vez por release do Site. Combinações: **NVDA + Firefox** e **NVDA
 
 Páginas: `src/site/index.html` e `src/site/contato.html`, em desktop e em celular (390 px).
 
+## Preparação
+1. No computador com o leitor de tela: `npm ci` (uma vez) e `npm run site`. O terminal imprime os endereços (`http://127.0.0.1:4173/...`); deixe-o aberto.
+2. Abra os endereços no navegador do teste. Para o celular (390 px), use a janela estreita do navegador ou o VoiceOver no iPhone com o computador na mesma rede (troque `127.0.0.1` pelo IP do computador e rode `npm run site` com o firewall liberado para a porta).
+3. Percorra os cenários na ordem, nas páginas: home, contato (inclusive com `?interesse=palestra`), Diagnóstico NEXO, Consultoria NEXO e Palestras.
+4. Preencha a tabela de resultados; cada Reprovado vira um item no PR de correção.
+
 | # | Cenário | Como | Esperado |
 |---|---|---|---|
 | 1 | Ordem de leitura e landmarks | Lista de landmarks / rotor | banner, navegação “Principal”, main, contentinfo; um h1; sem duplicidade |
