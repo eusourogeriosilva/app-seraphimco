@@ -185,3 +185,32 @@ test('marca: a página de contato tem um único primário (Enviar mensagem)', as
   await pg.close();
   v.fim();
 });
+
+test('marca: link de âncora nunca é "página atual" (aria-current)', async () => {
+  const v = verificacoes();
+  for (const url of PAGINAS) {
+    const pg = await abrir(amb, url, 1440);
+    const nome = url.split('/').pop();
+    const ancoras = (await pg.evaluate(() => [...document.querySelectorAll('a[href^="#"][aria-current], a[href*=".html#"][aria-current]')].map((a) => a.textContent!.trim()))) as string[];
+    v.ok(`${nome}: nenhum link de âncora com aria-current`, ancoras.length === 0, ancoras);
+    const atuais = (await pg.evaluate(() => [...document.querySelectorAll('nav a[aria-current="page"]')].map((a) => a.getAttribute('href')))) as string[];
+    v.ok(`${nome}: no máximo um link marca a página atual`, atuais.length <= 1, atuais);
+    await pg.close();
+  }
+  v.fim();
+});
+
+test('marca: o logotipo só usa os tamanhos declarados (15 e 18 px)', async () => {
+  const v = verificacoes();
+  for (const url of PAGINAS) {
+    for (const largura of [1440, 768, 390]) {
+      const pg = await abrir(amb, url, largura);
+      const nome = `${url.split('/').pop()} a ${largura}px`;
+      const tamanhos = (await pg.evaluate(() => [...document.querySelectorAll('.wordmark')].map((w) => parseFloat(getComputedStyle(w).fontSize)))) as number[];
+      v.ok(`${nome}: tem logotipo`, tamanhos.length > 0);
+      v.ok(`${nome}: tamanhos entre os declarados`, tamanhos.every((t) => t === 15 || t === 18), tamanhos);
+      await pg.close();
+    }
+  }
+  v.fim();
+});
