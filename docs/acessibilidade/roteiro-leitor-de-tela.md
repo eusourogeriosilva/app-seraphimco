@@ -17,6 +17,7 @@ Páginas: `src/site/index.html` e `src/site/contato.html`, em desktop e em celul
 | 9 | FAQ e abas | Teclado e leitor | `details` anuncia aberto/fechado; abas só com o padrão WAI-ARIA |
 | 10 | Zoom 400% e texto 200% | Ampliar em 1280 px | sem rolagem em duas direções, sem texto cortado |
 | 11 | Alto contraste do Windows | Tema de contraste ativo | cartões, logos e campos com contorno; foco visível |
+| 12 | Formulário: campos de Palestra | Marcar “Palestra…” e seguir com Tab | os campos “Organização ou evento” e “Data prevista” aparecem depois da corretora; rótulo e ajuda lidos; ao trocar de interesse, somem |
 
 ## Resultados
 

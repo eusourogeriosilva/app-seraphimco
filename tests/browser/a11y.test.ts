@@ -46,3 +46,15 @@ test('estrutura: um h1, sem salto de nível, lang pt-BR, img com alt', async () 
     await page.close();
   }
 });
+
+for (const largura of LARGURAS) {
+  test(`axe: contato com interesse em palestra (campos extras visíveis) @${largura}px sem violações`, async () => {
+    const page = await abrir(amb, '/src/site/contato.html?interesse=palestra', largura);
+    await page.waitForFunction(() => document.querySelector('form')?.noValidate === true);
+    assert.equal(await page.locator('#evento').isVisible(), true);
+    await page.evaluate(axeFonte);
+    const r = (await page.evaluate(`axe.run(document, { runOnly: { type: 'tag', values: ['wcag2a','wcag2aa','wcag21a','wcag21aa','wcag22aa','best-practice'] } })`)) as Resultado;
+    assert.deepEqual(r.violations.map((v) => `${v.id}: ${v.nodes.map((n) => n.target.join(' ')).join(' ; ')}`), []);
+    await page.close();
+  });
+}
